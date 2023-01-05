@@ -1,0 +1,28 @@
+.list__container {
+  display: flex;
+  border-bottom: 1px solid var(--dark-60);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  .list__item {
+    font-size: 20px;
+    width: 80%;
+  }
+  .button__container {
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+  }
+  button {
+    font-size: 20px;
+    margin-right: 2rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .modify__button {
+    color: var(--primary-color);
+  }
+  .delete__button {
+    color: var(--error-color);
+  }
+}

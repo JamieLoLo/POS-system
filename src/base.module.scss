@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+html,
+body {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+:global(:root) {
+  --white: #ffffff;
+  --black: #000000;
+  --main-color: #ff6600;
+  --primary-color: #0062ff;
+  --secondary-color: #6c757d;
+  --success-color: #3dd598;
+  --warn-color: #ffc542;
+  --error-color: #fc5a5a;
+  --new-color: #50b5ff;
+  --border-color: #e6ecf0;
+  --dark-100: #242021;
+  --dark-95: #2a2627;
+  --dark-90: #44444f;
+  --dark-80: #696974;
+  --dark-70: #92929d;
+  --dark-60: #b5b2be;
+  --dark-50: #d5d5dc;
+  --dark-40: #e2e2ea;
+  --dark-30: #f1f1f5;
+  --dark-20: #fafafb;
+}
+
+body {
+  --input-background: #f5f8fa;
+  --default-baseline: #657786;
+  --hover-focus-baseline: #50b5ff;
+  --navbar-default-text: #44444f;
+  --popularlist-background: #fafafb;
+  --main-text: #171725;
+  --modal-backdrop: #e5e5e5;
+  --control-container-border: #e6ecf0;
+  --navbar-active: #f46446;
+}
+
+:global(.main__container) {
+  display: flex;
+  width: 100%;
+}

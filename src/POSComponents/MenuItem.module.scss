@@ -1,0 +1,16 @@
+.menu__item {
+  font-size: 24px;
+  width: 50%;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+  background-color: var(--dark-50);
+  &:nth-child(4n) {
+    background-color: var(--dark-30);
+  }
+  &:nth-child(4n + 1) {
+    background-color: var(--dark-30);
+  }
+}

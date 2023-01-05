@@ -1,0 +1,19 @@
+.switch__button__container {
+  display: flex;
+  padding-left: 2rem;
+  margin-top: 4rem;
+  border-bottom: 1px solid var(--dark-90);
+  .switch__button {
+    border: 1px solid var(--dark-60);
+    color: var(--dark-60);
+    font-size: 24px;
+    padding: 0.5rem 1rem;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+  }
+  .active {
+    background-color: var(--dark-90);
+    color: var(--white);
+    border: 1px solid var(--dark-90);
+  }
+}

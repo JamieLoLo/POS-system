@@ -1,0 +1,46 @@
+.right__side__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .table__container {
+    width: 90vh;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+      'id_1 id_2 id_3 id_4 id_5'
+      'id_6 id_7 id_8 id_9 id_10'
+      'id_11 id_12 id_13 id_14 id_15'
+      'id_16 id_17 id_18 id_19 id_20'
+      'id_21 id_22 id_23 id_24 id_25';
+  }
+  .table_1 {
+    grid-area: id_1;
+    text-align: center;
+    background-color: var(--dark-20);
+    border: 1px solid var(--dark-60);
+    border-radius: 8px;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .table__name {
+      font-weight: 500;
+    }
+  }
+  .table_2 {
+    grid-area: id_14;
+    background-color: green;
+  }
+  .table_3 {
+    grid-area: id_25;
+    background-color: gold;
+  }
+  .table_4 {
+    grid-area: id_4;
+    background-color: red;
+  }
+}

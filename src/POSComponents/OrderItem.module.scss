@@ -1,0 +1,36 @@
+.order__item__container {
+  &:nth-child(even) {
+    background-color: var(--dark-30);
+  }
+  &:nth-child(odd) {
+    background-color: var(--dark-50);
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 24px;
+  .control__container {
+    display: flex;
+    align-items: center;
+    .icon__container {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      .icon {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+    .count__container {
+      text-align: center;
+      .count {
+        margin: 0 1.2rem;
+      }
+      .price {
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import './ClassificationItem.module.scss';
+
+.list__container {
+  width: 100%;
+
+  .list__item {
+    width: 33%;
+    &:nth-child(2) {
+      width: 33%;
+      text-align: center;
+    }
+  }
+  .button__container {
+    width: 33%;
+    display: flex;
+  }
+}

@@ -1,0 +1,22 @@
+@import './ClassificationSettingPage.module.scss';
+.table__container {
+  display: grid;
+  width: 75vh;
+  height: 75vh;
+  margin: 2rem auto 0 auto;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+@for $i from 1 through 25 {
+  .table__#{$i} {
+    font-size: 22px;
+    background-color: var(--dark-20);
+    border: 1px solid var(--dark-60);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

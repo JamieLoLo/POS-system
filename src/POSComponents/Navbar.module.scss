@@ -1,0 +1,51 @@
+.logo__container {
+  display: flex;
+  height: 25vh;
+  width: 25vh;
+  justify-content: center;
+  align-items: center;
+  .logo {
+    height: 65%;
+    width: 65%;
+  }
+}
+
+ul {
+  .nav__item {
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:nth-child(odd) {
+      background-color: var(--dark-100);
+    }
+  }
+  .icon {
+    width: 80px;
+    height: 80px;
+    color: var(--white);
+  }
+
+  .nav__item__active {
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--navbar-active);
+  }
+  .nav__text {
+    font-size: 20px;
+    text-align: center;
+    color: var(--white);
+    line-height: 35px;
+  }
+}
+
+nav {
+  background-color: var(--dark-95);
+  height: 100vh;
+}
