@@ -1,0 +1,52 @@
+.modal {
+  position: absolute;
+  z-index: 2;
+  .backdrop {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal__container {
+    position: absolute;
+    width: 90vw;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: var(--white);
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    border: 8px solid var(--error-color);
+    .text__container {
+      text-align: center;
+      margin-bottom: 1.2rem;
+      .title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+      }
+      .subtitle {
+        .difference {
+          color: var(--error-color);
+        }
+      }
+    }
+    .button__container {
+      .order__button {
+        font-size: 16px;
+        border: none;
+        color: var(--white);
+        background-color: var(--error-color);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import {
   OrderSystemPage,
   OrderCustomerPage,
 } from './POSPage/index'
+import { OrderPage, CartPage } from './CustomerPage'
 // SCSS
 import './reset.module.scss'
 import './base.module.scss'
@@ -34,6 +35,8 @@ function App() {
           <Route path='/order/table' element={<OrderTablePage />} />
           <Route path='/order/system' element={<OrderSystemPage />} />
           <Route path='/order/customer' element={<OrderCustomerPage />} />
+          <Route path='/customer/main' element={<OrderPage />} />
+          <Route path='/customer/cart' element={<CartPage />} />
         </Routes>
       </BrowserRouter>
     </div>
