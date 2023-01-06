@@ -11,6 +11,7 @@ import {
   OrderTablePage,
   OrderSystemPage,
   OrderCustomerPage,
+  HomePage,
 } from './POSPage/index'
 import { OrderPage, CartPage } from './CustomerPage'
 // SCSS
@@ -21,7 +22,6 @@ function App() {
   const basename = process.env.PUBLIC_URL
   return (
     <div className='App'>
-      Hello world!
       <BrowserRouter basename={basename}>
         <Routes>
           <Route
@@ -39,6 +39,7 @@ function App() {
           <Route path='/order/customer' element={<OrderCustomerPage />} />
           <Route path='/customer/main' element={<OrderPage />} />
           <Route path='/customer/cart' element={<CartPage />} />
+          <Route path='*' element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -8,6 +8,7 @@ import RankPage from './RankPage'
 import OrderTablePage from './OrderTablePage'
 import OrderSystemPage from './OrderSystemPage'
 import OrderCustomerPage from './OrderCustomerPage'
+import HomePage from './HomePage'
 
 export {
   ClassificationSettingPage,
@@ -20,4 +21,5 @@ export {
   OrderTablePage,
   OrderSystemPage,
   OrderCustomerPage,
+  HomePage,
 }
