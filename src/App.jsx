@@ -18,9 +18,10 @@ import './reset.module.scss'
 import './base.module.scss'
 
 function App() {
+  const basename = process.env.PUBLIC_URL
   return (
     <div className='App'>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route
             path='/setting/classification'
