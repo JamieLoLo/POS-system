@@ -21,6 +21,7 @@ function App() {
   const basename = process.env.PUBLIC_URL
   return (
     <div className='App'>
+      Hello world!
       <BrowserRouter basename={basename}>
         <Routes>
           <Route
