@@ -1,12 +1,12 @@
 header {
   background-color: var(--dark-95);
   display: flex;
-  height: 10vh;
+  height: 10%;
 
   .logo__container {
     display: flex;
     width: 10vh;
-    height: 10vh;
+    height: 10%;
     padding: 0.3rem;
     .logo {
       width: 100%;
@@ -24,15 +24,15 @@ header {
   }
 }
 .main {
-  min-height: 80vh;
-  max-height: 80vh;
+  height: 80%;
   overflow: scroll;
 }
 .button__container {
+  height: 10%;
   .return__button,
   .confirm__button {
     width: 50%;
-    height: 10vh;
+    height: 100%;
     color: var(--white);
     border: none;
     font-size: 18px;

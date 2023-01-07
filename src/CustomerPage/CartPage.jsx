@@ -25,7 +25,7 @@ const CartPage = () => {
           count='1'
         />
         <CartItem dish='奶油明太子義大利麵' price='$320' count='1' />
-        <CartItem dish='無錫排骨飯' price='$320' count='1' />
+        <CartItem dish='無錫排骨飯' price='$620' count='1' />
         <CartItem dish='無錫排骨飯' price='$320' count='4' />
         <CartItem dish='無錫排骨飯' price='$320' count='1' />
         <CartItem dish='無錫排骨飯' price='$320' count='1' />
