@@ -29,7 +29,7 @@ header {
   height: 15vh;
   .description {
     width: 70%;
-    padding: 0.75rem;
+    padding: 1rem;
     background-color: var(--dark-30);
   }
   .table__information {
@@ -40,6 +40,7 @@ header {
     flex-direction: column;
     justify-content: center;
     padding: 0.75rem;
+    text-align: center;
   }
 }
 .main {
@@ -76,20 +77,50 @@ header {
       }
     }
     .cart__count {
-      font-size: 20px;
+      font-size: 18px;
       margin-left: 1rem;
     }
   }
   .cart__text {
     width: 60vw;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     text-align: center;
   }
   .sum {
     width: 20vw;
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  header {
+    .restaurant__name {
+      font-size: 32px;
+      margin: 0 auto;
+    }
+  }
+  .information__container {
+    font-size: 22px;
+  }
+  .footer {
+    .cart__container {
+      .cart__icon__container {
+        width: 50px;
+        height: 50px;
+        margin-left: 1rem;
+      }
+      .cart__count {
+        font-size: 28px;
+      }
+    }
+    .cart__text {
+      font-size: 28px;
+    }
+    .sum {
+      font-size: 28px;
+    }
   }
 }

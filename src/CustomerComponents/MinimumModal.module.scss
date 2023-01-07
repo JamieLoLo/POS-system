@@ -50,3 +50,25 @@
     }
   }
 }
+@media screen and (min-width: 400px) {
+  .modal {
+    .modal__container {
+      .text__container {
+        margin-bottom: 1.5rem;
+        .title {
+          font-size: 32px;
+          margin-bottom: 1.5rem;
+        }
+        .subtitle {
+          font-size: 28px;
+        }
+      }
+      .button__container {
+        margin-top: 1rem;
+        .order__button {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}

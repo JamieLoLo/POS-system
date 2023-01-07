@@ -44,3 +44,17 @@ header {
     background-color: var(--primary-color);
   }
 }
+@media screen and (min-width: 400px) {
+  header {
+    .restaurant__name {
+      font-size: 32px;
+      margin: 0 auto;
+    }
+  }
+  .button__container {
+    .return__button,
+    .confirm__button {
+      font-size: 28px;
+    }
+  }
+}

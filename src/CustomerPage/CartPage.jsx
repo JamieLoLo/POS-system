@@ -9,8 +9,8 @@ import styles from './CartPage.module.scss'
 const CartPage = () => {
   return (
     <div className='mobile__main__container'>
-      {/* <MinimumModal /> */}
-      <ReceiptModal />
+      <MinimumModal />
+      {/* <ReceiptModal /> */}
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
