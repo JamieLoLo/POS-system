@@ -1,8 +1,8 @@
 .left__side__container {
   width: 35vw;
-  height: 100vh;
+  height: 100%;
   .table__name__container {
-    height: 10vh;
+    height: 10%;
     font-size: 24px;
     text-align: center;
     padding: 1rem;
@@ -10,11 +10,11 @@
     color: var(--white);
   }
   .order__list {
-    height: 60vh;
+    height: 60%;
     overflow: scroll;
   }
   .control__container {
-    height: 30vh;
+    height: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,14 +55,14 @@
 }
 .right__side__container {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 
   .classification__container {
     max-width: 100%;
     display: flex;
     overflow: scroll;
-    height: 10vh;
+    height: 10%;
     border-bottom: 1px solid var(--dark-95);
     margin-bottom: 2rem;
   }

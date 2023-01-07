@@ -14,7 +14,7 @@ const OrderTablePage = () => {
     navigate('/order/system')
   }
   return (
-    <div>
+    <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.right__side__container}>
           <div className={styles.table__container}>
