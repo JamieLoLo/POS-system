@@ -1,5 +1,5 @@
 .container__height {
-  height: 95vh;
+  height: 100%;
   width: 100%;
   .logout__button {
     background-color: var(--error-color);
@@ -15,7 +15,10 @@
   }
 }
 .input__container {
-  padding: 2rem 3rem;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  margin-left: 2rem;
 
   input,
   button {
@@ -37,6 +40,8 @@
   }
 }
 .list__container {
+  height: 65%;
+  overflow: scroll;
   padding: 1.5rem;
   .title {
     font-size: 24px;

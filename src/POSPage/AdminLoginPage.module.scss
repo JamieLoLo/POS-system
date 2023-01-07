@@ -1,14 +1,15 @@
 .page__container {
   background-image: linear-gradient(to left, #2a2627, #373334, #2a2627);
   height: 100vh;
+  max-height: -webkit-fill-available;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   .logo__container {
-    width: 20vw;
-    height: 20vw;
+    width: 200px;
+    height: 200px;
     margin-bottom: 2rem;
     .logo {
       width: 100%;
