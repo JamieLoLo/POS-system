@@ -14,7 +14,7 @@ const TableSettingPage = () => {
   const pathname = useLocation().pathname
   const dispatch = useDispatch()
   return (
-    <div>
+    <div className='main__container'>
       <TableSettingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>

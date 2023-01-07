@@ -47,6 +47,22 @@ const DishSettingPage = () => {
               <DishItem dish='密椒小豬球' classification='私房小點' />
               <DishItem dish='無錫排骨飯' classification='風味套餐' />
               <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='密椒小豬球' classification='私房小點' />
+              <DishItem dish='無錫排骨飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='密椒小豬球' classification='私房小點' />
+              <DishItem dish='無錫排骨飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='密椒小豬球' classification='私房小點' />
+              <DishItem dish='無錫排骨飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
+              <DishItem dish='密椒小豬球' classification='私房小點' />
+              <DishItem dish='無錫排骨飯' classification='風味套餐' />
+              <DishItem dish='紅燒牛腩筋飯' classification='風味套餐' />
             </div>
           </div>
         </div>

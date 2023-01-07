@@ -12,7 +12,7 @@ import styles from './MinimumSettingPage.module.scss'
 const MinimumSettingPage = () => {
   const pathname = useLocation().pathname
   return (
-    <div>
+    <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <button className={styles.logout__button}>登出</button>

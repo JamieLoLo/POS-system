@@ -1,8 +1,9 @@
 @import './ClassificationSettingPage.module.scss';
+
 .table__container {
   display: grid;
-  width: 75vh;
-  height: 75vh;
+  height: 75%;
+  aspect-ratio: 1/1;
   margin: 2rem auto 0 auto;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
