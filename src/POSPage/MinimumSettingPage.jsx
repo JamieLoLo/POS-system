@@ -21,8 +21,12 @@ const MinimumSettingPage = () => {
             <div className={styles.adult}>
               <PersonIcon className={styles.person__icon} />
               <div className={styles.input__container}>
-                <input type='text' placeholder='請輸入金額' />
-                <div className={styles.text}> $ / per adult</div>
+                <input
+                  className={styles.input}
+                  type='text'
+                  placeholder='請輸入金額'
+                />
+                <div className={styles.text}>$ / per adult</div>
               </div>
             </div>
             <div className={styles.description__container}>

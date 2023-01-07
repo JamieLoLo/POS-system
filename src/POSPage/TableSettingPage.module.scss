@@ -2,12 +2,14 @@
 
 .table__container {
   display: grid;
-  height: 75%;
+  height: 85%;
   aspect-ratio: 1/1;
-  margin: 2rem auto 0 auto;
+  aspect-ratio: 1/1;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 1rem;
+  padding: 2rem;
+  margin: 0 auto;
 }
 
 @for $i from 1 through 25 {
