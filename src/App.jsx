@@ -23,7 +23,6 @@ const basename = process.env.PUBLIC_URL
 function App() {
   return (
     <div className='App' basename={basename}>
-      Hello world !!!
       <HashRouter>
         <Routes>
           <Route
