@@ -12,8 +12,11 @@ import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/ca
 import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
-  let vh = window.innerHeight * 0.01
-  document.documentElement.style.setProperty('--vh', `${vh}px`)
+  window.addEventListener('resize', () => {
+    let vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  })
+
   return (
     <div className='mobile__main__container'>
       <header>
@@ -48,7 +51,7 @@ const OrderPage = () => {
           <CustomerMenuItem
             dish='無錫排骨飯'
             description='我是一個描述，描述描述描述啊啊啊。我是一個描述，描述描述描述啊啊啊。我是一個描述，描述描述描述啊啊啊。'
-            price='$220'
+            price='$120'
             count='1'
           />
           <CustomerMenuItem dish='奶油明太子義大利麵' price='$320' count='1' />
