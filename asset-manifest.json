@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/JamieLoLo/POS-system/static/css/main.004d295f.css",
-    "main.js": "/JamieLoLo/POS-system/static/js/main.805098bd.js",
+    "main.js": "/JamieLoLo/POS-system/static/js/main.e453a8bf.js",
     "static/js/787.aab8bd84.chunk.js": "/JamieLoLo/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/logo.png": "/JamieLoLo/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
     "static/media/logo_circle.png": "/JamieLoLo/POS-system/static/media/logo_circle.145b04c90b132c1034b2.png",
@@ -23,11 +23,11 @@
     "static/media/minus.svg": "/JamieLoLo/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/JamieLoLo/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
     "main.004d295f.css.map": "/JamieLoLo/POS-system/static/css/main.004d295f.css.map",
-    "main.805098bd.js.map": "/JamieLoLo/POS-system/static/js/main.805098bd.js.map",
+    "main.e453a8bf.js.map": "/JamieLoLo/POS-system/static/js/main.e453a8bf.js.map",
     "787.aab8bd84.chunk.js.map": "/JamieLoLo/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.004d295f.css",
-    "static/js/main.805098bd.js"
+    "static/js/main.e453a8bf.js"
   ]
 }
