@@ -4,6 +4,7 @@
   .backdrop {
     width: 100vw;
     height: 100vh;
+    max-height: -webkit-fill-available;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
