@@ -53,12 +53,5 @@ body {
 }
 :global(.mobile__main__container) {
   width: 100%;
-  min-height: 100vh;
-  max-height: -webkit-fill-available;
-}
-
-@supports (-webkit-touch-callout: none) {
-  :global(.mobile__main__container) {
-    min-height: -webkit-fill-available;
-  }
+  height: 100vh;
 }
