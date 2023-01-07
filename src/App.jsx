@@ -21,8 +21,8 @@ import './base.module.scss'
 function App() {
   const basename = process.env.PUBLIC_URL
   return (
-    <div className='App'>
-      <BrowserRouter basename={basename}>
+    <div className='App' basename={basename}>
+      <BrowserRouter>
         <Routes>
           <Route
             path='/setting/classification'
@@ -31,7 +31,7 @@ function App() {
           <Route path='/setting/dish' element={<DishSettingPage />} />
           <Route path='/setting/table' element={<TableSettingPage />} />
           <Route path='/setting/minimum' element={<MinimumSettingPage />} />
-          <Route path='/' element={<AdminLoginPage />} />
+          <Route path='/admin/login' element={<AdminLoginPage />} />
           <Route path='/forms/revenue' element={<MonthlyRevenuePage />} />
           <Route path='/forms/rank' element={<RankPage />} />
           <Route path='/order/table' element={<OrderTablePage />} />
