@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/POS-system/static/css/main.7c000545.css",
+    "main.css": "/POS-system/static/css/main.9ced18f9.css",
     "main.js": "/POS-system/static/js/main.dbc3252c.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
@@ -22,12 +22,12 @@
     "static/media/person.svg": "/POS-system/static/media/person.76f39bcbaef7934f6421fc49b59ca1a3.svg",
     "static/media/minus.svg": "/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
-    "main.7c000545.css.map": "/POS-system/static/css/main.7c000545.css.map",
+    "main.9ced18f9.css.map": "/POS-system/static/css/main.9ced18f9.css.map",
     "main.dbc3252c.js.map": "/POS-system/static/js/main.dbc3252c.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7c000545.css",
+    "static/css/main.9ced18f9.css",
     "static/js/main.dbc3252c.js"
   ]
 }
