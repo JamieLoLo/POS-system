@@ -18,8 +18,9 @@ import { OrderPage, CartPage } from './CustomerPage'
 import './reset.module.scss'
 import './base.module.scss'
 
+const basename = process.env.PUBLIC_URL
+
 function App() {
-  const basename = process.env.PUBLIC_URL
   return (
     <div className='App' basename={basename}>
       Hello world !!!
