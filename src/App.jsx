@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom'
 // UI
 import {
   ClassificationSettingPage,
@@ -24,7 +24,7 @@ function App() {
   return (
     <div className='App' basename={basename}>
       Hello world !!!
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route
             path='/setting/classification'
@@ -43,7 +43,7 @@ function App() {
           <Route path='/customer/cart' element={<CartPage />} />
           <Route path='*' element={<HomePage />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
 }
