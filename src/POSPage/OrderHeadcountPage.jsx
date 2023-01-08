@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus.svg'
 // SCSS
-import styles from './OrderCustomerPage.module.scss'
+import styles from './OrderHeadcountPage.module.scss'
 
 const OrderCustomerPage = () => {
   return (
