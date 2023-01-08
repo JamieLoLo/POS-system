@@ -25,6 +25,15 @@ const FormSwitchButton = ({ page }) => {
           銷售排行
         </div>
       </Link>
+      <Link to='/forms/account'>
+        <div
+          className={clsx(`${styles.switch__button}`, {
+            [styles.active]: page === 'account',
+          })}
+        >
+          關帳
+        </div>
+      </Link>
     </div>
   )
 }

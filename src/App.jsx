@@ -10,8 +10,9 @@ import {
   RankPage,
   OrderTablePage,
   OrderSystemPage,
-  OrderCustomerPage,
+  OrderHeadcountPage,
   HomePage,
+  AccountClosingPage,
 } from './POSPage/index'
 import { OrderPage, CartPage } from './CustomerPage'
 // SCSS
@@ -35,9 +36,10 @@ function App() {
           <Route path='/admin/login' element={<AdminLoginPage />} />
           <Route path='/forms/revenue' element={<MonthlyRevenuePage />} />
           <Route path='/forms/rank' element={<RankPage />} />
+          <Route path='/forms/account' element={<AccountClosingPage />} />
           <Route path='/order/table' element={<OrderTablePage />} />
           <Route path='/order/system' element={<OrderSystemPage />} />
-          <Route path='/order/customer' element={<OrderCustomerPage />} />
+          <Route path='/order/headcount' element={<OrderHeadcountPage />} />
           <Route path='/customer/main' element={<OrderPage />} />
           <Route path='/customer/cart' element={<CartPage />} />
           <Route path='*' element={<HomePage />} />
