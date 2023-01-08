@@ -1,7 +1,14 @@
 @import './MonthlyRevenuePage.module.scss';
-.title__container {
-  width: 100%;
-  .title {
-    width: 33%;
+.list__container {
+  .title__container {
+    width: 100%;
+    .title {
+      width: 33%;
+    }
   }
+}
+
+.rank__list {
+  height: 95%;
+  overflow: scroll;
 }
