@@ -18,7 +18,7 @@ const OrderCustomerPage = () => {
               <div className={styles.icon__container}>
                 <CustomerPlusIcon className={styles.icon} />
               </div>
-              <p className={styles.count}>3</p>
+              <p className={styles.count}>2</p>
               <div className={styles.icon__container}>
                 <CustomerMinusIcon className={styles.icon} />
               </div>
