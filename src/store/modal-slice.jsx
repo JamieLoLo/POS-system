@@ -4,6 +4,7 @@ const initialState = {
   isAddDishModalOpen: false,
   isCheckoutModalOpen: false,
   isSettingTableModalOpen: false,
+  isAccountClosingModalOpen: false,
 }
 
 const modalSlice = createSlice({
@@ -19,6 +20,9 @@ const modalSlice = createSlice({
     },
     setIsSettingTableModalOpen(state, action) {
       state.isSettingTableModalOpen = action.payload
+    },
+    setIsAccountClosingModalOpen(state, action) {
+      state.isAccountClosingModalOpen = action.payload
     },
   },
 })

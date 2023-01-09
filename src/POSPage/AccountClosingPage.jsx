@@ -1,16 +1,21 @@
 import React from 'react'
 // hook
 import { useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
-import { FormSwitchButton } from '../POSComponents/index'
+import { FormSwitchButton, AccountClosingModal } from '../POSComponents/index'
+// store
+import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './AccountClosingPage.module.scss'
 
 const AccountClosingPage = () => {
   const pathname = useLocation().pathname
+  const dispatch = useDispatch()
   return (
     <div className='main__container'>
+      <AccountClosingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <FormSwitchButton page='account' />
@@ -136,7 +141,14 @@ const AccountClosingPage = () => {
             </form>
           </div>
           <div className={styles.button__container}>
-            <button className={styles.submit__button}>開始結算</button>
+            <button
+              className={styles.submit__button}
+              onClick={() => {
+                dispatch(modalActions.setIsAccountClosingModalOpen(true))
+              }}
+            >
+              開始結算
+            </button>
           </div>
         </div>
       </PosMainGridSystem>

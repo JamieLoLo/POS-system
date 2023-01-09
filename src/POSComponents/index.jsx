@@ -11,6 +11,7 @@ import OrderClassification from './OrderClassification'
 import MenuItem from './MenuItem'
 import CheckoutModal from './CheckoutModal'
 import TableSettingModal from './TableSettingModal'
+import AccountClosingModal from './AccountClosingModal'
 
 export {
   ClassificationItem,
@@ -26,4 +27,5 @@ export {
   MenuItem,
   CheckoutModal,
   TableSettingModal,
+  AccountClosingModal,
 }
