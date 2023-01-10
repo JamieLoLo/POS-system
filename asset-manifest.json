@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/POS-system/static/css/main.5a7d8d81.css",
-    "main.js": "/POS-system/static/js/main.1b67723f.js",
+    "main.css": "/POS-system/static/css/main.039529cf.css",
+    "main.js": "/POS-system/static/js/main.5ec9481d.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
     "static/media/logo_circle.png": "/POS-system/static/media/logo_circle.145b04c90b132c1034b2.png",
@@ -22,12 +22,12 @@
     "static/media/person.svg": "/POS-system/static/media/person.76f39bcbaef7934f6421fc49b59ca1a3.svg",
     "static/media/minus.svg": "/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
-    "main.5a7d8d81.css.map": "/POS-system/static/css/main.5a7d8d81.css.map",
-    "main.1b67723f.js.map": "/POS-system/static/js/main.1b67723f.js.map",
+    "main.039529cf.css.map": "/POS-system/static/css/main.039529cf.css.map",
+    "main.5ec9481d.js.map": "/POS-system/static/js/main.5ec9481d.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5a7d8d81.css",
-    "static/js/main.1b67723f.js"
+    "static/css/main.039529cf.css",
+    "static/js/main.5ec9481d.js"
   ]
 }
