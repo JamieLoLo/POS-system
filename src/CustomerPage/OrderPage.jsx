@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+// hook
+import { useEffect, useState } from 'react'
 // UI
 import {
   CustomerOrderClassification,
@@ -8,10 +10,28 @@ import {
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
+// api
+import { getMinimumApi } from '../api/posApi'
 // SCSS
 import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
+  // useState
+  const [description, setDescription] = useState('')
+
+  // 取得描述
+  useEffect(() => {
+    const getDecription = async () => {
+      try {
+        const res = await getMinimumApi()
+        setDescription(res.data.description)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getDecription()
+  }, [])
+
   return (
     <div className='mobile__main__container'>
       <header>
@@ -21,13 +41,7 @@ const OrderPage = () => {
         <div className={styles.restaurant__name}>咕咕義小餐館</div>
       </header>
       <div className={styles.information__container}>
-        <div className={styles.description}>
-          點餐說明：
-          <br />
-          1. 每人低消200元，小孩無低消。
-          <br />
-          2. 點好餐請先至櫃檯結帳。
-        </div>
+        <div className={styles.description}>{description}</div>
         <div className={styles.table__information}>
           <div className={styles.table__number}>桌號：22</div>
           <div className={styles.headcount}>人數：1大1小</div>

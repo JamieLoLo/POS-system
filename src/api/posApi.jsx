@@ -26,3 +26,27 @@ export const posLoginApi = async (payload) => {
     return error
   }
 }
+
+// 取得低消與描述資訊
+export const getMinimumApi = async () => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/settings`)
+    return res
+  } catch (error) {
+    console.error('[Get Minimum Failed]: ', error)
+  }
+}
+
+// 編輯低消與描述資訊
+export const minimumModifyApi = async (minCharge, description) => {
+  try {
+    const res = await axiosInstance.put(`${posURL}/settings`, {
+      minCharge,
+      description,
+    })
+    return res
+  } catch (error) {
+    console.error('[Modify Minimum Failed]: ', error)
+    return error
+  }
+}

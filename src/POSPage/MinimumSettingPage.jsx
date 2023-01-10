@@ -1,16 +1,53 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 // hook
 import { useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 // UI
 import { SettingSwitchButton } from '../POSComponents'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // icon
 import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person.svg'
+// api
+import { getMinimumApi, minimumModifyApi } from '../api/posApi'
 // SCSS
 import styles from './MinimumSettingPage.module.scss'
 
 const MinimumSettingPage = () => {
   const pathname = useLocation().pathname
+  const [minimum, setMinimum] = useState('')
+  const [description, setDescription] = useState('')
+
+  // 取得低消金額與描述
+  useEffect(() => {
+    const getMinimumInformation = async () => {
+      try {
+        const res = await getMinimumApi()
+        setMinimum(res.data.minCharge)
+        setDescription(res.data.description)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getMinimumInformation()
+  }, [])
+
+  // 編輯低消與描述
+  const modifyHandler = async () => {
+    try {
+      await minimumModifyApi(minimum, description)
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '資訊更新成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
@@ -25,6 +62,8 @@ const MinimumSettingPage = () => {
                   className={styles.input}
                   type='text'
                   placeholder='請輸入金額'
+                  defaultValue={minimum}
+                  onChange={(e) => setMinimum(e.target.value)}
                 />
                 <div className={styles.text}>$ / per adult</div>
               </div>
@@ -35,11 +74,15 @@ const MinimumSettingPage = () => {
                 placeholder='請輸入低消描述'
                 cols='30'
                 rows='9'
+                defaultValue={description}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
           </div>
           <div className={styles.submit__button__container}>
-            <button className={styles.submit__button}>提交</button>
+            <button className={styles.submit__button} onClick={modifyHandler}>
+              提交
+            </button>
           </div>
         </div>
       </PosMainGridSystem>
