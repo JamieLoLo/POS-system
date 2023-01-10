@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 // hook
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -23,12 +24,18 @@ const AdminLoginPage = () => {
   }
 
   const adminLoginHandler = async () => {
+    if (!account || !password) {
+      Swal.fire('欄位不可空白', '', 'error')
+      return
+    }
+
     try {
       const res = await posLoginApi({
         account: account,
         password: password,
       })
       if (res.status !== 200) {
+        Swal.fire('帳號或密碼錯誤', '', 'error')
         return
       }
       localStorage.setItem('authToken', res.data.token)
