@@ -48,7 +48,7 @@ const Navbar = ({ pathname }) => {
             [styles.nav__item]: pathname.slice(0, 8) !== '/setting',
           })}
           onClick={() => {
-            navigate('/setting/classification')
+            navigate('/setting/category')
           }}
         >
           <SettingIcon className={styles.icon} />
