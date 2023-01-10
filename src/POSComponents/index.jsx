@@ -12,6 +12,7 @@ import MenuItem from './MenuItem'
 import CheckoutModal from './CheckoutModal'
 import TableSettingModal from './TableSettingModal'
 import AccountClosingModal from './AccountClosingModal'
+import CategoryModifyModal from './CategoryModifyModal'
 
 export {
   CategoryItem,
@@ -28,4 +29,5 @@ export {
   CheckoutModal,
   TableSettingModal,
   AccountClosingModal,
+  CategoryModifyModal,
 }
