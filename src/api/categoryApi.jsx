@@ -46,3 +46,16 @@ export const deleteCategoryApi = async (id) => {
     console.error('[Delete Category Failed]: ', error)
   }
 }
+
+// 編輯分類
+export const categoryModifyApi = async (id, name) => {
+  try {
+    const res = await axiosInstance.put(`${categoryURL}/${id}`, {
+      name,
+    })
+    return res
+  } catch (error) {
+    console.error('[Modify Category Failed]: ', error)
+    return error
+  }
+}
