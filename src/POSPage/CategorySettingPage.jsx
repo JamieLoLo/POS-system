@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 // hook
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
@@ -8,7 +9,11 @@ import { categoryGetAllApi, categoryPostApi } from '../api/categoryApi'
 // store
 import { updateActions } from '../store/update-slice'
 // UI
-import { SettingSwitchButton, CategoryItem } from '../POSComponents/index'
+import {
+  SettingSwitchButton,
+  CategoryItem,
+  CategoryModifyModal,
+} from '../POSComponents/index'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // SCSS
 import styles from './CategorySettingPage.module.scss'
@@ -44,6 +49,16 @@ const CategorySettingPage = () => {
 
   // 新增分類
   const addCategoryHandler = async () => {
+    if (!newCategory) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '欄位不可空白',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    }
     try {
       await categoryPostApi(newCategory)
       dispatch(updateActions.setIsAllCategoryUpdate())
@@ -58,6 +73,7 @@ const CategorySettingPage = () => {
 
   return (
     <div className='main__container'>
+      <CategoryModifyModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <button className={styles.logout__button}>登出</button>
