@@ -25,7 +25,13 @@ const AdminLoginPage = () => {
 
   const adminLoginHandler = async () => {
     if (!account || !password) {
-      Swal.fire('欄位不可空白', '', 'error')
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '欄位不可空白',
+        showConfirmButton: false,
+        timer: 2000,
+      })
       return
     }
 
@@ -35,7 +41,14 @@ const AdminLoginPage = () => {
         password: password,
       })
       if (res.status !== 200) {
-        Swal.fire('帳號或密碼錯誤', '', 'error')
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '帳號或密碼錯誤',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+
         return
       }
       localStorage.setItem('authToken', res.data.token)
