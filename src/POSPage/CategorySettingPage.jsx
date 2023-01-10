@@ -61,6 +61,14 @@ const CategorySettingPage = () => {
     }
     try {
       await categoryPostApi(newCategory)
+      setNewCategory('')
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '新增成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
       dispatch(updateActions.setIsAllCategoryUpdate())
     } catch (error) {
       console.error(error)
@@ -79,7 +87,11 @@ const CategorySettingPage = () => {
           <button className={styles.logout__button}>登出</button>
           <SettingSwitchButton page='category' />
           <div className={styles.input__container}>
-            <input type='text' onChange={newCategoryHandler} />
+            <input
+              type='text'
+              onChange={newCategoryHandler}
+              value={newCategory}
+            />
             <button onClick={addCategoryHandler}>新增類別</button>
           </div>
           <div className={styles.list__container}>

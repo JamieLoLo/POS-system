@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
 // UI
-import {
-  CustomerOrderClassification,
-  CustomerMenuItem,
-} from '../CustomerComponents'
+import { CustomerOrderCategory, CustomerMenuItem } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
 // api
 import { getMinimumApi } from '../api/posApi'
+import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 // SCSS
 import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
   // useState
   const [description, setDescription] = useState('')
+  const [allCategoryData, setAllCategoryData] = useState([])
+  const [products, setProducts] = useState([])
 
   // 取得描述
   useEffect(() => {
@@ -31,6 +31,43 @@ const OrderPage = () => {
     }
     getDecription()
   }, [])
+
+  // 取得所有分類
+  useEffect(() => {
+    const categoryGetAll = async () => {
+      try {
+        const res = await categoryGetAllApi()
+        await setAllCategoryData(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    categoryGetAll()
+  }, [])
+
+  // 取得單一分類裡的所有餐點
+  const productsHandler = async (id) => {
+    try {
+      const res = await getProductsApi(id)
+      setProducts(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // 分類列表
+  const categoryList = allCategoryData.map((data) => (
+    <CustomerOrderCategory
+      data={data}
+      key={data.id}
+      onClick={(id) => productsHandler(id)}
+    />
+  ))
+
+  // 餐點清單
+  const productList = products.map((data) => (
+    <CustomerMenuItem key={data.id} data={data} count='1' />
+  ))
 
   return (
     <div className='mobile__main__container'>
@@ -48,30 +85,8 @@ const OrderPage = () => {
         </div>
       </div>
       <main className={styles.main}>
-        <div className={styles.classification__container}>
-          <CustomerOrderClassification classification='套餐' />
-          <CustomerOrderClassification classification='風味小菜' />
-          <CustomerOrderClassification classification='飲品' />
-          <CustomerOrderClassification classification='炸物' />
-          <CustomerOrderClassification classification='烤物' />
-          <CustomerOrderClassification classification='酒類' />
-        </div>
-        <div className={styles.menu__container}>
-          <CustomerMenuItem
-            dish='無錫排骨飯'
-            description='我是一個描述，描述描述描述啊啊啊。我是一個描述，描述描述描述啊啊啊。我是一個描述，描述描述描述啊啊啊。'
-            price='$420'
-            count='1'
-          />
-          <CustomerMenuItem dish='奶油明太子義大利麵' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='4' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-          <CustomerMenuItem dish='無錫排骨飯' price='$320' count='1' />
-        </div>
+        <div className={styles.classification__container}>{categoryList}</div>
+        <div className={styles.menu__container}>{productList}</div>
       </main>
       <Link to='/customer/cart'>
         <footer className={styles.footer}>

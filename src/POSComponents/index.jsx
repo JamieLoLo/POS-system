@@ -7,7 +7,7 @@ import FormSwitchButton from './FormSwitchButton'
 import RevenueItem from './RevenueItem'
 import RankItem from './RankItem'
 import OrderItem from './OrderItem'
-import OrderClassification from './OrderClassification'
+import OrderCategory from './OrderCategory'
 import MenuItem from './MenuItem'
 import CheckoutModal from './CheckoutModal'
 import TableSettingModal from './TableSettingModal'
@@ -24,7 +24,7 @@ export {
   RevenueItem,
   RankItem,
   OrderItem,
-  OrderClassification,
+  OrderCategory,
   MenuItem,
   CheckoutModal,
   TableSettingModal,

@@ -2,15 +2,18 @@ import React from 'react'
 // hook
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 // UI
 import {
   OrderItem,
-  OrderClassification,
+  OrderCategory,
   MenuItem,
   CheckoutModal,
 } from '../POSComponents'
 // store
 import { modalActions } from '../store/modal-slice'
+// api
+import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus_white.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus_white.svg'
@@ -19,6 +22,46 @@ import styles from './OrderSystemPage.module.scss'
 
 const OrderSystemPage = () => {
   const dispatch = useDispatch()
+  const [allCategoryData, setAllCategoryData] = useState([])
+  const [products, setProducts] = useState([])
+
+  // 取得所有分類
+  useEffect(() => {
+    const categoryGetAll = async () => {
+      try {
+        const res = await categoryGetAllApi()
+        await setAllCategoryData(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    categoryGetAll()
+  }, [])
+
+  // 取得單一分類裡的所有餐點
+  const productsHandler = async (id) => {
+    try {
+      const res = await getProductsApi(id)
+      setProducts(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  // 類別清單
+  const categoryList = allCategoryData.map((data) => (
+    <OrderCategory
+      data={data}
+      key={data.id}
+      onClick={(id) => productsHandler(id)}
+    />
+  ))
+
+  // 餐點清單
+  const productList = products.map((data) => (
+    <MenuItem data={data} key={data.id} />
+  ))
+
   return (
     <div className='main__container'>
       <CheckoutModal />
@@ -71,26 +114,8 @@ const OrderSystemPage = () => {
         </div>
       </div>
       <div className={styles.right__side__container}>
-        <div className={styles.classification__container}>
-          <OrderClassification classification='套餐' />
-          <OrderClassification classification='風味小菜' />
-          <OrderClassification classification='飲品' />
-          <OrderClassification classification='炸物' />
-          <OrderClassification classification='烤物' />
-          <OrderClassification classification='酒類' />
-        </div>
-        <div className={styles.menu__container}>
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='烏龍茶' price='$120' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-          <MenuItem dish='紅燒牛腩筋飯' price='$320' />
-        </div>
+        <div className={styles.classification__container}>{categoryList}</div>
+        <div className={styles.menu__container}>{productList}</div>
         <div className={styles.button__container}>
           <Link to='/order/table'>
             <button className={styles.return__button}>返回</button>

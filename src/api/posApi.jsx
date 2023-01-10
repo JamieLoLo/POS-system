@@ -50,3 +50,13 @@ export const minimumModifyApi = async (minCharge, description) => {
     return error
   }
 }
+
+// 取得所有桌子
+export const getTablesApi = async () => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/tables`)
+    return res
+  } catch (error) {
+    console.error('[Get Tables Failed]: ', error)
+  }
+}

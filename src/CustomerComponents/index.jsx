@@ -1,11 +1,11 @@
-import CustomerOrderClassification from './CustomerOrderClassification'
+import CustomerOrderCategory from './CustomerOrderCategory'
 import CustomerMenuItem from './CustomerMenuItem'
 import CartItem from './CartItem'
 import MinimumModal from './MinimumModal'
 import ReceiptModal from './ReceiptModal'
 
 export {
-  CustomerOrderClassification,
+  CustomerOrderCategory,
   CustomerMenuItem,
   CartItem,
   MinimumModal,

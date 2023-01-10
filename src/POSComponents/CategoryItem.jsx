@@ -30,7 +30,13 @@ const CategoryItem = ({ data }) => {
       if (result.isConfirmed) {
         await deleteCategoryApi(data.id)
         await dispatch(updateActions.setIsAllCategoryUpdate())
-        Swal.fire('Deleted!', '分類已刪除', 'success')
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '刪除成功',
+          showConfirmButton: false,
+          timer: 2000,
+        })
       }
     } catch (error) {
       console.error(error)

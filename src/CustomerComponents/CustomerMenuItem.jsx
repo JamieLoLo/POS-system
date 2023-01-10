@@ -7,7 +7,7 @@ import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.
 // SCSS
 import styles from './CustomerMenuItem.module.scss'
 
-const CustomerMenuItem = ({ dish, description, price, count }) => {
+const CustomerMenuItem = ({ data, count }) => {
   return (
     <div className={styles.menu__item__container}>
       <div className={styles.image__container}>
@@ -15,10 +15,12 @@ const CustomerMenuItem = ({ dish, description, price, count }) => {
       </div>
       <div className={styles.right__side__container}>
         <div className={styles.title__container}>
-          <div className={styles.title}>{dish}</div>
-          <div className={styles.description}>{description}</div>
+          <div className={styles.title}>
+            {data.name} ({data.nameEn})
+          </div>
+          <div className={styles.description}>{data.description}</div>
         </div>
-        <div className={styles.price}>{price}</div>
+        <div className={styles.price}>${data.price}</div>
         <div className={styles.count__control}>
           <div className={styles.icon__container}>
             <MinusIcon className={styles.icon} />

@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import React, { useState } from 'react'
 // SCSS
-import styles from './CustomerOrderClassification.module.scss'
+import styles from './CustomerOrderCategory.module.scss'
 
-const CustomerOrderClassification = ({ classification }) => {
+const CustomerOrderCategory = ({ data, onClick }) => {
   // 現在的變色問題出在於沒有重新渲染，所以狀態沒有更新，可以之後打API的時候用useEffect
   const [target, setTarget] = useState('')
   const targetHandler = (e) => {
@@ -12,17 +12,14 @@ const CustomerOrderClassification = ({ classification }) => {
   return (
     <div
       className={clsx('', {
-        [styles.active]: classification === target,
-        [styles.item]: classification !== target,
+        [styles.active]: data.name === target,
+        [styles.item]: data.name !== target,
       })}
-      onClick={(e) => {
-        targetHandler(e)
-        console.log(classification)
-      }}
+      onClick={() => onClick?.(data.id)}
     >
-      {classification}
+      {data.name}
     </div>
   )
 }
 
-export default CustomerOrderClassification
+export default CustomerOrderCategory

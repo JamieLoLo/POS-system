@@ -59,3 +59,14 @@ export const categoryModifyApi = async (id, name) => {
     return error
   }
 }
+
+// 取得單一類別內的所有餐點
+export const getProductsApi = async (id) => {
+  try {
+    const res = await axios.get(`${categoryURL}/${id}`)
+    return res
+  } catch (error) {
+    console.error(['[Category Get All Failed]: ', error])
+    return error
+  }
+}
