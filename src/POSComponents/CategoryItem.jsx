@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 import { deleteCategoryApi } from '../api/categoryApi'
 // store
 import { updateActions } from '../store/update-slice'
+import { modalActions } from '../store/modal-slice'
+import { informationActions } from '../store/information-slice'
 // SCSS
 import styles from './CategoryItem.module.scss'
 
@@ -39,7 +41,16 @@ const CategoryItem = ({ data }) => {
     <div className={styles.list__container}>
       <div className={styles.list__item}>{data.name}</div>
       <div className={styles.button__container}>
-        <button className={styles.modify__button}>修改</button>
+        <button
+          className={styles.modify__button}
+          onClick={() => {
+            dispatch(informationActions.setCategoryName(data.name))
+            dispatch(informationActions.setCategoryId(data.id))
+            dispatch(modalActions.setIsCategoryModifyModalOpen(true))
+          }}
+        >
+          修改
+        </button>
         <button className={styles.delete__button} onClick={deleteHandler}>
           刪除
         </button>
