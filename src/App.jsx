@@ -1,7 +1,7 @@
 import { Routes, Route, HashRouter } from 'react-router-dom'
 // UI
 import {
-  ClassificationSettingPage,
+  CategorySettingPage,
   DishSettingPage,
   TableSettingPage,
   MinimumSettingPage,
@@ -26,10 +26,7 @@ function App() {
     <div className='App' basename={basename}>
       <HashRouter>
         <Routes>
-          <Route
-            path='/setting/classification'
-            element={<ClassificationSettingPage />}
-          />
+          <Route path='/setting/category' element={<CategorySettingPage />} />
           <Route path='/setting/dish' element={<DishSettingPage />} />
           <Route path='/setting/table' element={<TableSettingPage />} />
           <Route path='/setting/minimum' element={<MinimumSettingPage />} />

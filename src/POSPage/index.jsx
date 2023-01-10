@@ -1,4 +1,4 @@
-import ClassificationSettingPage from './ClassificationSettingPage'
+import CategorySettingPage from './CategorySettingPage'
 import DishSettingPage from './DishSettingPage'
 import TableSettingPage from './TableSettingPage'
 import MinimumSettingPage from './MinimumSettingPage'
@@ -12,7 +12,7 @@ import HomePage from './HomePage'
 import AccountClosingPage from './AccountClosingPage'
 
 export {
-  ClassificationSettingPage,
+  CategorySettingPage,
   DishSettingPage,
   TableSettingPage,
   MinimumSettingPage,

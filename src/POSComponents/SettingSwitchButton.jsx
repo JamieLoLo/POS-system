@@ -7,10 +7,10 @@ import styles from './SettingSwitchButton.module.scss'
 const SettingSwitchButton = ({ page }) => {
   return (
     <div className={styles.switch__button__container}>
-      <Link to='/setting/classification'>
+      <Link to='/setting/category'>
         <div
           className={clsx(`${styles.switch__button}`, {
-            [styles.active]: page === 'classification',
+            [styles.active]: page === 'category',
           })}
         >
           分類設定

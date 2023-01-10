@@ -1,4 +1,4 @@
-import ClassificationItem from './ClassificationItem'
+import CategoryItem from './CategoryItem'
 import DishItem from './DishItem'
 import Navbar from './Navbar'
 import SettingSwitchButton from './SettingSwitchButton'
@@ -14,7 +14,7 @@ import TableSettingModal from './TableSettingModal'
 import AccountClosingModal from './AccountClosingModal'
 
 export {
-  ClassificationItem,
+  CategoryItem,
   DishItem,
   Navbar,
   SettingSwitchButton,
