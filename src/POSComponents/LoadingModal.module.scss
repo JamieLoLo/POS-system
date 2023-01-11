@@ -1,0 +1,41 @@
+.modal {
+  position: absolute;
+  z-index: 2;
+  .backdrop {
+    width: 100vw;
+    height: 100vh;
+    max-height: -webkit-fill-available;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal__container {
+    position: absolute;
+    width: 50%;
+    height: 40%;
+    border-radius: 5px;
+    z-index: 10;
+    background-color: var(--white);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .title {
+    font-size: 32px;
+    font-weight: 500;
+    height: 30%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .icon__container {
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      height: 90%;
+    }
+  }
+}
