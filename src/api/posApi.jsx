@@ -73,7 +73,24 @@ export const AddProductApi = async (formData) => {
     })
     return res
   } catch (error) {
-    console.error(error)
+    console.error('[Add Product Failed]: ', error)
+    return error
+  }
+}
+
+// 修改餐點
+export const ModifyProductApi = async (formData, id) => {
+  try {
+    const res = axiosInstance({
+      method: 'put',
+      baseURL: posURL,
+      url: '/products' + id,
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return res
+  } catch (error) {
+    console.error('[Modify Product Failed]: ', error)
     return error
   }
 }
