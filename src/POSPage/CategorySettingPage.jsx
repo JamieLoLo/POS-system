@@ -44,6 +44,8 @@ const CategorySettingPage = () => {
       try {
         const res = await categoryGetAllApi()
         await setAllCategoryData(res.data)
+        localStorage.setItem('default_category_id', res.data[0].id)
+        localStorage.setItem('default_category_name', res.data[0].name)
       } catch (error) {
         console.error(error)
       }
