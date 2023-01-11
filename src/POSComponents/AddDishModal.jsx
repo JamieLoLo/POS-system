@@ -1,14 +1,16 @@
 import React from 'react'
 import Swal from 'sweetalert2'
+import Select from 'react-select'
 // icon
 import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // store
 import { modalActions } from '../store/modal-slice'
 // api
 import { AddProductApi } from '../api/posApi'
+import { categoryGetAllApi } from '../api/categoryApi'
 // SCSS
 import styles from './AddDishModal.module.scss'
 
@@ -28,11 +30,31 @@ const AddDishModal = () => {
   const [imageFile, setImageFile] = useState()
   const [cost, setCost] = useState()
   const [price, setPrice] = useState()
+  const [allCategoryData, setAllCategoryData] = useState([])
 
   // 取得上傳照片位置
   const AddImageHandler = async (event) => {
     setImageFile(event.target.files[0])
   }
+
+  // 取得所有分類
+  useEffect(() => {
+    const categoryGetAll = async () => {
+      try {
+        const res = await categoryGetAllApi()
+        await setAllCategoryData(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    categoryGetAll()
+  }, [])
+
+  // 餐點分類選單
+  const options = allCategoryData.map((data) => ({
+    value: data.id,
+    label: data.name,
+  }))
 
   // 新增餐點
   const addProductHandler = async () => {
@@ -74,7 +96,7 @@ const AddDishModal = () => {
       formData.append('price', price)
     }
     formData.append('image', imageFile)
-    if (description.length === 0) {
+    if (description === undefined || description === '') {
       formData.append('description', '')
     } else {
       formData.append('description', description)
@@ -87,7 +109,7 @@ const AddDishModal = () => {
       return
     }
   }
-
+  console.log(categoryId)
   return isAddDishModalOpen ? (
     <div className={styles.modal}>
       <div
@@ -120,10 +142,10 @@ const AddDishModal = () => {
           </div>
           <div className={styles.input__container}>
             <label htmlFor='category'>類別</label>
-            <input
-              type='text'
-              id='category'
-              onChange={(e) => setCategoryId(e.target.value)}
+            <Select
+              className={styles.select__list}
+              options={options}
+              onChange={(item) => setCategoryId(item.value)}
             />
           </div>
           <div className={styles.input__container}>

@@ -20,7 +20,7 @@ const CustomerMenuItem = ({ data, count }) => {
       <div className={styles.right__side__container}>
         <div className={styles.title__container}>
           <div className={styles.title}>
-            {data.name} ({data.nameEn})
+            {data.name} {data.nameEn}
           </div>
           <div className={styles.description}>{data.description}</div>
         </div>

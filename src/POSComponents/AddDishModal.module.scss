@@ -73,6 +73,11 @@
           resize: none;
           word-wrap: break-word;
         }
+        .select__list {
+          width: 60%;
+          border: 1px solid var(--dark-95);
+          border-radius: 5px;
+        }
       }
     }
     .submit__button__container {
