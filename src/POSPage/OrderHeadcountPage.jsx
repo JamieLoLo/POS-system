@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+// hook
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus.svg'
@@ -7,6 +10,14 @@ import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/ico
 import styles from './OrderHeadcountPage.module.scss'
 
 const OrderCustomerPage = () => {
+  const navigate = useNavigate()
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
   return (
     <div className={styles.page__container}>
       <div className={styles.content__container}>

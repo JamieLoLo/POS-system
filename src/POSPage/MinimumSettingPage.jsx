@@ -1,7 +1,7 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 // hook
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 // UI
 import { SettingSwitchButton } from '../POSComponents'
@@ -15,8 +15,18 @@ import styles from './MinimumSettingPage.module.scss'
 
 const MinimumSettingPage = () => {
   const pathname = useLocation().pathname
+  const navigate = useNavigate()
+  // useState
   const [minimum, setMinimum] = useState('')
   const [description, setDescription] = useState('')
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
 
   // 取得低消金額與描述
   useEffect(() => {
@@ -48,11 +58,18 @@ const MinimumSettingPage = () => {
     }
   }
 
+  // 登出
+  const logoutHandler = () => {
+    localStorage.clear()
+    navigate('/admin/login')
+  }
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
-          <button className={styles.logout__button}>登出</button>
+          <button className={styles.logout__button} onClick={logoutHandler}>
+            登出
+          </button>
           <SettingSwitchButton page='minimum' />
           <div className={styles.minimum__container}>
             <div className={styles.adult}>

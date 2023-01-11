@@ -1,7 +1,7 @@
 import React from 'react'
 // hook
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 // UI
 import {
@@ -22,8 +22,18 @@ import styles from './OrderSystemPage.module.scss'
 
 const OrderSystemPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
 
   // 取得所有分類
   useEffect(() => {

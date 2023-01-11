@@ -1,7 +1,7 @@
 import React from 'react'
 // hook
-import { useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, RankItem } from '../POSComponents/index'
@@ -13,8 +13,18 @@ import styles from './RankPage.module.scss'
 
 const RankPage = () => {
   const pathname = useLocation().pathname
+  const navigate = useNavigate()
+  // useState
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>

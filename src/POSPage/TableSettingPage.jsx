@@ -1,7 +1,8 @@
 import React from 'react'
 // hook
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 // UI
 import { SettingSwitchButton, TableSettingModal } from '../POSComponents/index'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
@@ -13,12 +14,29 @@ import styles from './TableSettingPage.module.scss'
 const TableSettingPage = () => {
   const pathname = useLocation().pathname
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
+  // 登出
+  const logoutHandler = () => {
+    localStorage.clear()
+    navigate('/admin/login')
+  }
   return (
     <div className='main__container'>
       <TableSettingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
-          <button className={styles.logout__button}>登出</button>
+          <button className={styles.logout__button} onClick={logoutHandler}>
+            登出
+          </button>
           <SettingSwitchButton page='table' />
           <div className={styles.table__container}>
             <div

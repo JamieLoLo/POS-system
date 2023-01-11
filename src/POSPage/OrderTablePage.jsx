@@ -13,9 +13,15 @@ import styles from './OrderTablePage.module.scss'
 const OrderTablePage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
-  const orderHandler = () => {
-    navigate('/order/system')
-  }
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
   let tableList = []
 
   for (let i = 1; i <= 25; i++) {

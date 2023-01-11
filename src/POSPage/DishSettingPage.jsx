@@ -1,6 +1,8 @@
 import React from 'react'
 // hook
 import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 // UI
 import {
   SettingSwitchButton,
@@ -10,23 +12,39 @@ import {
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // store
 import { modalActions } from '../store/modal-slice'
-// hook
-import { useLocation } from 'react-router-dom'
 // SCSS
 import styles from './DishSettingPage.module.scss'
 
 const DishSettingPage = () => {
   const dispatch = useDispatch()
   const pathname = useLocation().pathname
+  const navigate = useNavigate()
+  // useSelector
   const isAddDishModalOpen = useSelector(
     (state) => state.modal.isAddDishModalOpen
   )
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
+  // 登出
+  const logoutHandler = () => {
+    localStorage.clear()
+    navigate('/admin/login')
+  }
   return (
     <div>
       <AddDishModal trigger={isAddDishModalOpen} />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
-          <button className={styles.logout__button}>登出</button>
+          <button className={styles.logout__button} onClick={logoutHandler}>
+            登出
+          </button>
           <SettingSwitchButton page='dish' />
           <div className={styles.input__container}>
             <button

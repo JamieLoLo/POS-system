@@ -1,7 +1,8 @@
 import React from 'react'
 // hook
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, AccountClosingModal } from '../POSComponents/index'
@@ -13,6 +14,16 @@ import styles from './AccountClosingPage.module.scss'
 const AccountClosingPage = () => {
   const pathname = useLocation().pathname
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // 確認登入狀態
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken')
+    if (!authToken) {
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
   return (
     <div className='main__container'>
       <AccountClosingModal />
