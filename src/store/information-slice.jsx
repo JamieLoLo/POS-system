@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+  // 分類資訊管理
   categoryName: '',
   categoryID: '',
+  // 餐點資訊管理
+  product: [],
 }
 
 const informationSlice = createSlice({
@@ -15,6 +18,9 @@ const informationSlice = createSlice({
     },
     setCategoryId(state, action) {
       state.categoryID = action.payload
+    },
+    setProductInfo(state, action) {
+      state.product = action.payload
     },
   },
 })
