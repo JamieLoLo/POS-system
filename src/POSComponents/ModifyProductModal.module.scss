@@ -1,0 +1,98 @@
+.modal {
+  position: absolute;
+  z-index: 2;
+  .backdrop {
+    width: 100vw;
+    height: 100vh;
+    max-height: -webkit-fill-available;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal__container {
+    position: absolute;
+    width: 75vh;
+    height: 80%;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: var(--white);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .delete__button__container {
+      height: 10%;
+      display: flex;
+      justify-content: flex-end;
+      border-bottom: 1px solid var(--dark-80);
+      background-color: var(--dark-90);
+      border-radius: 15px 15px 0 0;
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      .delete__button {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        cursor: pointer;
+      }
+    }
+
+    .list__container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      font-size: 20px;
+      text-align: center;
+      .input__container {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        label {
+          display: inline-block;
+          width: 20%;
+          text-align: left;
+          padding: 0.3rem 1rem;
+          color: var(--dark-95);
+          font-weight: 500;
+        }
+        input,
+        textarea {
+          width: 60%;
+          padding: 0.3rem 1rem;
+          font-size: 20px;
+          outline: none;
+          color: var(--dark-95);
+          border-radius: 5px;
+          border: 1px solid var(--dark-95);
+          resize: none;
+          word-wrap: break-word;
+        }
+        .select__list {
+          width: 60%;
+          border: 1px solid var(--dark-95);
+          border-radius: 5px;
+        }
+      }
+    }
+    .submit__button__container {
+      display: flex;
+      justify-content: end;
+      .submit__button {
+        font-size: 20px;
+        padding: 0.5rem 1rem;
+        margin: -0.5rem 3rem 0 0;
+        border: none;
+        color: var(--white);
+        background-color: var(--primary-color);
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
