@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'
 import Select from 'react-select'
 // icon
 import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
+import { ReactComponent as LoadingIcon } from './assets/icon/loading.svg'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
@@ -12,15 +13,15 @@ import { modalActions } from '../store/modal-slice'
 import { AddProductApi } from '../api/posApi'
 import { categoryGetAllApi } from '../api/categoryApi'
 // SCSS
-import styles from './AddDishModal.module.scss'
+import styles from './AddProductModal.module.scss'
 
-const AddDishModal = () => {
+const AddProductModal = () => {
   const dispatch = useDispatch()
   const formData = new FormData()
 
   // useSelector
-  const isAddDishModalOpen = useSelector(
-    (state) => state.modal.isAddDishModalOpen
+  const isAddProductModalOpen = useSelector(
+    (state) => state.modal.isAddProductModalOpen
   )
   // useState
   const [categoryId, setCategoryId] = useState()
@@ -101,28 +102,38 @@ const AddDishModal = () => {
     } else {
       formData.append('description', description)
     }
+    dispatch(modalActions.setIsLoadingModalOpen(true))
     const res = await AddProductApi(formData)
     if (res.status === 200) {
-      dispatch(modalActions.setIsAddDishModalOpen(false))
-      console.log('success!!!')
-      console.log(res.data)
+      dispatch(modalActions.setIsLoadingModalOpen(false))
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '新增成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      dispatch(modalActions.setIsAddProductModalOpen(false))
       return
     }
   }
-  console.log(categoryId)
-  return isAddDishModalOpen ? (
+
+  return isAddProductModalOpen ? (
     <div className={styles.modal}>
       <div
         className={styles.backdrop}
-        onClick={() => dispatch(modalActions.setIsAddDishModalOpen(false))}
+        onClick={() => dispatch(modalActions.setIsAddProductModalOpen(false))}
       ></div>
       <div className={styles.modal__container}>
         <div className={styles.delete__button__container}>
           <DeleteIcon
             className={styles.delete__button}
-            onClick={() => dispatch(modalActions.setIsAddDishModalOpen(false))}
+            onClick={() =>
+              dispatch(modalActions.setIsAddProductModalOpen(false))
+            }
           />
         </div>
+
         <div className={styles.list__container}>
           <div className={styles.input__container}>
             <label htmlFor='chinese__name'>品名</label>
@@ -146,6 +157,7 @@ const AddDishModal = () => {
               className={styles.select__list}
               options={options}
               onChange={(item) => setCategoryId(item.value)}
+              placeholder='請選擇類別'
             />
           </div>
           <div className={styles.input__container}>
@@ -180,7 +192,7 @@ const AddDishModal = () => {
             <textarea
               id='description'
               cols='30'
-              rows='4'
+              rows='3'
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
@@ -200,4 +212,4 @@ const AddDishModal = () => {
   )
 }
 
-export default AddDishModal
+export default AddProductModal
