@@ -60,3 +60,20 @@ export const getTablesApi = async () => {
     console.error('[Get Tables Failed]: ', error)
   }
 }
+
+// 新增餐點
+export const AddProductApi = async (formData) => {
+  try {
+    const res = axiosInstance({
+      method: 'post',
+      baseURL: posURL,
+      url: '/products',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    return res
+  } catch (error) {
+    console.error(error)
+    return error
+  }
+}
