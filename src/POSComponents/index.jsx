@@ -15,6 +15,8 @@ import AccountClosingModal from './AccountClosingModal'
 import CategoryModifyModal from './CategoryModifyModal'
 import LoadingModal from './LoadingModal'
 import ModifyProductModal from './ModifyProductModal'
+import TableItem from './TableItem'
+import OrderTableItem from './OrderTableItem'
 
 export {
   CategoryItem,
@@ -34,4 +36,6 @@ export {
   CategoryModifyModal,
   LoadingModal,
   ModifyProductModal,
+  TableItem,
+  OrderTableItem,
 }
