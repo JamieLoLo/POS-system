@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isAddProductModalOpen: false,
   isCheckoutModalOpen: false,
-  isSettingTableModalOpen: false,
+  isTableSettingModalOpen: false,
   isAccountClosingModalOpen: false,
   isCategoryModifyModalOpen: false,
   isLoadingModalOpen: false,
@@ -21,8 +21,8 @@ const modalSlice = createSlice({
     setIsCheckoutModalOpen(state, action) {
       state.isCheckoutModalOpen = action.payload
     },
-    setIsSettingTableModalOpen(state, action) {
-      state.isSettingTableModalOpen = action.payload
+    setIsTableSettingModalOpen(state, action) {
+      state.isTableSettingModalOpen = action.payload
     },
     setIsAccountClosingModalOpen(state, action) {
       state.isAccountClosingModalOpen = action.payload
