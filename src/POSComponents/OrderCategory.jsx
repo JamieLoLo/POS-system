@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 // SCSS
 import styles from './OrderCategory.module.scss'
@@ -13,7 +13,7 @@ const OrderCategory = ({ data, onClick }) => {
 
   useEffect(() => {
     localStorage.setItem('active_category', defaultCategory)
-  }, [])
+  }, [defaultCategory])
 
   return (
     <div

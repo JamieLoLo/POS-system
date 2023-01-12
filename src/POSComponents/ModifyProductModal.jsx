@@ -46,7 +46,7 @@ const ModifyProductModal = () => {
   const newImageHandler = async (event) => {
     setNewImageFile(event.target.files[0])
   }
-  console.log(newImageFile)
+
   // 取得所有分類
   useEffect(() => {
     const categoryGetAll = async () => {
@@ -117,6 +117,7 @@ const ModifyProductModal = () => {
     const res = await modifyProductApi(formData, productId)
     if (res.status === 200) {
       dispatch(modalActions.setIsLoadingModalOpen(false))
+      localStorage.setItem('default_category_id', categoryId)
       dispatch(updateActions.setIsProductUpdate())
       Swal.fire({
         position: 'center',

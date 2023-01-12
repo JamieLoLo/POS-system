@@ -28,7 +28,6 @@ const OrderSystemPage = () => {
   const [products, setProducts] = useState([])
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
-  const defaultCategoryName = localStorage.getItem('default_category_name')
 
   // 確認登入狀態
   useEffect(() => {
