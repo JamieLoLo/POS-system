@@ -1,22 +1,30 @@
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // SCSS
 import styles from './OrderCategory.module.scss'
-// 現在的變色問題出在於沒有重新渲染，所以狀態沒有更新，可以之後打API的時候用useEffect
+
 const OrderCategory = ({ data, onClick }) => {
-  const [target, setTarget] = useState('')
   const targetHandler = (e) => {
-    setTarget(e.target.innerText)
+    localStorage.setItem('active_category', e.target.innerText)
   }
+  const activeCategory = localStorage.getItem('active_category')
+  const defaultCategory = localStorage.getItem('default_category_name')
+
+  useEffect(() => {
+    localStorage.setItem('active_category', defaultCategory)
+  }, [])
 
   return (
     <div
       className={clsx('', {
-        [styles.active]: data.name === target,
-        [styles.item]: data.name !== target,
+        [styles.active]: data.name === activeCategory,
+        [styles.item]: data.name !== activeCategory,
       })}
-      onClick={() => onClick?.(data.id)}
+      onClick={(e) => {
+        onClick?.(data.id)
+        targetHandler(e)
+      }}
     >
       {data.name}
     </div>

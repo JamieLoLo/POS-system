@@ -18,6 +18,9 @@ const OrderPage = () => {
   const [description, setDescription] = useState('')
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
+  // localStorage
+  const defaultCategoryId = localStorage.getItem('default_category_id')
+  const defaultCategoryName = localStorage.getItem('default_category_name')
 
   // 取得描述
   useEffect(() => {
@@ -38,12 +41,27 @@ const OrderPage = () => {
       try {
         const res = await categoryGetAllApi()
         await setAllCategoryData(res.data)
+        localStorage.setItem('default_category_id', res.data[0].id)
+        localStorage.setItem('default_category_name', res.data[0].name)
       } catch (error) {
         console.error(error)
       }
     }
     categoryGetAll()
   }, [])
+
+  // 取得單一分類裡的所有餐點 (首次進入本頁時)
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const res = await getProductsApi(defaultCategoryId)
+        await setProducts(res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getProducts()
+  }, [defaultCategoryId])
 
   // 取得單一分類裡的所有餐點
   const productsHandler = async (id) => {

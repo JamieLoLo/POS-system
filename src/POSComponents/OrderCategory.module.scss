@@ -6,6 +6,7 @@
   padding: 1rem;
   cursor: pointer;
 }
+
 .active {
   min-width: 250px;
   text-align: center;
@@ -15,4 +16,5 @@
   border-bottom: 3px solid var(--navbar-active);
   margin: 0 0 10px 0;
   color: var(--navbar-active);
+  // transform: translateX(60%);
 }

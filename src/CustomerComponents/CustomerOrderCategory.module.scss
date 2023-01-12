@@ -3,22 +3,21 @@
   text-align: center;
   font-size: 16px;
   color: var(--dark-95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
   padding: 0.5rem;
 }
+
 .active {
-  min-width: 100px;
+  min-width: 130px;
   text-align: center;
   font-size: 16px;
   padding: 0.5rem;
   cursor: pointer;
   border-bottom: 3px solid var(--navbar-active);
-  margin: 0 0 10px 0;
+  margin: 0 0 5px 0;
   color: var(--navbar-active);
 }
+
 @media screen and (min-width: 400px) {
   .item {
     font-size: 24px;
