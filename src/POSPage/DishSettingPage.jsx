@@ -15,6 +15,7 @@ import {
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // store
 import { modalActions } from '../store/modal-slice'
+import { updateActions } from '../store/update-slice'
 // api
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 // SCSS
@@ -34,6 +35,7 @@ const DishSettingPage = () => {
   const isModifyProductModalOpen = useSelector(
     (state) => state.modal.isModifyProductModalOpen
   )
+  const isProductUpdate = useSelector((state) => state.update.isProductUpdate)
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
@@ -81,7 +83,7 @@ const DishSettingPage = () => {
       }
     }
     getProducts()
-  }, [defaultCategoryId])
+  }, [defaultCategoryId, isProductUpdate])
 
   // 取得單一分類裡的所有餐點 (變化選單時)
   const productsHandler = async (item) => {
