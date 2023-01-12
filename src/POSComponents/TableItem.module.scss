@@ -1,0 +1,22 @@
+.table {
+  text-align: center;
+  background-color: var(--dark-20);
+  border: 1px solid var(--dark-60);
+  border-radius: 8px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 500;
+}
+.table__active {
+  text-align: center;
+  background-color: #9fc088;
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 500;
+}
