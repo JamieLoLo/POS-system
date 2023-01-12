@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isAllCategoryUpdate: false,
+  isTableUpdate: false,
+  isProductUpdate: false,
 }
 
 const updateSlice = createSlice({
@@ -10,6 +12,12 @@ const updateSlice = createSlice({
   reducers: {
     setIsAllCategoryUpdate(state) {
       state.isAllCategoryUpdate = !state.isAllCategoryUpdate
+    },
+    setIsTableUpdate(state) {
+      state.isTableUpdate = !state.isTableUpdate
+    },
+    setIsProductUpdate(state) {
+      state.isProductUpdate = !state.isProductUpdate
     },
   },
 })
