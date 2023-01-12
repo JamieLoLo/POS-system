@@ -1,25 +1,33 @@
 @import './CategorySettingPage.module.scss';
 
-.table__container {
-  display: grid;
+.right__bottom__container {
   height: 85%;
-  aspect-ratio: 1/1;
-  aspect-ratio: 1/1;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 1rem;
-  padding: 2rem;
-  margin: 0 auto;
-}
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-@for $i from 1 through 25 {
-  .table__#{$i} {
-    font-size: 22px;
-    background-color: var(--dark-20);
-    border: 1px solid var(--dark-60);
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .table__container {
+    height: 90%;
+    aspect-ratio: 1/1;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  @for $i from 1 through 25 {
+    :global(.table__#{$i}) {
+      grid-area: id_#{$i};
+      text-align: center;
+      background-color: var(--dark-20);
+      border: 1px solid var(--dark-60);
+      border-radius: 8px;
+      font-size: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-weight: 500;
+    }
   }
 }
