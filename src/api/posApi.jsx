@@ -61,6 +61,16 @@ export const getTablesApi = async () => {
   }
 }
 
+// 修改桌號
+export const modifyTableApi = async (id, name) => {
+  try {
+    const res = await axiosInstance.put(`${posURL}/tables/${id}`, { name })
+    return res
+  } catch (error) {
+    console.error('[Modify Table Failed]: ', error)
+  }
+}
+
 // 新增餐點
 export const AddProductApi = async (formData) => {
   try {
@@ -79,12 +89,12 @@ export const AddProductApi = async (formData) => {
 }
 
 // 修改餐點
-export const ModifyProductApi = async (formData, id) => {
+export const modifyProductApi = async (formData, id) => {
   try {
     const res = axiosInstance({
       method: 'put',
       baseURL: posURL,
-      url: '/products' + id,
+      url: '/products/' + id,
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
