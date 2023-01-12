@@ -157,6 +157,7 @@ const ModifyProductModal = () => {
               type='text'
               id='chinese__name'
               defaultValue={productData.name}
+              autoComplete='off'
               onChange={(e) =>
                 dispatch(
                   informationActions.setProductInfo({
@@ -172,6 +173,7 @@ const ModifyProductModal = () => {
             <input
               type='text'
               id='english__name'
+              autoComplete='off'
               onChange={(e) =>
                 dispatch(
                   informationActions.setProductInfo({
@@ -205,6 +207,7 @@ const ModifyProductModal = () => {
               type='text'
               id='costs'
               value={productData.cost}
+              autoComplete='off'
               onChange={(e) =>
                 dispatch(
                   informationActions.setProductInfo({
@@ -220,6 +223,7 @@ const ModifyProductModal = () => {
             <input
               type='text'
               id='price'
+              autoComplete='off'
               value={productData.price}
               onChange={(e) =>
                 dispatch(
@@ -248,6 +252,7 @@ const ModifyProductModal = () => {
               id='description'
               cols='30'
               rows='3'
+              autoComplete='off'
               onChange={(e) =>
                 dispatch(
                   informationActions.setProductInfo({

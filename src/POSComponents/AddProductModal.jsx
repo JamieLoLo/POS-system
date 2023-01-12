@@ -141,6 +141,7 @@ const AddProductModal = () => {
               type='text'
               id='chinese__name'
               onChange={(e) => setName(e.target.value)}
+              autoComplete='off'
             />
           </div>
           <div className={styles.input__container}>
@@ -149,6 +150,7 @@ const AddProductModal = () => {
               type='text'
               id='english__name'
               onChange={(e) => setNameEn(e.target.value)}
+              autoComplete='off'
             />
           </div>
           <div className={styles.input__container}>
@@ -166,6 +168,7 @@ const AddProductModal = () => {
               type='text'
               id='costs'
               onChange={(e) => setCost(e.target.value)}
+              autoComplete='off'
             />
           </div>
           <div className={styles.input__container}>
@@ -174,6 +177,7 @@ const AddProductModal = () => {
               type='text'
               id='price'
               onChange={(e) => setPrice(e.target.value)}
+              autoComplete='off'
             />
           </div>
           <div className={styles.input__container}>
@@ -194,6 +198,7 @@ const AddProductModal = () => {
               cols='30'
               rows='3'
               onChange={(e) => setDescription(e.target.value)}
+              autoComplete='off'
             ></textarea>
           </div>
           <div className={styles.submit__button__container}>
