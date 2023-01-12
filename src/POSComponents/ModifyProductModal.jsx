@@ -9,8 +9,9 @@ import { useState, useEffect } from 'react'
 // store
 import { modalActions } from '../store/modal-slice'
 import { informationActions } from '../store/information-slice'
+import { updateActions } from '../store/update-slice'
 // api
-import { AddProductApi } from '../api/posApi'
+import { modifyProductApi } from '../api/posApi'
 import { categoryGetAllApi } from '../api/categoryApi'
 // SCSS
 import styles from './ModifyProductModal.module.scss'
@@ -24,6 +25,7 @@ const ModifyProductModal = () => {
     (state) => state.modal.isModifyProductModalOpen
   )
   const productData = useSelector((state) => state.information.product)
+  const productId = useSelector((state) => state.information.product.id)
   const categoryId = useSelector(
     (state) => state.information.product.categoryId
   )
@@ -31,22 +33,20 @@ const ModifyProductModal = () => {
   const nameEn = useSelector((state) => state.information.product.nameEn)
   const imageFile = useSelector((state) => state.information.product.image)
   const cost = useSelector((state) => state.information.product.cost)
-
+  const price = useSelector((state) => state.information.product.price)
   const description = useSelector(
     (state) => state.information.product.description
   )
 
   // useState
   const [newImageFile, setNewImageFile] = useState()
-
-  const [price, setPrice] = useState()
   const [allCategoryData, setAllCategoryData] = useState([])
-  console.log(productData)
+
   // 取得上傳照片位置
   const newImageHandler = async (event) => {
     setNewImageFile(event.target.files[0])
   }
-
+  console.log(newImageFile)
   // 取得所有分類
   useEffect(() => {
     const categoryGetAll = async () => {
@@ -105,24 +105,28 @@ const ModifyProductModal = () => {
     } else {
       formData.append('price', price)
     }
-    formData.append('image', imageFile)
+
+    formData.append('image', newImageFile)
+
     if (description === undefined || description === '') {
       formData.append('description', '')
     } else {
       formData.append('description', description)
     }
     dispatch(modalActions.setIsLoadingModalOpen(true))
-    const res = await AddProductApi(formData)
+    const res = await modifyProductApi(formData, productId)
     if (res.status === 200) {
       dispatch(modalActions.setIsLoadingModalOpen(false))
+      dispatch(updateActions.setIsProductUpdate())
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: '新增成功',
+        title: '修改成功',
         showConfirmButton: false,
         timer: 2000,
       })
       dispatch(modalActions.setIsModifyProductModalOpen(false))
+      setNewImageFile(undefined)
       return
     }
   }
@@ -216,7 +220,14 @@ const ModifyProductModal = () => {
               type='text'
               id='price'
               value={productData.price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) =>
+                dispatch(
+                  informationActions.setProductInfo({
+                    ...productData,
+                    price: e.target.value,
+                  })
+                )
+              }
             />
           </div>
           <div className={styles.input__container}>
