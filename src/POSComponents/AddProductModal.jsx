@@ -196,19 +196,16 @@ const AddProductModal = () => {
             <textarea
               id='description'
               cols='30'
-              rows='3'
+              rows='2'
               onChange={(e) => setDescription(e.target.value)}
               autoComplete='off'
             ></textarea>
           </div>
-          <div className={styles.submit__button__container}>
-            <button
-              className={styles.submit__button}
-              onClick={addProductHandler}
-            >
-              送出
-            </button>
-          </div>
+        </div>
+        <div className={styles.submit__button__container}>
+          <button className={styles.submit__button} onClick={addProductHandler}>
+            送出
+          </button>
         </div>
       </div>
     </div>

@@ -264,14 +264,12 @@ const ModifyProductModal = () => {
               value={productData.description}
             ></textarea>
           </div>
-          <div className={styles.submit__button__container}>
-            <button
-              className={styles.submit__button}
-              onClick={addProductHandler}
-            >
-              送出
-            </button>
-          </div>
+        </div>
+
+        <div className={styles.submit__button__container}>
+          <button className={styles.submit__button} onClick={addProductHandler}>
+            送出
+          </button>
         </div>
       </div>
     </div>

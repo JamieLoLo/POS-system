@@ -28,7 +28,6 @@
       border-bottom: 1px solid var(--dark-80);
       background-color: var(--dark-90);
       border-radius: 15px 15px 0 0;
-      margin-bottom: 1.5rem;
       position: relative;
 
       .delete__button {
@@ -45,8 +44,10 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+      height: 78%;
       font-size: 18px;
       text-align: center;
+      justify-content: center;
       .input__container {
         margin-bottom: 1rem;
         display: flex;
@@ -55,7 +56,7 @@
 
         label {
           display: inline-block;
-          width: 20%;
+          width: 25%;
           text-align: left;
           padding: 0.3rem 1rem;
           color: var(--dark-95);
@@ -82,11 +83,15 @@
     }
     .submit__button__container {
       display: flex;
-      justify-content: end;
+      height: 12%;
+      width: 85%;
+      margin: 0 auto;
+      justify-content: flex-end;
+      align-items: center;
       .submit__button {
         font-size: 20px;
         padding: 0.5rem 1rem;
-        margin: -0.5rem 3rem 0 0;
+
         border: none;
         color: var(--white);
         background-color: var(--primary-color);
