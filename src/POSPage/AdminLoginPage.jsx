@@ -51,6 +51,13 @@ const AdminLoginPage = () => {
 
         return
       }
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '登入成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
       localStorage.setItem('authToken', res.data.token)
       navigate('/order/table')
     } catch (error) {
@@ -68,13 +75,23 @@ const AdminLoginPage = () => {
           <div className={styles.icon__container}>
             <PersonIcon className={styles.icon} />
           </div>
-          <input type='text' id='account' onChange={accountHandler} />
+          <input
+            type='text'
+            id='account'
+            onChange={accountHandler}
+            autoComplete='off'
+          />
         </div>
         <div className={styles.input__container}>
           <div className={styles.icon__container}>
             <PasswordIcon className={styles.icon} />
           </div>
-          <input type='password' id='password' onChange={passwordHandler} />
+          <input
+            type='password'
+            id='password'
+            onChange={passwordHandler}
+            autoComplete='off'
+          />
         </div>
         <button className={styles.login__button} onClick={adminLoginHandler}>
           登入

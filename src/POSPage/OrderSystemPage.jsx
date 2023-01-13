@@ -69,6 +69,7 @@ const OrderSystemPage = () => {
       try {
         const res = await categoryGetAllApi()
         await setAllCategoryData(res.data)
+        // localStorage.setItem('defaultCategoryId', res.data[0].id)
       } catch (error) {
         console.error(error)
       }
@@ -112,12 +113,12 @@ const OrderSystemPage = () => {
   const productList = products.map((data) => (
     <MenuItem data={data} key={data.id} />
   ))
-
+  console.log(products)
   // 訂單
   const orderList = soldProducts.map((data) => (
     <OrderItem data={data} key={data.productId} />
   ))
-  // console.log(soldProducts)
+
   return (
     <div className='main__container'>
       <CheckoutModal />

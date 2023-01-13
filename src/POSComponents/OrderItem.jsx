@@ -15,7 +15,7 @@ const OrderItem = ({ data }) => {
         </div>
         <div className={styles.count__container}>
           <p className={styles.count}>{data.count}</p>
-          <p className={styles.price}>{data.Product.price}</p>
+          <p className={styles.price}>${data.Product.price}</p>
         </div>
         <div className={styles.icon__container}>
           <PlusIcon className={styles.icon} />

@@ -22,7 +22,6 @@ const OrderCustomerPage = () => {
   const [childrenCount, setChildrenCount] = useState(0)
   // useSelector
   const tableId = useSelector((state) => state.information.tableInfo.id)
-  console.log(tableId)
 
   // 確認登入狀態
   useEffect(() => {
@@ -31,6 +30,7 @@ const OrderCustomerPage = () => {
       navigate('/admin/login')
     }
   }, [navigate])
+  console.log(tableId)
 
   // 開桌
   const submitHandler = async () => {

@@ -7,6 +7,7 @@ import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { OrderTableItem } from '../POSComponents'
 // api
 import { getTablesApi } from '../api/posApi'
+import { categoryGetAllApi } from '../api/categoryApi'
 // SCSS
 import styles from './OrderTablePage.module.scss'
 
@@ -38,11 +39,24 @@ const OrderTablePage = () => {
     getTables()
   }, [])
 
+  // 取得所有分類
+  useEffect(() => {
+    const categoryGetAll = async () => {
+      try {
+        const res = await categoryGetAllApi()
+        localStorage.setItem('default_category_id', res.data[0].id)
+        localStorage.setItem('default_category_name', res.data[0].name)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    categoryGetAll()
+  }, [])
+
   // 所有桌子
   const tableList = allTablesData.map((data) => (
     <OrderTableItem data={data} key={data.id} />
   ))
-
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
