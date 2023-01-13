@@ -2,13 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 // UI
 import { CustomerOrderCategory, CustomerMenuItem } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
 // api
-import { getMinimumApi } from '../api/posApi'
+import { getMinimumApi, getTablesApi } from '../api/posApi'
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 // SCSS
 import styles from './OrderPage.module.scss'
@@ -21,7 +22,8 @@ const OrderPage = () => {
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
   const defaultCategoryName = localStorage.getItem('default_category_name')
-
+  const tableId = useSelector((state) => state.information.orderInfo.tableId)
+  console.log(tableId)
   // 取得描述
   useEffect(() => {
     const getDecription = async () => {
@@ -72,6 +74,26 @@ const OrderPage = () => {
       console.error(error)
     }
   }
+
+  // 取得訂單內容 (餐點、人數)
+  // const getOrderHandler = async () => {
+  //   try {
+  //     const res = await getOrderApi(tableId)
+  //     if (!res) {
+  //       Swal.fire({
+  //         position: 'center',
+  //         icon: 'error',
+  //         title: '未開桌，請洽櫃檯。',
+  //         showConfirmButton: false,
+  //         timer: 2000,
+  //       })
+  //     }
+  //     await dispatch(informationActions.setOrderInfo(res.data))
+  //     navigate('/customer/main')
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   // 分類列表
   const categoryList = allCategoryData.map((data) => (
