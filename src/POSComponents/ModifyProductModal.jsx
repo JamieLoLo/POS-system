@@ -251,7 +251,7 @@ const ModifyProductModal = () => {
             <textarea
               id='description'
               cols='30'
-              rows='3'
+              rows='2'
               autoComplete='off'
               onChange={(e) =>
                 dispatch(
