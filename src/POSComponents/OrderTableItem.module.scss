@@ -9,6 +9,17 @@
   justify-content: center;
   font-weight: 500;
 }
+.table__not__order {
+  text-align: center;
+  background-color: #2c74b3;
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: 500;
+}
 .table__active {
   text-align: center;
   background-color: #9fc088;

@@ -6,8 +6,12 @@ const initialState = {
   categoryID: '',
   // 餐點資訊管理
   product: [],
+  // 桌子資訊管理
   tableName: '',
   tableID: '',
+  tableInfo: [],
+  headcountInfo: [],
+  orderInfo: [],
 }
 
 const informationSlice = createSlice({
@@ -29,6 +33,15 @@ const informationSlice = createSlice({
     },
     setTableID(state, action) {
       state.tableID = action.payload
+    },
+    setTableInfo(state, action) {
+      state.tableInfo = action.payload
+    },
+    setHeadcountInfo(state, action) {
+      state.headcountInfo = action.payload
+    },
+    setOrderInfo(state, action) {
+      state.orderInfo = action.payload
     },
   },
 })

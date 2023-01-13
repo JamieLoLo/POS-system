@@ -104,3 +104,17 @@ export const modifyProductApi = async (formData, id) => {
     return error
   }
 }
+
+// 店家設人數開桌
+export const addHeadcountApi = async (table_id, adultNum, childrenNum) => {
+  try {
+    const res = await axiosInstance.post(`${posURL}/orders/${table_id}`, {
+      adultNum,
+      childrenNum,
+    })
+    return res
+  } catch (error) {
+    console.error('[Add Headcount Failed]: ', error)
+    return error
+  }
+}
