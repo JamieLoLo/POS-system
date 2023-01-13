@@ -14,7 +14,7 @@ import {
   HomePage,
   AccountClosingPage,
 } from './POSPage/index'
-import { OrderPage, CartPage } from './CustomerPage'
+import { OrderPage, CartPage, CustomerLoginPage } from './CustomerPage'
 // SCSS
 import './reset.module.scss'
 import './base.module.scss'
@@ -39,6 +39,7 @@ function App() {
           <Route path='/order/headcount' element={<OrderHeadcountPage />} />
           <Route path='/customer/main' element={<OrderPage />} />
           <Route path='/customer/cart' element={<CartPage />} />
+          <Route path='/customer/login' element={<CustomerLoginPage />} />
           <Route path='*' element={<HomePage />} />
         </Routes>
       </HashRouter>
