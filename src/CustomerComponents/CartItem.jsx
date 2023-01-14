@@ -30,7 +30,11 @@ const CartItem = ({ data, addProductHandler, minusProductHandler }) => {
   return (
     <div className={styles.menu__item__container}>
       <div className={styles.image__container}>
-        <img className={styles.default__img} src={DefaultFoodImg} alt='' />
+        <img
+          className={styles.default__img}
+          src={data.image ? data.image : DefaultFoodImg}
+          alt=''
+        />
       </div>
       <div className={styles.right__side__container}>
         <div className={styles.title__container}>
