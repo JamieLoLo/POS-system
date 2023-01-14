@@ -38,7 +38,6 @@ const OrderTablePage = () => {
     }
     getTables()
   }, [])
-  console.log(allTablesData)
 
   // 取得所有分類
   useEffect(() => {
