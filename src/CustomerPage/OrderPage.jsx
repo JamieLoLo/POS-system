@@ -1,35 +1,51 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // UI
 import { CustomerOrderCategory, CustomerMenuItem } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
 // api
-import { getMinimumApi, getTablesApi } from '../api/posApi'
+import { getMinimumApi } from '../api/posApi'
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
+import { getOrderApi } from '../api/orderApi'
+// store
+import { informationActions } from '../store/information-slice'
 // SCSS
 import styles from './OrderPage.module.scss'
+import clsx from 'clsx'
 
 const OrderPage = () => {
-  // useState
-  const [description, setDescription] = useState('')
-  const [allCategoryData, setAllCategoryData] = useState([])
-  const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
   const defaultCategoryName = localStorage.getItem('default_category_name')
-  const tableId = useSelector((state) => state.information.orderInfo.tableId)
-  console.log(tableId)
+  const tableId = localStorage.getItem('customer_table_id')
+  const orderId = localStorage.getItem('order_id')
+  const cartList = JSON.parse(localStorage.getItem('cart_list'))
+  const totalCount = localStorage.getItem('total_count')
+  const totalPrice = localStorage.getItem('total_price')
+
+  // useState
+  const [minimumInfo, setMinimumInfo] = useState({})
+  const [allCategoryData, setAllCategoryData] = useState([])
+  const [products, setProducts] = useState([])
+  const [totalCountForRender, setTotalCountForRender] = useState(totalCount)
+  const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
+
+  // useSelector
+  const orderInfo = useSelector((state) => state.information.orderInfo)
+
   // 取得描述
   useEffect(() => {
     const getDecription = async () => {
       try {
         const res = await getMinimumApi()
-        setDescription(res.data.description)
+        setMinimumInfo(res.data)
       } catch (error) {
         console.error(error)
       }
@@ -76,24 +92,17 @@ const OrderPage = () => {
   }
 
   // 取得訂單內容 (餐點、人數)
-  // const getOrderHandler = async () => {
-  //   try {
-  //     const res = await getOrderApi(tableId)
-  //     if (!res) {
-  //       Swal.fire({
-  //         position: 'center',
-  //         icon: 'error',
-  //         title: '未開桌，請洽櫃檯。',
-  //         showConfirmButton: false,
-  //         timer: 2000,
-  //       })
-  //     }
-  //     await dispatch(informationActions.setOrderInfo(res.data))
-  //     navigate('/customer/main')
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+  useEffect(() => {
+    const getOrder = async () => {
+      try {
+        const res = await getOrderApi(tableId)
+        await dispatch(informationActions.setOrderInfo(res.data))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getOrder()
+  }, [dispatch, tableId])
 
   // 分類列表
   const categoryList = allCategoryData.map((data) => (
@@ -104,9 +113,80 @@ const OrderPage = () => {
     />
   ))
 
+  const addProductHandler = (id, name, nameEn, description, price, image) => {
+    let isProductExit = cartList.find((product) => product.id === id)
+    if (isProductExit) {
+      // 更新數量
+      let newList = cartList.map((product) => {
+        if (product.id === id) {
+          product.count = product.count + 1
+        }
+        return product
+      })
+      localStorage.setItem('cart_list', JSON.stringify(newList))
+    } else {
+      // 加入餐點
+      cartList.push({
+        id: id,
+        name: name,
+        nameEn: nameEn,
+        image: image,
+        description: description,
+        price: price,
+        count: 1,
+      })
+      localStorage.setItem('cart_list', JSON.stringify(cartList))
+    }
+    let calculateCount = cartList.reduce(
+      (acc, product) => acc + product.count,
+      0
+    )
+    let calculatePrice = cartList.reduce(
+      (acc, product) => acc + product.count * product.price,
+      0
+    )
+    localStorage.setItem('total_count', calculateCount)
+    localStorage.setItem('total_price', calculatePrice)
+    setTotalCountForRender(calculateCount)
+    setTotalPriceForRender(calculatePrice)
+  }
+
+  const minusProductHandler = (id, name, nameEn, description, price, image) => {
+    let isProductExit = cartList.find((product) => product.id === id)
+    if (isProductExit) {
+      // 減少數量
+      let newList = cartList.map((product) => {
+        if (product.id === id && product.count !== 0) {
+          product.count = product.count - 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+    }
+    let calculateCount = cartList.reduce(
+      (acc, product) => acc + product.count,
+      0
+    )
+    let calculatePrice = cartList.reduce(
+      (acc, product) => acc + product.count * product.price,
+      0
+    )
+    localStorage.setItem('total_count', calculateCount)
+    localStorage.setItem('total_price', calculatePrice)
+    setTotalCountForRender(calculateCount)
+    setTotalPriceForRender(calculatePrice)
+  }
+
   // 餐點清單
   const productList = products.map((data) => (
-    <CustomerMenuItem key={data.id} data={data} count='1' />
+    <CustomerMenuItem
+      key={data.id}
+      data={data}
+      count='1'
+      addProductHandler={addProductHandler}
+      minusProductHandler={minusProductHandler}
+    />
   ))
 
   return (
@@ -118,10 +198,12 @@ const OrderPage = () => {
         <div className={styles.restaurant__name}>咕咕義小餐館</div>
       </header>
       <div className={styles.information__container}>
-        <div className={styles.description}>{description}</div>
+        <div className={styles.description}>{minimumInfo.description}</div>
         <div className={styles.table__information}>
           <div className={styles.table__number}>桌號：22</div>
-          <div className={styles.headcount}>人數：1大1小</div>
+          <div className={styles.headcount}>
+            人數：{orderInfo.adultNum}大 {orderInfo.childrenNum}小
+          </div>
         </div>
       </div>
       <main className={styles.main}>
@@ -129,15 +211,22 @@ const OrderPage = () => {
         <div className={styles.menu__container}>{productList}</div>
       </main>
       <Link to='/customer/cart'>
-        <footer className={styles.footer}>
+        <footer
+          className={clsx('', {
+            [styles.footer__success]:
+              totalPrice >= orderInfo.adultNum * minimumInfo.minCharge,
+            [styles.footer__error]:
+              totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
+          })}
+        >
           <div className={styles.cart__container}>
             <div className={styles.cart__icon__container}>
               <CartIcon className={styles.icon} />
             </div>
-            <div className={styles.cart__count}>3</div>
+            <div className={styles.cart__count}>{totalCountForRender}</div>
           </div>
           <div className={styles.cart__text}>購物車</div>
-          <div className={styles.sum}>$350</div>
+          <div className={styles.sum}>${totalPriceForRender}</div>
         </footer>
       </Link>
     </div>

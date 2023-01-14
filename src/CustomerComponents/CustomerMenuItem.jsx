@@ -1,13 +1,29 @@
 import React from 'react'
+// hook
+import { useState, useEffect } from 'react'
+
 // default img
-import DefaultFoodImg from './assets/img/default_food.jpeg'
+import DefaultFoodImg from '../POSComponents/assets/logo/logo.png'
 // icon
 import { ReactComponent as PlusIcon } from '../POSComponents/assets/icon/plus.svg'
 import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.svg'
 // SCSS
 import styles from './CustomerMenuItem.module.scss'
 
-const CustomerMenuItem = ({ data, count }) => {
+const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
+  let [count, setCount] = useState(0)
+  // localStorage
+  const orderId = localStorage.getItem('order_id')
+  const cartList = JSON.parse(localStorage.getItem('cart_list'))
+
+  // 進入頁面時取得數量
+  useEffect(() => {
+    let filterData = cartList.filter((product) => product.id === data.id)
+    if (filterData.length === 1) {
+      setCount(filterData[0].count)
+    }
+  }, [])
+
   return (
     <div className={styles.menu__item__container}>
       <div className={styles.image__container}>
@@ -26,11 +42,50 @@ const CustomerMenuItem = ({ data, count }) => {
         </div>
         <div className={styles.price}>${data.price}</div>
         <div className={styles.count__control}>
-          <div className={styles.icon__container}>
+          <div
+            className={styles.icon__container}
+            onClick={() => {
+              minusProductHandler?.(
+                data.id,
+                data.name,
+                data.nameEn,
+                data.description,
+                data.price,
+                data.image
+              )
+              if (count > 0) {
+                let filterData = cartList.filter(
+                  (product) => product.id === data.id
+                )
+
+                setCount(filterData[0].count - 1)
+              }
+            }}
+          >
             <MinusIcon className={styles.icon} />
           </div>
           <div className={styles.count}>{count}</div>
-          <div className={styles.icon__container}>
+          <div
+            className={styles.icon__container}
+            onClick={() => {
+              addProductHandler?.(
+                data.id,
+                data.name,
+                data.nameEn,
+                data.description,
+                data.price,
+                data.image
+              )
+              let filterData = cartList.filter(
+                (product) => product.id === data.id
+              )
+              if (filterData.length === 1) {
+                setCount(filterData[0].count + 1)
+              } else {
+                setCount((count) => count + 1)
+              }
+            }}
+          >
             <PlusIcon className={styles.icon} />
           </div>
         </div>
