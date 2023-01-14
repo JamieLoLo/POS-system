@@ -4,6 +4,7 @@ const initialState = {
   isAllCategoryUpdate: false,
   isTableUpdate: false,
   isProductUpdate: false,
+  isCartUpdate: false,
 }
 
 const updateSlice = createSlice({
@@ -18,6 +19,9 @@ const updateSlice = createSlice({
     },
     setIsProductUpdate(state) {
       state.isProductUpdate = !state.isProductUpdate
+    },
+    setIsCartUpdate(state) {
+      state.isCartUpdate = !state.isCartUpdate
     },
   },
 })
