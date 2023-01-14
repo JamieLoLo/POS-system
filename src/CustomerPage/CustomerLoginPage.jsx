@@ -18,6 +18,11 @@ const CustomerLoginPage = () => {
   const navigate = useNavigate()
   // useState
   const [tableId, setTableID] = useState()
+  // 初始化購物車
+  let cartList = []
+  localStorage.setItem('cart_list', JSON.stringify(cartList))
+  localStorage.setItem('total_count', 0)
+  localStorage.setItem('total_price', 0)
 
   // 取得訂單內容 (餐點、人數)
   const getOrderHandler = async () => {
@@ -32,6 +37,8 @@ const CustomerLoginPage = () => {
           timer: 2000,
         })
       }
+      localStorage.setItem('customer_table_id', tableId)
+      localStorage.setItem('order_id', res.data.id)
       await dispatch(informationActions.setOrderInfo(res.data))
       navigate('/customer/main')
     } catch (error) {
