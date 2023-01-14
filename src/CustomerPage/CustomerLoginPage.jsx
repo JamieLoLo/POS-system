@@ -1,13 +1,14 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 // hook
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 // api
 import { getOrderApi } from '../api/orderApi'
+import { categoryGetAllApi } from '../api/categoryApi'
 // store
 import { informationActions } from '../store/information-slice'
 // SCSS
@@ -23,6 +24,11 @@ const CustomerLoginPage = () => {
   localStorage.setItem('cart_list', JSON.stringify(cartList))
   localStorage.setItem('total_count', 0)
   localStorage.setItem('total_price', 0)
+  // 初始化訂單
+  let checkoutList = []
+  localStorage.setItem('checkout_list', JSON.stringify(checkoutList))
+  localStorage.setItem('checkout_count', 0)
+  localStorage.setItem('checkout_price', 0)
 
   // 取得訂單內容 (餐點、人數)
   const getOrderHandler = async () => {
@@ -39,12 +45,28 @@ const CustomerLoginPage = () => {
       }
       localStorage.setItem('customer_table_id', tableId)
       localStorage.setItem('order_id', res.data.id)
+      localStorage.setItem('table_id', tableId)
+      localStorage.setItem('adult_count', res.data.adultNum)
       await dispatch(informationActions.setOrderInfo(res.data))
       navigate('/customer/main')
     } catch (error) {
       console.error(error)
     }
   }
+
+  // 取得所有分類
+  useEffect(() => {
+    const categoryGetAll = async () => {
+      try {
+        const res = await categoryGetAllApi()
+        localStorage.setItem('default_category_id', res.data[0].id)
+        localStorage.setItem('default_category_name', res.data[0].name)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    categoryGetAll()
+  }, [])
 
   return (
     <div className={styles.page__container}>
