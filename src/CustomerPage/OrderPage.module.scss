@@ -28,12 +28,12 @@ header {
   font-size: 14px;
   height: 15%;
   .description {
-    width: 70%;
+    width: 65%;
     padding: 1rem;
     background-color: var(--dark-30);
   }
   .table__information {
-    width: 30%;
+    width: 35%;
     background-color: var(--primary-color);
     display: flex;
     color: var(--white);
@@ -57,7 +57,44 @@ header {
     overflow: scroll;
   }
 }
-.footer {
+.footer__success {
+  height: 10%;
+  background-color: #9fc088;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+  .cart__container {
+    display: flex;
+    width: 20vw;
+    .cart__icon__container {
+      width: 32px;
+      height: 32px;
+      .icon {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .cart__count {
+      font-size: 18px;
+      margin-left: 1rem;
+    }
+  }
+  .cart__text {
+    width: 60vw;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .sum {
+    width: 20vw;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+.footer__error {
   height: 10%;
   background-color: var(--error-color);
   color: var(--white);
@@ -105,7 +142,8 @@ header {
   .information__container {
     font-size: 22px;
   }
-  .footer {
+  .footer__success,
+  .footer__error {
     .cart__container {
       .cart__icon__container {
         width: 50px;
