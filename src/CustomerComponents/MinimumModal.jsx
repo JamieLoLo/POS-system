@@ -1,10 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+// hook
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+// store
+import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './MinimumModal.module.scss'
 
 const MinimumModal = () => {
-  return (
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // localStorage
+  const minCharge = localStorage.getItem('min_charge')
+  const adultNum = localStorage.getItem('adult_count')
+  const totalPrice = localStorage.getItem('total_price')
+  // useSelector
+  const isMinimumModalOpen = useSelector(
+    (state) => state.modal.isMinimumModalOpen
+  )
+
+  // 未達低消，繼續點餐。
+  const orderHandler = () => {
+    dispatch(modalActions.setIsMinimumModalOpen(false))
+    navigate('/customer/main')
+  }
+
+  return isMinimumModalOpen ? (
     <div className={styles.modal}>
       <div className={styles.backdrop}></div>
       <div className={styles.modal__container}>
@@ -12,16 +33,21 @@ const MinimumModal = () => {
           <div className={styles.title}>未達低消</div>
           <div className={styles.subtitle}>
             提醒您：距離最低消費金額還差
-            <span className={styles.difference}> $100 </span>元
+            <span className={styles.difference}>
+              ${adultNum * minCharge - totalPrice}
+            </span>
+            元
           </div>
         </div>
         <div className={styles.button__container}>
-          <Link to='/customer/main'>
-            <button className={styles.order__button}>繼續點餐</button>
-          </Link>
+          <button className={styles.order__button} onClick={orderHandler}>
+            繼續點餐
+          </button>
         </div>
       </div>
     </div>
+  ) : (
+    ''
   )
 }
 

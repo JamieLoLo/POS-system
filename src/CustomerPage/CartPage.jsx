@@ -2,22 +2,37 @@ import React from 'react'
 // hook
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // UI
 import { CartItem, MinimumModal, ReceiptModal } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
+// store
+import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './CartPage.module.scss'
 
 const CartPage = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   // localStorage
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
+  const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
+  const orderId = localStorage.getItem('order_id')
+  const tableId = localStorage.getItem('table_id')
+  const minCharge = localStorage.getItem('min_charge')
+  const adultNum = localStorage.getItem('adult_count')
+  const totalPrice = localStorage.getItem('total_price')
+  // useState
   const [renderList, setRenderList] = useState([])
   // useSelector
   const isCartUpdate = useSelector((state) => state.update.isCartUpdate)
+  const isMinimumModalOpen = useSelector(
+    (state) => state.modal.isMinimumModalOpen
+  )
+  const isGetMinimum = useSelector((state) => state.information.isGetMinimum)
 
+  // 因為這一頁沒有打 api 的動作，資料都是從 localStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 localStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
     const renderList = () => {
       const cartList = JSON.parse(localStorage.getItem('cart_list'))
@@ -84,20 +99,17 @@ const CartPage = () => {
     localStorage.setItem('total_price', calculatePrice)
   }
 
-  // 購物車清單
-
-  const filterList = cartList.filter((product) => product.count !== 0)
-  const cartItemList = filterList.map((data) => (
-    <CartItem
-      data={data}
-      key={data.id}
-      addProductHandler={addProductHandler}
-      minusProductHandler={minusProductHandler}
-    />
-  ))
+  // 提交訂單
+  const submitHandler = () => {
+    if (totalPrice < adultNum * minCharge) {
+      dispatch(modalActions.setIsMinimumModalOpen(true))
+      return
+    }
+  }
+  // totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
   return (
     <div className='mobile__main__container'>
-      {/* <MinimumModal /> */}
+      <MinimumModal trigger={isMinimumModalOpen} />
       {/* <ReceiptModal /> */}
       <header>
         <div className={styles.logo__container}>
@@ -116,7 +128,9 @@ const CartPage = () => {
         >
           繼續點餐
         </button>
-        <button className={styles.confirm__button}>確認送出</button>
+        <button className={styles.confirm__button} onClick={submitHandler}>
+          確認送出
+        </button>
       </footer>
     </div>
   )
