@@ -21,3 +21,16 @@ export const getOrderApi = async (table_id) => {
     console.error('[Get Order Failed]: ', error)
   }
 }
+
+// 顧客送出訂單
+export const customerOrderApi = async (table_id, order_id, data) => {
+  try {
+    const res = await axios.put(`orderURL/${table_id}/${order_id}`, {
+      data,
+    })
+    return res
+  } catch (error) {
+    console.error('[Customer Order Failed]: ', error)
+    return error
+  }
+}
