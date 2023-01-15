@@ -11,6 +11,7 @@ import { getOrderApi } from '../api/orderApi'
 import { categoryGetAllApi } from '../api/categoryApi'
 // store
 import { informationActions } from '../store/information-slice'
+import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './CustomerLoginPage.module.scss'
 
@@ -43,11 +44,13 @@ const CustomerLoginPage = () => {
           timer: 2000,
         })
       }
-      localStorage.setItem('customer_table_id', tableId)
       localStorage.setItem('order_id', res.data.id)
       localStorage.setItem('table_id', tableId)
+      localStorage.setItem('table_name', res.data.Table.name)
       localStorage.setItem('adult_count', res.data.adultNum)
+      localStorage.setItem('children_count', res.data.childrenNum)
       await dispatch(informationActions.setOrderInfo(res.data))
+      dispatch(modalActions.setIsReceiptModalOpen(false))
       navigate('/customer/main')
     } catch (error) {
       console.error(error)
