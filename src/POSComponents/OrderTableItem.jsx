@@ -19,9 +19,9 @@ const OrderTableItem = ({ data }) => {
     }
     dispatch(informationActions.setTableInfo(data))
     localStorage.setItem('table_id', data.id)
-    if (data.Orders.id === null) {
+    if (data.Orders.id === null && data.Orders.isPaid === 0) {
       navigate('/order/headcount')
-    } else {
+    } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
       navigate('/order/system')
     }
   }
@@ -36,6 +36,7 @@ const OrderTableItem = ({ data }) => {
           data.name !== '0' &&
           data.Orders.isPaid === 0 &&
           data.Orders.totalPrice !== 0,
+        [styles.table__paid]: data.Orders.isPaid === 1,
       })}
       onClick={orderHandler}
     >
