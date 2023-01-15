@@ -9,6 +9,9 @@ import { CartItem, MinimumModal, ReceiptModal } from '../CustomerComponents'
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 // store
 import { modalActions } from '../store/modal-slice'
+import { updateActions } from '../store/update-slice'
+// api
+import { customerOrderApi } from '../api/orderApi'
 // SCSS
 import styles from './CartPage.module.scss'
 
@@ -18,7 +21,7 @@ const CartPage = () => {
   // localStorage
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
-  const orderId = localStorage.getItem('order_id')
+  const orderId = Number(localStorage.getItem('order_id'))
   const tableId = localStorage.getItem('table_id')
   const minCharge = localStorage.getItem('min_charge')
   const adultNum = localStorage.getItem('adult_count')
@@ -30,7 +33,9 @@ const CartPage = () => {
   const isMinimumModalOpen = useSelector(
     (state) => state.modal.isMinimumModalOpen
   )
-  const isGetMinimum = useSelector((state) => state.information.isGetMinimum)
+  const isReceiptModalOpen = useSelector(
+    (state) => state.modal.isReceiptModalOpen
+  )
 
   // 因為這一頁沒有打 api 的動作，資料都是從 localStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 localStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
@@ -100,27 +105,33 @@ const CartPage = () => {
   }
 
   // 提交訂單
-  const submitHandler = () => {
+  const submitHandler = async () => {
+    console.log(checkoutList)
     if (totalPrice < adultNum * minCharge) {
       dispatch(modalActions.setIsMinimumModalOpen(true))
       return
     }
+    try {
+      const res = await customerOrderApi(tableId, orderId, checkoutList)
+      if (res.data) {
+        dispatch(modalActions.setIsReceiptModalOpen(true))
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
-  // totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
+
   return (
     <div className='mobile__main__container'>
       <MinimumModal trigger={isMinimumModalOpen} />
-      {/* <ReceiptModal /> */}
+      <ReceiptModal trigger={isReceiptModalOpen} />
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
         </div>
         <div className={styles.restaurant__name}>咕咕義小餐館</div>
       </header>
-      <main className={styles.main}>
-        {/* {cartItemList} */}
-        {renderList}
-      </main>
+      <main className={styles.main}>{renderList}</main>
       <footer className={styles.button__container}>
         <button
           className={styles.return__button}
