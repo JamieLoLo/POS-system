@@ -23,8 +23,8 @@ const OrderPage = () => {
   const dispatch = useDispatch()
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
-  const defaultCategoryName = localStorage.getItem('default_category_name')
   const tableId = localStorage.getItem('table_id')
+  const tableName = localStorage.getItem('table_name')
   const orderId = Number(localStorage.getItem('order_id'))
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
@@ -248,7 +248,7 @@ const OrderPage = () => {
       <div className={styles.information__container}>
         <div className={styles.description}>{minimumInfo.description}</div>
         <div className={styles.table__information}>
-          <div className={styles.table__number}>桌號：22</div>
+          <div className={styles.table__number}>桌號：{tableName}</div>
           <div className={styles.headcount}>
             人數：{orderInfo.adultNum}大 {orderInfo.childrenNum}小
           </div>
