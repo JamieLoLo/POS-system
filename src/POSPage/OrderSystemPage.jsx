@@ -25,8 +25,16 @@ import styles from './OrderSystemPage.module.scss'
 const OrderSystemPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  // localStorage
+  const defaultCategoryId = localStorage.getItem('default_category_id')
+  const tableId = localStorage.getItem('table_id')
+  const cartList = JSON.parse(localStorage.getItem('cart_list'))
+  const renderCartList = JSON.parse(localStorage.getItem('render_cart_list'))
+  const totalPrice = localStorage.getItem('total_price')
+  const tableName = localStorage.getItem('table_name')
   // useSelector
   const orderInfo = useSelector((state) => state.information.orderInfo)
+
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
@@ -34,10 +42,8 @@ const OrderSystemPage = () => {
   const [adultCount, setAdultCount] = useState(orderInfo.adultNum)
   const [childrenCount, setChildrenCount] = useState(orderInfo.childrenNum)
   const [soldProducts, setSoldProducts] = useState([])
-
-  // localStorage
-  const defaultCategoryId = localStorage.getItem('default_category_id')
-  const tableId = localStorage.getItem('table_id')
+  const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
+  const [orderListForRender, setOrderListForRender] = useState([])
 
   // 確認登入狀態
   useEffect(() => {
@@ -61,7 +67,7 @@ const OrderSystemPage = () => {
       }
     }
     getOrder()
-  }, [])
+  }, [tableId])
 
   // 取得所有分類
   useEffect(() => {
@@ -99,6 +105,99 @@ const OrderSystemPage = () => {
       console.error(error)
     }
   }
+  console.log(cartList)
+
+  // 點擊增加產品數量時
+  const addProductHandler = (id) => {
+    // 用來打印購物車的資訊
+    let isProductExit = cartList.find((product) => product.productId === id)
+    if (isProductExit) {
+      // 更新數量
+      let newList = cartList.map((product) => {
+        if (product.productId === id) {
+          product.count = product.count + 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+    }
+
+    // 用來渲染購物車資訊
+    let isRenderCartExit = renderCartList.find(
+      (product) => product.productId === id
+    )
+    if (isRenderCartExit) {
+      // 更新數量
+      let newList = renderCartList.map((product) => {
+        if (product.productId === id) {
+          product.count = product.count + 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('render_cart_list', JSON.stringify(filterCartList))
+    }
+
+    let calculatePrice = cartList.reduce(
+      (acc, product) => acc + product.count * product.price,
+      0
+    )
+
+    localStorage.setItem('total_price', calculatePrice)
+    setTotalPriceForRender(calculatePrice)
+  }
+
+  // 點擊減少產品數量時
+  const minusProductHandler = (id) => {
+    // 用來打印購物車的資訊
+    let isProductExit = cartList.find((product) => product.productId === id)
+    if (isProductExit) {
+      // 減少數量
+      let newList = cartList.map((product) => {
+        if (product.productId === id && product.count !== 0) {
+          product.count = product.count - 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+    }
+
+    // 用來渲染購物車的資訊
+    let isRenderCartExit = renderCartList.find(
+      (product) => product.productId === id
+    )
+    if (isRenderCartExit) {
+      // 減少數量
+      let newList = renderCartList.map((product) => {
+        if (product.productId === id && product.count !== 0) {
+          product.count = product.count - 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('render_cart_list', JSON.stringify(filterCartList))
+    }
+
+    let calculatePrice = cartList.reduce(
+      (acc, product) => acc + product.count * product.price,
+      0
+    )
+
+    localStorage.setItem('total_price', calculatePrice)
+    setTotalPriceForRender(calculatePrice)
+  }
+
+  //  已點品項的清單
+  const orderList = renderCartList.map((data) => (
+    <OrderItem
+      data={data}
+      key={data.productId}
+      addProductHandler={addProductHandler}
+      minusProductHandler={minusProductHandler}
+    />
+  ))
 
   // 類別清單
   const categoryList = allCategoryData.map((data) => (
@@ -113,18 +212,17 @@ const OrderSystemPage = () => {
   const productList = products.map((data) => (
     <MenuItem data={data} key={data.id} />
   ))
-  console.log(products)
-  // 訂單
-  const orderList = soldProducts.map((data) => (
-    <OrderItem data={data} key={data.productId} />
-  ))
 
+  const returnHandler = () => {
+    localStorage.setItem('render_cart_list', JSON.stringify([]))
+    navigate('/order/table')
+  }
   return (
     <div className='main__container'>
       <CheckoutModal />
       <div className={styles.left__side__container}>
         <div className={styles.table__name__container}>
-          <p className={StyleSheet.table__name}>A1</p>
+          <p className={StyleSheet.table__name}>{tableName}</p>
         </div>
         <div className={styles.order__list}>{orderList}</div>
         <div className={styles.control__container}>
@@ -158,16 +256,17 @@ const OrderSystemPage = () => {
         <div className={styles.classification__container}>{categoryList}</div>
         <div className={styles.menu__container}>{productList}</div>
         <div className={styles.button__container}>
-          <Link to='/order/table'>
-            <button className={styles.return__button}>返回</button>
-          </Link>
+          <button className={styles.return__button} onClick={returnHandler}>
+            返回
+          </button>
+
           <button
             className={styles.checkout__button}
             onClick={() => dispatch(modalActions.setIsCheckoutModalOpen(true))}
           >
             結帳
             <br />
-            <p className={styles.price}>應付金額：$320</p>
+            <p className={styles.price}>應付金額：${totalPrice}</p>
           </button>
         </div>
       </div>
