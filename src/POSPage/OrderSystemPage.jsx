@@ -105,7 +105,6 @@ const OrderSystemPage = () => {
       console.error(error)
     }
   }
-  console.log(cartList)
 
   // 點擊增加產品數量時
   const addProductHandler = (id) => {
@@ -140,10 +139,9 @@ const OrderSystemPage = () => {
     }
 
     let calculatePrice = cartList.reduce(
-      (acc, product) => acc + product.count * product.price,
+      (acc, product) => acc + product.count * product.sellingPrice,
       0
     )
-
     localStorage.setItem('total_price', calculatePrice)
     setTotalPriceForRender(calculatePrice)
   }
@@ -181,11 +179,12 @@ const OrderSystemPage = () => {
     }
 
     let calculatePrice = cartList.reduce(
-      (acc, product) => acc + product.count * product.price,
+      (acc, product) => acc + product.count * product.sellingPrice,
       0
     )
 
     localStorage.setItem('total_price', calculatePrice)
+    console.log(calculatePrice)
     setTotalPriceForRender(calculatePrice)
   }
 
