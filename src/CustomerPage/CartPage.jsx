@@ -57,6 +57,8 @@ const CartPage = () => {
 
   const addProductHandler = (id) => {
     let isProductExit = cartList.find((product) => product.id === id)
+
+    // 用來打印畫面
     if (isProductExit) {
       // 更新數量
       let newList = cartList.map((product) => {
@@ -67,6 +69,22 @@ const CartPage = () => {
       })
       localStorage.setItem('cart_list', JSON.stringify(newList))
     }
+
+    // 用來存打點餐api的資訊
+    let isCheckoutExit = checkoutList.find(
+      (product) => product.productId === id
+    )
+    if (isCheckoutExit) {
+      // 更新數量
+      let newList = checkoutList.map((product) => {
+        if (product.productId === id) {
+          product.count = product.count + 1
+        }
+        return product
+      })
+      localStorage.setItem('checkout_list', JSON.stringify(newList))
+    }
+
     let calculateCount = cartList.reduce(
       (acc, product) => acc + product.count,
       0
@@ -79,7 +97,9 @@ const CartPage = () => {
     localStorage.setItem('total_price', calculatePrice)
   }
 
+  // 點選餐點數量減少時
   const minusProductHandler = (id) => {
+    // 用來渲染畫面的資料
     let isProductExit = cartList.find((product) => product.id === id)
     if (isProductExit) {
       // 減少數量
@@ -91,6 +111,22 @@ const CartPage = () => {
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
       localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+    }
+
+    // 用來打點餐api的資訊
+    let isCheckoutExit = checkoutList.find(
+      (product) => product.productId === id
+    )
+    if (isCheckoutExit) {
+      // 減少數量
+      let newList = checkoutList.map((product) => {
+        if (product.productId === id && product.count !== 0) {
+          product.count = product.count - 1
+        }
+        return product
+      })
+      let filterCartList = newList.filter((product) => product.count !== 0)
+      localStorage.setItem('checkout_list', JSON.stringify(filterCartList))
     }
     let calculateCount = cartList.reduce(
       (acc, product) => acc + product.count,
