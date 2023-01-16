@@ -43,7 +43,7 @@ const OrderItem = ({ data, addProductHandler, minusProductHandler }) => {
         <div
           className={styles.icon__container}
           onClick={() => {
-            addProductHandler?.(data.productId, data.count, data.price)
+            addProductHandler?.(data.productId, data.sellingPrice, data.name)
             setCount((count) => count + 1)
           }}
         >
