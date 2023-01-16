@@ -38,11 +38,8 @@ const CartItem = ({ data, addProductHandler, minusProductHandler }) => {
       </div>
       <div className={styles.right__side__container}>
         <div className={styles.title__container}>
-          <div className={styles.title}>
-            {data.name}
-            {data.nameEn}
-          </div>
-          <div className={styles.description}>{data.description}</div>
+          <div className={styles.title}>{data.name}</div>
+          <div className={styles.name__en}>{data.nameEn}</div>
         </div>
         <div className={styles.price}>{data.price}</div>
         <div className={styles.count__control}>
