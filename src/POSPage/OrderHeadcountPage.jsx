@@ -30,7 +30,6 @@ const OrderCustomerPage = () => {
       navigate('/admin/login')
     }
   }, [navigate])
-  console.log(tableId)
 
   // 開桌
   const submitHandler = async () => {
