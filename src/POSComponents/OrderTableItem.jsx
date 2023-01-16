@@ -21,7 +21,7 @@ const OrderTableItem = ({ data }) => {
     }
     dispatch(informationActions.setTableInfo(data))
     localStorage.setItem('table_id', data.id)
-    if (data.Orders.id === null && data.Orders.isPaid === 0) {
+    if (data.Orders.id === null && data.Orders.isPaid === null) {
       navigate('/order/headcount')
     } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
       try {
