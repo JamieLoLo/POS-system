@@ -3,6 +3,7 @@ import CustomerMenuItem from './CustomerMenuItem'
 import CartItem from './CartItem'
 import MinimumModal from './MinimumModal'
 import ReceiptModal from './ReceiptModal'
+import ProductDetailModal from './ProductDetailModal'
 
 export {
   CustomerOrderCategory,
@@ -10,4 +11,5 @@ export {
   CartItem,
   MinimumModal,
   ReceiptModal,
+  ProductDetailModal,
 }
