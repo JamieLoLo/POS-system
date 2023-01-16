@@ -10,6 +10,7 @@ const initialState = {
   isModifyProductModalOpen: false,
   isMinimumModalOpen: false,
   isReceiptModalOpen: false,
+  isProductDetailModalOpen: false,
 }
 
 const modalSlice = createSlice({
@@ -43,6 +44,9 @@ const modalSlice = createSlice({
     },
     setIsReceiptModalOpen(state, action) {
       state.isReceiptModalOpen = action.payload
+    },
+    setIsProductDetailModalOpen(state, action) {
+      state.isProductDetailModalOpen = action.payload
     },
   },
 })
