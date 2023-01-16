@@ -83,7 +83,8 @@
     justify-content: flex-end;
     align-items: flex-end;
     .return__button,
-    .checkout__button {
+    .checkout__button,
+    .modify__button {
       font-size: 24px;
       height: 80px;
       width: 220px;
@@ -97,6 +98,9 @@
       width: 160px;
       margin-right: 1.5rem;
       background-color: var(--error-color);
+    }
+    .modify__button {
+      background-color: #f4b639;
     }
     .checkout__button {
       text-align: end;
