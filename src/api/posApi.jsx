@@ -131,3 +131,23 @@ export const modifyHeadcountApi = async (table_id, adultNum, childrenNum) => {
     console.error('[Modify Headcount Failed]: ', error)
   }
 }
+
+// 結帳
+export const checkoutApi = async (order_id) => {
+  try {
+    const res = await axiosInstance.patch(`${posURL}/orders/${order_id}`)
+    return res
+  } catch (error) {
+    console.error('[Checkout Failed]: ', error)
+  }
+}
+
+// 完成訂單
+export const finishOrderApi = async (order_id) => {
+  try {
+    const res = await axiosInstance.patch(`${posURL}/finishorder/${order_id}`)
+    return res
+  } catch (error) {
+    console.error('[Finish Order Failed]: ', error)
+  }
+}
