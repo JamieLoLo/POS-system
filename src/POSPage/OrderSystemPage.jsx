@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 // hook
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -9,13 +10,16 @@ import {
   OrderCategory,
   MenuItem,
   CheckoutModal,
+  LoadingModal,
 } from '../POSComponents'
+
 // store
 import { modalActions } from '../store/modal-slice'
 import { informationActions } from '../store/information-slice'
 // api
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
-import { getOrderApi } from '../api/orderApi'
+import { getOrderApi, customerOrderApi } from '../api/orderApi'
+import { modifyHeadcountApi } from '../api/posApi'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus_white.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus_white.svg'
@@ -26,24 +30,35 @@ const OrderSystemPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // localStorage
+  const orderInfo = JSON.parse(localStorage.getItem('order_info'))
   const defaultCategoryId = localStorage.getItem('default_category_id')
-  const tableId = localStorage.getItem('table_id')
+  const tableId = orderInfo.tableId
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const renderCartList = JSON.parse(localStorage.getItem('render_cart_list'))
-  const totalPrice = localStorage.getItem('total_price')
-  const tableName = localStorage.getItem('table_name')
+  const minCharge = Number(localStorage.getItem('min_charge'))
+  const totalPrice = orderInfo.totalPrice
+  const defaultTotalPrice = orderInfo.totalPrice
+  const tableName = orderInfo.Table.name
+  const orderId = Number(orderInfo.id)
+  const defaultAdultCount = orderInfo.adultNum
+  const defaultChildrenCount = orderInfo.childrenNum
   // useSelector
-  const orderInfo = useSelector((state) => state.information.orderInfo)
-
+  const isLoadingModalOpen = useSelector(
+    (state) => state.modal.isLoadingModalOpen
+  )
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
   const [orderData, setOrderData] = useState([])
-  const [adultCount, setAdultCount] = useState(orderInfo.adultNum)
-  const [childrenCount, setChildrenCount] = useState(orderInfo.childrenNum)
+  const [adultCount, setAdultCount] = useState(defaultAdultCount)
+  const [childrenCount, setChildrenCount] = useState(defaultChildrenCount)
+  const [adultCountForCompare, setAdultCountForCompare] =
+    useState(defaultAdultCount)
+  const [childrenCountForCompare, setChildrenCountForCompare] =
+    useState(defaultChildrenCount)
   const [soldProducts, setSoldProducts] = useState([])
   const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
-  const [orderListForRender, setOrderListForRender] = useState([])
+  const [total, setTotal] = useState(defaultTotalPrice)
 
   // 確認登入狀態
   useEffect(() => {
@@ -59,8 +74,8 @@ const OrderSystemPage = () => {
       try {
         const res = await getOrderApi(tableId)
         await setOrderData(res.data)
-        await setAdultCount(res.data.adultNum)
-        await setChildrenCount(res.data.childrenNum)
+        // await setAdultCount(res.data.adultNum)
+        // await setChildrenCount(res.data.childrenNum)
         await setSoldProducts(res.data.soldProducts)
       } catch (error) {
         console.error(error)
@@ -106,36 +121,56 @@ const OrderSystemPage = () => {
     }
   }
 
-  // 點擊增加產品數量時
-  const addProductHandler = (id) => {
+  // 點擊增加購物車內產品數量時
+  const addProductHandler = (productId, price, name) => {
     // 用來打印購物車的資訊
-    let isProductExit = cartList.find((product) => product.productId === id)
+    let isProductExit = cartList.find(
+      (product) => product.productId === productId
+    )
     if (isProductExit) {
       // 更新數量
       let newList = cartList.map((product) => {
-        if (product.productId === id) {
+        if (product.productId === productId) {
           product.count = product.count + 1
         }
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
       localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+    } else {
+      // 加入餐點
+      cartList.push({
+        orderId: orderId,
+        productId: productId,
+        count: 1,
+        sellingPrice: price,
+      })
+      localStorage.setItem('cart_list', JSON.stringify(cartList))
     }
 
     // 用來渲染購物車資訊
     let isRenderCartExit = renderCartList.find(
-      (product) => product.productId === id
+      (product) => product.productId === productId
     )
     if (isRenderCartExit) {
       // 更新數量
       let newList = renderCartList.map((product) => {
-        if (product.productId === id) {
+        if (product.productId === productId) {
           product.count = product.count + 1
         }
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
       localStorage.setItem('render_cart_list', JSON.stringify(filterCartList))
+    } else {
+      // 加入餐點
+      renderCartList.push({
+        productId: productId,
+        name: name,
+        count: 1,
+        sellingPrice: price,
+      })
+      localStorage.setItem('render_cart_list', JSON.stringify(renderCartList))
     }
 
     let calculatePrice = cartList.reduce(
@@ -146,7 +181,7 @@ const OrderSystemPage = () => {
     setTotalPriceForRender(calculatePrice)
   }
 
-  // 點擊減少產品數量時
+  // 點擊減少購物車內產品數量時
   const minusProductHandler = (id) => {
     // 用來打印購物車的資訊
     let isProductExit = cartList.find((product) => product.productId === id)
@@ -188,6 +223,79 @@ const OrderSystemPage = () => {
     setTotalPriceForRender(calculatePrice)
   }
 
+  // 點擊菜單時新增商品
+  const addMenuItemHandler = (productId, price, name) => {
+    // 用來打印購物車的資訊
+    let isProductExit = cartList.find(
+      (product) => product.productId === productId
+    )
+    if (isProductExit) {
+      return
+    } else {
+      // 加入餐點
+      cartList.push({
+        orderId: orderId,
+        productId: productId,
+        count: 1,
+        sellingPrice: price,
+      })
+      localStorage.setItem('cart_list', JSON.stringify(cartList))
+    }
+
+    // 用來渲染購物車資訊
+    let isRenderCartExit = renderCartList.find(
+      (product) => product.productId === productId
+    )
+    if (isRenderCartExit) {
+      return
+    } else {
+      // 加入餐點
+      renderCartList.push({
+        productId: productId,
+        name: name,
+        count: 1,
+        sellingPrice: price,
+      })
+      localStorage.setItem('render_cart_list', JSON.stringify(renderCartList))
+    }
+
+    let calculatePrice = cartList.reduce(
+      (acc, product) => acc + product.count * product.sellingPrice,
+      0
+    )
+    localStorage.setItem('total_price', calculatePrice)
+    setTotalPriceForRender(calculatePrice)
+  }
+
+  // 修改訂單人數或內容
+  const modifyHandler = async () => {
+    try {
+      if (total !== totalPriceForRender) {
+        dispatch(modalActions.setIsLoadingModalOpen(true))
+        await customerOrderApi(orderId, cartList)
+        setTotal(totalPriceForRender)
+      }
+      if (
+        adultCountForCompare !== adultCount ||
+        childrenCountForCompare !== childrenCount
+      ) {
+        await modifyHeadcountApi(tableId, adultCount, childrenCount)
+        setAdultCountForCompare(adultCount)
+        setChildrenCountForCompare(childrenCount)
+      }
+      dispatch(modalActions.setIsLoadingModalOpen(false))
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: '訂單更新成功',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   //  已點品項的清單
   const orderList = renderCartList.map((data) => (
     <OrderItem
@@ -209,16 +317,23 @@ const OrderSystemPage = () => {
 
   // 餐點清單
   const productList = products.map((data) => (
-    <MenuItem data={data} key={data.id} />
+    <MenuItem
+      data={data}
+      key={data.id}
+      addMenuItemHandler={addMenuItemHandler}
+    />
   ))
 
+  // 返回桌子頁面
   const returnHandler = () => {
     localStorage.setItem('render_cart_list', JSON.stringify([]))
     navigate('/order/table')
   }
+
   return (
     <div className='main__container'>
       <CheckoutModal />
+      <LoadingModal trigger={isLoadingModalOpen} />
       <div className={styles.left__side__container}>
         <div className={styles.table__name__container}>
           <p className={StyleSheet.table__name}>{tableName}</p>
@@ -229,11 +344,23 @@ const OrderSystemPage = () => {
             <div className={styles.subtitle}>大人</div>
             <div className={styles.count__container}>
               <div className={styles.icon__container}>
-                <CustomerPlusIcon className={styles.icon} />
+                <CustomerMinusIcon
+                  className={styles.icon}
+                  onClick={() => {
+                    if (adultCount > 0) {
+                      setAdultCount((adultCount) => adultCount - 1)
+                    }
+                  }}
+                />
               </div>
               <p className={styles.count}>{adultCount}</p>
               <div className={styles.icon__container}>
-                <CustomerMinusIcon className={styles.icon} />
+                <CustomerPlusIcon
+                  className={styles.icon}
+                  onClick={() => {
+                    setAdultCount((adultCount) => adultCount + 1)
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -241,11 +368,23 @@ const OrderSystemPage = () => {
             <div className={styles.subtitle}>小孩</div>
             <div className={styles.count__container}>
               <div className={styles.icon__container}>
-                <CustomerPlusIcon className={styles.icon} />
+                <CustomerMinusIcon
+                  className={styles.icon}
+                  onClick={() => {
+                    if (childrenCount > 0) {
+                      setChildrenCount((childrenCount) => childrenCount - 1)
+                    }
+                  }}
+                />
               </div>
               <p className={styles.count}>{childrenCount}</p>
               <div className={styles.icon__container}>
-                <CustomerMinusIcon className={styles.icon} />
+                <CustomerPlusIcon
+                  className={styles.icon}
+                  onClick={() => {
+                    setChildrenCount((childrenCount) => childrenCount + 1)
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -258,15 +397,27 @@ const OrderSystemPage = () => {
           <button className={styles.return__button} onClick={returnHandler}>
             返回
           </button>
-
-          <button
-            className={styles.checkout__button}
-            onClick={() => dispatch(modalActions.setIsCheckoutModalOpen(true))}
-          >
-            結帳
-            <br />
-            <p className={styles.price}>應付金額：${totalPrice}</p>
-          </button>
+          {total === totalPriceForRender &&
+            adultCountForCompare === adultCount &&
+            childrenCountForCompare === childrenCount && (
+              <button
+                className={styles.checkout__button}
+                onClick={() =>
+                  dispatch(modalActions.setIsCheckoutModalOpen(true))
+                }
+              >
+                結帳
+                <br />
+                <p className={styles.price}>應付金額：${totalPriceForRender}</p>
+              </button>
+            )}
+          {(total !== totalPriceForRender ||
+            adultCountForCompare !== adultCount ||
+            childrenCountForCompare !== childrenCount) && (
+            <button className={styles.modify__button} onClick={modifyHandler}>
+              修改訂單
+            </button>
+          )}
         </div>
       </div>
     </div>
