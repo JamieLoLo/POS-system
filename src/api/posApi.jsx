@@ -118,3 +118,16 @@ export const addHeadcountApi = async (table_id, adultNum, childrenNum) => {
     return error
   }
 }
+
+// 店家修改人數
+export const modifyHeadcountApi = async (table_id, adultNum, childrenNum) => {
+  try {
+    const res = await axiosInstance.put(`${posURL}/orders/${table_id}`, {
+      adultNum,
+      childrenNum,
+    })
+    return res
+  } catch (error) {
+    console.error('[Modify Headcount Failed]: ', error)
+  }
+}
