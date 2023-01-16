@@ -12,6 +12,7 @@ const initialState = {
   tableInfo: [],
   headcountInfo: [],
   orderInfo: [],
+  customerMenuInfo: [],
 }
 
 const informationSlice = createSlice({
@@ -42,6 +43,9 @@ const informationSlice = createSlice({
     },
     setOrderInfo(state, action) {
       state.orderInfo = action.payload
+    },
+    setCustomerMenuInfo(state, action) {
+      state.customerMenuInfo = action.payload
     },
   },
 })
