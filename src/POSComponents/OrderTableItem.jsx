@@ -3,16 +3,31 @@ import clsx from 'clsx'
 // hook
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 // store
 import { informationActions } from '../store/information-slice'
 // api
 import { getOrderApi } from '../api/orderApi'
+import { getMinimumApi } from '../api/posApi'
 // SCSS
 import styles from './OrderTableItem.module.scss'
 
 const OrderTableItem = ({ data }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  // 取得低消金額
+  useEffect(() => {
+    const getDescription = async () => {
+      try {
+        const res = await getMinimumApi()
+        localStorage.setItem('min_charge', res.data.minCharge)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getDescription()
+  }, [])
 
   // 點擊桌子後將桌子資訊存入store，判斷目前狀態，導入對應頁面。
   const orderHandler = async () => {
@@ -28,7 +43,6 @@ const OrderTableItem = ({ data }) => {
         const res = await getOrderApi(data.id)
         // 這邊取出已點餐點的資訊，取出的部分為更新訂單時需要的資料格式。
         const cartList = res.data.soldProducts.map((product) => ({
-          orderId: res.data.id,
           productId: product.productId,
           count: product.count,
           sellingPrice: product.Product.price,
@@ -40,10 +54,9 @@ const OrderTableItem = ({ data }) => {
           count: product.count,
           sellingPrice: product.Product.price,
         }))
+        localStorage.setItem('order_info', JSON.stringify(res.data))
         localStorage.setItem('cart_list', JSON.stringify(cartList))
         localStorage.setItem('render_cart_list', JSON.stringify(renderCartList))
-        localStorage.setItem('total_price', res.data.totalPrice)
-        localStorage.setItem('table_name', res.data.Table.name)
         navigate('/order/system')
       } catch (error) {
         console.error(error)
