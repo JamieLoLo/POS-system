@@ -2,6 +2,7 @@ import React from 'react'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { OrderTableItem } from '../POSComponents'
@@ -17,6 +18,8 @@ const OrderTablePage = () => {
   const navigate = useNavigate()
   // useState
   const [allTablesData, setAllTablesData] = useState([])
+  // useSelector
+  const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
 
   // 確認登入狀態
   useEffect(() => {
@@ -37,7 +40,7 @@ const OrderTablePage = () => {
       }
     }
     getTables()
-  }, [])
+  }, [isTableUpdate])
 
   // 取得所有分類
   useEffect(() => {
