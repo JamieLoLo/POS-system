@@ -15,7 +15,6 @@ import {
 
 // store
 import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
 // api
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 import { getOrderApi, customerOrderApi } from '../api/orderApi'
@@ -38,6 +37,7 @@ const OrderSystemPage = () => {
   const minCharge = Number(localStorage.getItem('min_charge'))
   const totalPrice = orderInfo.totalPrice
   const defaultTotalPrice = orderInfo.totalPrice
+  const realTotalPrice = Number(localStorage.getItem('total_price'))
   const tableName = orderInfo.Table.name
   const orderId = Number(orderInfo.id)
   const defaultAdultCount = orderInfo.adultNum
@@ -274,6 +274,11 @@ const OrderSystemPage = () => {
         dispatch(modalActions.setIsLoadingModalOpen(true))
         await customerOrderApi(orderId, cartList)
         setTotal(totalPriceForRender)
+        let newOrderInfoPrice = {
+          ...orderInfo,
+          totalPrice: totalPriceForRender,
+        }
+        localStorage.setItem('order_info', JSON.stringify(newOrderInfoPrice))
       }
       if (
         adultCountForCompare !== adultCount ||
@@ -293,6 +298,22 @@ const OrderSystemPage = () => {
       })
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  // 結帳按鈕
+  const checkoutHandler = () => {
+    if (realTotalPrice < minCharge * adultCount) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '未達低消',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    } else {
+      dispatch(modalActions.setIsCheckoutModalOpen(true))
     }
   }
 
@@ -402,9 +423,7 @@ const OrderSystemPage = () => {
             childrenCountForCompare === childrenCount && (
               <button
                 className={styles.checkout__button}
-                onClick={() =>
-                  dispatch(modalActions.setIsCheckoutModalOpen(true))
-                }
+                onClick={checkoutHandler}
               >
                 結帳
                 <br />
