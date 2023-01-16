@@ -1,11 +1,16 @@
 import React from 'react'
+import clsx from 'clsx'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 // UI
-import { CustomerOrderCategory, CustomerMenuItem } from '../CustomerComponents'
+import {
+  CustomerOrderCategory,
+  CustomerMenuItem,
+  ProductDetailModal,
+} from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
@@ -17,7 +22,6 @@ import { getOrderApi } from '../api/orderApi'
 import { informationActions } from '../store/information-slice'
 // SCSS
 import styles from './OrderPage.module.scss'
-import clsx from 'clsx'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
@@ -40,6 +44,9 @@ const OrderPage = () => {
 
   // useSelector
   const orderInfo = useSelector((state) => state.information.orderInfo)
+  const isProductDetailModalOpen = useSelector(
+    (state) => state.modal.isProductDetailModalOpen
+  )
 
   // 取得描述
   useEffect(() => {
@@ -158,7 +165,6 @@ const OrderPage = () => {
     } else {
       // 加入餐點
       checkoutList.push({
-        orderId: orderId,
         productId: id,
         count: 1,
         sellingPrice: price,
@@ -181,7 +187,7 @@ const OrderPage = () => {
   }
 
   // 點擊減少產品數量時
-  const minusProductHandler = (id, name, nameEn, description, price, image) => {
+  const minusProductHandler = (id) => {
     // 用來打印購物車的資訊
     let isProductExit = cartList.find((product) => product.id === id)
     if (isProductExit) {
@@ -239,6 +245,7 @@ const OrderPage = () => {
 
   return (
     <div className='mobile__main__container'>
+      <ProductDetailModal trigger={isProductDetailModalOpen} />
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
