@@ -15,7 +15,6 @@ import {
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // store
 import { modalActions } from '../store/modal-slice'
-import { updateActions } from '../store/update-slice'
 // api
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
 // SCSS
