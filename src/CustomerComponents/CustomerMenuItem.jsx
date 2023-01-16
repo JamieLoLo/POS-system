@@ -1,16 +1,21 @@
 import React from 'react'
 // hook
 import { useState, useEffect } from 'react'
-
+import { useDispatch } from 'react-redux'
 // default img
 import DefaultFoodImg from '../POSComponents/assets/logo/logo.png'
 // icon
 import { ReactComponent as PlusIcon } from '../POSComponents/assets/icon/plus.svg'
 import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.svg'
+// store
+import { modalActions } from '../store/modal-slice'
+import { informationActions } from '../store/information-slice'
 // SCSS
 import styles from './CustomerMenuItem.module.scss'
 
 const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
+  const dispatch = useDispatch()
+  // useState
   let [count, setCount] = useState(0)
   // localStorage
   const orderId = localStorage.getItem('order_id')
@@ -26,7 +31,13 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
 
   return (
     <div className={styles.menu__item__container}>
-      <div className={styles.image__container}>
+      <div
+        className={styles.image__container}
+        onClick={() => {
+          dispatch(informationActions.setCustomerMenuInfo(data))
+          dispatch(modalActions.setIsProductDetailModalOpen(true))
+        }}
+      >
         <img
           className={styles.default__img}
           src={data.image ? data.image : DefaultFoodImg}
@@ -35,10 +46,24 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
       </div>
       <div className={styles.right__side__container}>
         <div className={styles.title__container}>
-          <div className={styles.title}>
-            {data.name} {data.nameEn}
+          <div
+            className={styles.title}
+            onClick={() => {
+              dispatch(informationActions.setCustomerMenuInfo(data))
+              dispatch(modalActions.setIsProductDetailModalOpen(true))
+            }}
+          >
+            {data.name}
           </div>
-          <div className={styles.description}>{data.description}</div>
+          <div
+            className={styles.name__en}
+            onClick={() => {
+              dispatch(informationActions.setCustomerMenuInfo(data))
+              dispatch(modalActions.setIsProductDetailModalOpen(true))
+            }}
+          >
+            {data.nameEn}
+          </div>
         </div>
         <div className={styles.price}>${data.price}</div>
         <div className={styles.count__control}>
