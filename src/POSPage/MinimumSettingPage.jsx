@@ -89,8 +89,9 @@ const MinimumSettingPage = () => {
               <div className={styles.description}>低消描述</div>
               <textarea
                 placeholder='請輸入低消描述'
-                cols='30'
+                cols='16'
                 rows='9'
+                wrap='Physical'
                 defaultValue={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
