@@ -61,10 +61,12 @@ const ModifyProductModal = () => {
   }, [])
 
   // 餐點分類選單
-  const options = allCategoryData.map((data) => ({
+  const selectList = allCategoryData.map((data) => ({
     value: data.id,
     label: data.name,
   }))
+  selectList.push({ value: 0, label: '未分類' })
+  const options = selectList
 
   // 新增餐點
   const addProductHandler = async () => {
@@ -94,9 +96,10 @@ const ModifyProductModal = () => {
     } else {
       formData.append('nameEn', nameEn)
     }
-    if (categoryId !== undefined || categoryId !== '') {
+    if (categoryId && categoryId !== 0) {
       formData.append('categoryId', categoryId)
     }
+
     if (cost === undefined || cost === '') {
       formData.append('cost', 0)
     } else {

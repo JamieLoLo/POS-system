@@ -88,6 +88,7 @@ const DishSettingPage = () => {
   const productsHandler = async (item) => {
     try {
       const res = await getProductsApi(item.value)
+      localStorage.setItem('default_category_id', item.value)
       setProducts(res.data)
     } catch (error) {
       console.error(error)
