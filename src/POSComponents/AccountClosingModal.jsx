@@ -47,6 +47,7 @@ const AccountClosingModal = () => {
         showConfirmButton: false,
         timer: 2000,
       })
+      dispatch(modalActions.setIsAccountClosingModalOpen(false))
       navigate('/forms/revenue')
     } else {
       Swal.fire({
