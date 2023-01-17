@@ -112,7 +112,10 @@ const OrderTableItem = ({ data }) => {
         [styles.table]: data.name !== '0' && data.Orders.id === null,
         [styles.table__d__none]: data.name === '0',
         [styles.table__not__order]:
-          data.name !== '0' && data.Orders.id !== null,
+          data.name !== '0' &&
+          data.Orders.id !== null &&
+          data.Orders.isPaid === 0 &&
+          data.Orders.totalPrice === 0,
         [styles.table__not__paid]:
           data.name !== '0' &&
           data.Orders.isPaid === 0 &&
