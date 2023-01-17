@@ -19,7 +19,6 @@ const ProductDetailModal = () => {
   const customerMenuInfo = useSelector(
     (state) => state.information.customerMenuInfo
   )
-  console.log(customerMenuInfo)
   return isProductDetailModalOpen ? (
     <div className={styles.modal}>
       <div
