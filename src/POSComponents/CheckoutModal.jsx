@@ -47,16 +47,27 @@ const CheckoutModal = () => {
   // 結帳
   const checkoutHandle = async () => {
     try {
-      await checkoutApi(orderId)
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '結帳成功',
-        showConfirmButton: false,
-        timer: 2000,
+      let result = await Swal.fire({
+        title: '確定要結帳嗎？',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: '取消',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確定',
       })
-      dispatch(modalActions.setIsCheckoutModalOpen(false))
-      navigate('/order/table')
+      if (result.isConfirmed) {
+        await checkoutApi(orderId)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: '結帳成功',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+        dispatch(modalActions.setIsCheckoutModalOpen(false))
+        navigate('/order/table')
+      }
     } catch (error) {
       console.error(error)
       Swal.fire({
