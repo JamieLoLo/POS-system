@@ -13,7 +13,7 @@
   .modal__container {
     position: absolute;
     width: 90vw;
-    height: 45%;
+    height: 55%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +28,10 @@
 
     .title__container {
       text-align: center;
-      margin-bottom: 1.2rem;
+      height: 35%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       .title {
         font-size: 18px;
         font-weight: 700;
@@ -38,6 +41,26 @@
         .subtitle__one {
           font-weight: 700;
         }
+      }
+    }
+    .detail {
+      height: 40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .button__container {
+      height: 25%;
+      display: flex;
+      align-items: center;
+      .close__button {
+        border: none;
+        font-size: 16px;
+        color: var(--white);
+        background-color: #478058;
+
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
       }
     }
   }

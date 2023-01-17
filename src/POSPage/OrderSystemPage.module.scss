@@ -84,7 +84,8 @@
     align-items: flex-end;
     .return__button,
     .checkout__button,
-    .modify__button {
+    .modify__button,
+    .unreached__button {
       font-size: 24px;
       height: 80px;
       width: 220px;
@@ -93,6 +94,9 @@
       border: none;
       border-radius: 10px;
       padding: 0 1rem;
+    }
+    .unreached__button {
+      background-color: var(--error-color);
     }
     .return__button {
       width: 160px;
