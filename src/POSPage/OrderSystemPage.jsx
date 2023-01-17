@@ -420,7 +420,20 @@ const OrderSystemPage = () => {
           </button>
           {total === totalPriceForRender &&
             adultCountForCompare === adultCount &&
-            childrenCountForCompare === childrenCount && (
+            childrenCountForCompare === childrenCount &&
+            totalPrice < minCharge * adultCount && (
+              <button className={styles.unreached__button}>
+                未達低消
+                <br />
+                <p className={styles.price}>
+                  差額：${minCharge * adultCount - totalPrice}
+                </p>
+              </button>
+            )}
+          {total === totalPriceForRender &&
+            adultCountForCompare === adultCount &&
+            childrenCountForCompare === childrenCount &&
+            totalPrice >= minCharge * adultCount && (
               <button
                 className={styles.checkout__button}
                 onClick={checkoutHandler}
