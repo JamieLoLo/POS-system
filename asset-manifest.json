@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/POS-system/static/css/main.ca83617c.css",
-    "main.js": "/POS-system/static/js/main.b2976f6a.js",
+    "main.css": "/POS-system/static/css/main.3cab9984.css",
+    "main.js": "/POS-system/static/js/main.93a3fa05.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
     "static/media/logo_circle.png": "/POS-system/static/media/logo_circle.145b04c90b132c1034b2.png",
@@ -11,6 +11,7 @@
     "static/media/loading.svg": "/POS-system/static/media/loading.30f22533f74514586cf1c7f585869131.svg",
     "static/media/form.svg": "/POS-system/static/media/form.3301d6abd46e655050fc8a29af46746a.svg",
     "static/media/password.svg": "/POS-system/static/media/password.339f93b5ac0a88667ee99dc4aa4383c0.svg",
+    "static/media/loading_ball.svg": "/POS-system/static/media/loading_ball.4e5359abaa8a8d3884988bf91e33bec1.svg",
     "static/media/customer_plus.svg": "/POS-system/static/media/customer_plus.234b497a2dde3d8401ccf56b579ca6c5.svg",
     "static/media/customer_plus_white.svg": "/POS-system/static/media/customer_plus_white.83894e371b9fb0fa9a8ce6baa450a0f7.svg",
     "static/media/calculator_delete.svg": "/POS-system/static/media/calculator_delete.131264267fc079245856c2348d510b09.svg",
@@ -23,12 +24,13 @@
     "static/media/person.svg": "/POS-system/static/media/person.76f39bcbaef7934f6421fc49b59ca1a3.svg",
     "static/media/minus.svg": "/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
-    "main.ca83617c.css.map": "/POS-system/static/css/main.ca83617c.css.map",
-    "main.b2976f6a.js.map": "/POS-system/static/js/main.b2976f6a.js.map",
+    "static/media/delete_black.svg": "/POS-system/static/media/delete_black.51522a7618bca8e90c2d8ea9c0ba4458.svg",
+    "main.3cab9984.css.map": "/POS-system/static/css/main.3cab9984.css.map",
+    "main.93a3fa05.js.map": "/POS-system/static/js/main.93a3fa05.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ca83617c.css",
-    "static/js/main.b2976f6a.js"
+    "static/css/main.3cab9984.css",
+    "static/js/main.93a3fa05.js"
   ]
 }
