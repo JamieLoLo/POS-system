@@ -9,6 +9,8 @@ import { OrderTableItem } from '../POSComponents'
 // api
 import { getTablesApi } from '../api/posApi'
 import { categoryGetAllApi } from '../api/categoryApi'
+// icon
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // SCSS
 import styles from './OrderTablePage.module.scss'
 
@@ -63,9 +65,13 @@ const OrderTablePage = () => {
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
-        <div className={styles.right__side__container}>
-          <div className={styles.table__container}>{tableList}</div>
-        </div>
+        {allTablesData.length ? (
+          <div className={styles.right__side__container}>
+            <div className={styles.table__container}>{tableList}</div>
+          </div>
+        ) : (
+          <LoadingIcon />
+        )}
       </PosMainGridSystem>
     </div>
   )
