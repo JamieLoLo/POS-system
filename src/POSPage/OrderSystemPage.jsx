@@ -37,7 +37,7 @@ const OrderSystemPage = () => {
   const minCharge = Number(localStorage.getItem('min_charge'))
   const totalPrice = orderInfo.totalPrice
   const defaultTotalPrice = orderInfo.totalPrice
-  const realTotalPrice = Number(localStorage.getItem('total_price'))
+  const realTotalPrice = Number(orderInfo.totalPrice)
   const tableName = orderInfo.Table.name
   const orderId = Number(orderInfo.id)
   const defaultAdultCount = orderInfo.adultNum
