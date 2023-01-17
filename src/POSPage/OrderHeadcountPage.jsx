@@ -39,11 +39,11 @@ const OrderCustomerPage = () => {
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: '成功開桌，正在導向點餐頁面。',
+        title: '成功開桌',
         showConfirmButton: false,
         timer: 2000,
       })
-      navigate('/order/system')
+      navigate('/order/table')
     } catch (error) {
       console.error(error)
     }
