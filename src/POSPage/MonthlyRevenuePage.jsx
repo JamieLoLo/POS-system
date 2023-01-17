@@ -25,6 +25,7 @@ const MonthlyRevenuePage = () => {
       navigate('/admin/login')
     }
   }, [navigate])
+  console.log(startDate)
 
   return (
     <div className='main__container'>
