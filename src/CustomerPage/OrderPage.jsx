@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 // UI
 import {
   CustomerOrderCategory,
@@ -25,6 +26,7 @@ import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
   const tableId = localStorage.getItem('table_id')
@@ -106,6 +108,7 @@ const OrderPage = () => {
       try {
         const res = await getOrderApi(tableId)
         await dispatch(informationActions.setOrderInfo(res.data))
+        localStorage.setItem('adult_count', res.data.adultNum)
       } catch (error) {
         console.error(error)
       }
@@ -232,6 +235,17 @@ const OrderPage = () => {
     setTotalPriceForRender(calculatePrice)
   }
 
+  // 前往購物車
+  const getCartHandler = async () => {
+    try {
+      const res = await getOrderApi(tableId)
+      localStorage.setItem('adult_count', res.data.adultNum)
+      navigate('/customer/cart')
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   // 餐點清單
   const productList = products.map((data) => (
     <CustomerMenuItem
@@ -253,7 +267,11 @@ const OrderPage = () => {
         <div className={styles.restaurant__name}>咕咕義小餐館</div>
       </header>
       <div className={styles.information__container}>
-        <div className={styles.description}>{minimumInfo.description}</div>
+        <div className={styles.description}>
+          <pre className={styles.description__text}>
+            {minimumInfo.description}
+          </pre>
+        </div>
         <div className={styles.table__information}>
           <div className={styles.table__number}>桌號：{tableName}</div>
           <div className={styles.headcount}>
@@ -265,25 +283,25 @@ const OrderPage = () => {
         <div className={styles.classification__container}>{categoryList}</div>
         <div className={styles.menu__container}>{productList}</div>
       </main>
-      <Link to='/customer/cart'>
-        <footer
-          className={clsx('', {
-            [styles.footer__success]:
-              totalPrice >= orderInfo.adultNum * minimumInfo.minCharge,
-            [styles.footer__error]:
-              totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
-          })}
-        >
-          <div className={styles.cart__container}>
-            <div className={styles.cart__icon__container}>
-              <CartIcon className={styles.icon} />
-            </div>
-            <div className={styles.cart__count}>{totalCountForRender}</div>
+
+      <footer
+        className={clsx('', {
+          [styles.footer__success]:
+            totalPrice >= orderInfo.adultNum * minimumInfo.minCharge,
+          [styles.footer__error]:
+            totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
+        })}
+        onClick={getCartHandler}
+      >
+        <div className={styles.cart__container}>
+          <div className={styles.cart__icon__container}>
+            <CartIcon className={styles.icon} />
           </div>
-          <div className={styles.cart__text}>購物車</div>
-          <div className={styles.sum}>${totalPriceForRender}</div>
-        </footer>
-      </Link>
+          <div className={styles.cart__count}>{totalCountForRender}</div>
+        </div>
+        <div className={styles.cart__text}>購物車</div>
+        <div className={styles.sum}>${totalPriceForRender}</div>
+      </footer>
     </div>
   )
 }
