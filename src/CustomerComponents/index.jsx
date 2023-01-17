@@ -4,6 +4,7 @@ import CartItem from './CartItem'
 import MinimumModal from './MinimumModal'
 import ReceiptModal from './ReceiptModal'
 import ProductDetailModal from './ProductDetailModal'
+import OrderConfirmModal from './OrderConfirmModal'
 
 export {
   CustomerOrderCategory,
@@ -12,4 +13,5 @@ export {
   MinimumModal,
   ReceiptModal,
   ProductDetailModal,
+  OrderConfirmModal,
 }

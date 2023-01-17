@@ -4,14 +4,19 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 // UI
-import { CartItem, MinimumModal, ReceiptModal } from '../CustomerComponents'
+import {
+  CartItem,
+  MinimumModal,
+  ReceiptModal,
+  OrderConfirmModal,
+} from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 // store
 import { modalActions } from '../store/modal-slice'
 import { updateActions } from '../store/update-slice'
 // api
-import { customerOrderApi } from '../api/orderApi'
+import { customerOrderApi, getOrderApi } from '../api/orderApi'
 // SCSS
 import styles from './CartPage.module.scss'
 
@@ -36,6 +41,21 @@ const CartPage = () => {
   const isReceiptModalOpen = useSelector(
     (state) => state.modal.isReceiptModalOpen
   )
+  const isOrderConfirmModalOpen = useSelector(
+    (state) => state.modal.isOrderConfirmModalOpen
+  )
+  // 進入購物車時，再度確定人數是否有更新。
+  useEffect(() => {
+    const getOrder = async () => {
+      try {
+        const res = await getOrderApi(tableId)
+        localStorage.setItem('adult_count', res.data.adultNum)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getOrder()
+  }, [tableId])
 
   // 因為這一頁沒有打 api 的動作，資料都是從 localStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 localStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
@@ -142,15 +162,12 @@ const CartPage = () => {
 
   // 提交訂單
   const submitHandler = async () => {
-    console.log(checkoutList)
-    if (totalPrice < adultNum * minCharge) {
-      dispatch(modalActions.setIsMinimumModalOpen(true))
-      return
-    }
     try {
-      const res = await customerOrderApi(tableId, orderId, checkoutList)
-      if (res.data) {
-        dispatch(modalActions.setIsReceiptModalOpen(true))
+      // 再次確認後台是否更新人數
+      const res = await getOrderApi(tableId)
+      if (res.status === 200) {
+        localStorage.setItem('adult_count', res.data.adultNum)
+        dispatch(modalActions.setIsOrderConfirmModalOpen(true))
       }
     } catch (error) {
       console.error(error)
@@ -161,6 +178,7 @@ const CartPage = () => {
     <div className='mobile__main__container'>
       <MinimumModal trigger={isMinimumModalOpen} />
       <ReceiptModal trigger={isReceiptModalOpen} />
+      <OrderConfirmModal trigger={isOrderConfirmModalOpen} />
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
