@@ -14,7 +14,12 @@ import {
   HomePage,
   AccountClosingPage,
 } from './POSPage/index'
-import { OrderPage, CartPage, CustomerLoginPage } from './CustomerPage'
+import {
+  OrderPage,
+  CartPage,
+  CustomerLoginPage,
+  CustomerReceiptPage,
+} from './CustomerPage'
 // SCSS
 import './reset.module.scss'
 import './base.module.scss'
@@ -40,6 +45,7 @@ function App() {
           <Route path='/customer/main' element={<OrderPage />} />
           <Route path='/customer/cart' element={<CartPage />} />
           <Route path='/customer/login' element={<CustomerLoginPage />} />
+          <Route path='/customer/receipt' element={<CustomerReceiptPage />} />
           <Route path='*' element={<HomePage />} />
         </Routes>
       </HashRouter>
