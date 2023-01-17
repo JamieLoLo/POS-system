@@ -38,9 +38,6 @@ const CartPage = () => {
   const isMinimumModalOpen = useSelector(
     (state) => state.modal.isMinimumModalOpen
   )
-  const isReceiptModalOpen = useSelector(
-    (state) => state.modal.isReceiptModalOpen
-  )
   const isOrderConfirmModalOpen = useSelector(
     (state) => state.modal.isOrderConfirmModalOpen
   )
@@ -177,7 +174,6 @@ const CartPage = () => {
   return (
     <div className='mobile__main__container'>
       <MinimumModal trigger={isMinimumModalOpen} />
-      <ReceiptModal trigger={isReceiptModalOpen} />
       <OrderConfirmModal trigger={isOrderConfirmModalOpen} />
       <header>
         <div className={styles.logo__container}>

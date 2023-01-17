@@ -49,7 +49,6 @@ const CustomerLoginPage = () => {
       localStorage.setItem('adult_count', res.data.adultNum)
       localStorage.setItem('children_count', res.data.childrenNum)
       await dispatch(informationActions.setOrderInfo(res.data))
-      dispatch(modalActions.setIsReceiptModalOpen(false))
       navigate('/customer/main')
     } catch (error) {
       console.error(error)
