@@ -77,6 +77,15 @@ const ModifyProductModal = () => {
         timer: 2000,
       })
       return
+    } else if (name.length > 20) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '品名請輸入20字內',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
     } else {
       formData.append('name', name)
     }
@@ -117,7 +126,6 @@ const ModifyProductModal = () => {
     const res = await modifyProductApi(formData, productId)
     if (res.status === 200) {
       dispatch(modalActions.setIsLoadingModalOpen(false))
-      localStorage.setItem('default_category_id', categoryId)
       dispatch(updateActions.setIsProductUpdate())
       Swal.fire({
         position: 'center',
