@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,6 +22,9 @@ const AccountClosingPage = () => {
   // useSelector
   const isAccountClosingModalOpen = useSelector(
     (state) => state.modal.isAccountClosingModalOpen
+  )
+  const unSettledRevenue = useSelector(
+    (state) => state.information.unSettledRevenue
   )
   // useState
   const [twoThousand, setTwoThousand] = useState(0)
@@ -52,6 +56,16 @@ const AccountClosingPage = () => {
 
   // 計算金額加總
   const startCalculateHandler = () => {
+    if (unSettledRevenue.UnsettledRevenue === null) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '尚無未入帳訂單',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    }
     dispatch(
       informationActions.setAccountClosingCalculate(
         2000 * twoThousand +
