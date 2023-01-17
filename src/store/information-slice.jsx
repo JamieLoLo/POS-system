@@ -13,6 +13,8 @@ const initialState = {
   headcountInfo: [],
   orderInfo: [],
   customerMenuInfo: [],
+  unSettledRevenue: '',
+  accountClosingCalculate: 0,
 }
 
 const informationSlice = createSlice({
@@ -46,6 +48,12 @@ const informationSlice = createSlice({
     },
     setCustomerMenuInfo(state, action) {
       state.customerMenuInfo = action.payload
+    },
+    setUnSettledRevenue(state, action) {
+      state.unSettledRevenue = action.payload
+    },
+    setAccountClosingCalculate(state, action) {
+      state.accountClosingCalculate = action.payload
     },
   },
 })
