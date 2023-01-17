@@ -20,16 +20,6 @@ const CustomerLoginPage = () => {
   const navigate = useNavigate()
   // useState
   const [tableId, setTableID] = useState()
-  // 初始化購物車
-  let cartList = []
-  localStorage.setItem('cart_list', JSON.stringify(cartList))
-  localStorage.setItem('total_count', 0)
-  localStorage.setItem('total_price', 0)
-  // 初始化訂單
-  let checkoutList = []
-  localStorage.setItem('checkout_list', JSON.stringify(checkoutList))
-  localStorage.setItem('checkout_count', 0)
-  localStorage.setItem('checkout_price', 0)
 
   // 取得訂單內容 (餐點、人數)
   const getOrderHandler = async () => {
