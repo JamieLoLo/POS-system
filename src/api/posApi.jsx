@@ -151,3 +151,42 @@ export const finishOrderApi = async (order_id) => {
     console.error('[Finish Order Failed]: ', error)
   }
 }
+
+// 取得未結算營收
+export const getUnsettledRevenueApi = async () => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/revenues/unsettledrevenue`)
+    return res
+  } catch (error) {
+    console.error('[Get Unsettled Revenue Failed]: ', error)
+  }
+}
+
+// 關帳
+export const closeDailyRevenueApi = async (postingDate, revenue) => {
+  try {
+    const res = await axiosInstance.post(
+      `${posURL}/revenues/closedailyrevenue`,
+      {
+        postingDate,
+        revenue,
+      }
+    )
+    return res
+  } catch (error) {
+    console.error('[Close Daily Revenue Failed]: ', error)
+  }
+}
+
+// 取得營收報表
+export const getRevenuesApi = async (startDate, endDate) => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/revenues`, {
+      startDate,
+      endDate,
+    })
+    return res
+  } catch (error) {
+    console.error('[Get Revenues Failed]: ', error)
+  }
+}
