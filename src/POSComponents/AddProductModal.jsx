@@ -51,6 +51,17 @@ const AddProductModal = () => {
     categoryGetAll()
   }, [])
 
+  // 關閉 modal 時，清空原有資料。
+  const refreshHandler = () => {
+    setCategoryId()
+    setName()
+    setNameEn()
+    setDescription()
+    setImageFile()
+    setCost()
+    setPrice()
+  }
+
   // 餐點分類選單
   const options = allCategoryData.map((data) => ({
     value: data.id,
@@ -59,11 +70,21 @@ const AddProductModal = () => {
 
   // 新增餐點
   const addProductHandler = async () => {
+    console.log(categoryId)
     if (name === undefined || name === '') {
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: '品名不可空白',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    } else if (name.length > 20) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '品名請輸入20字內',
         showConfirmButton: false,
         timer: 2000,
       })
@@ -76,7 +97,7 @@ const AddProductModal = () => {
     } else {
       formData.append('nameEn', nameEn)
     }
-    if (categoryId !== undefined || categoryId !== '') {
+    if (categoryId) {
       formData.append('categoryId', categoryId)
     }
     if (cost === undefined || cost === '') {
@@ -115,6 +136,15 @@ const AddProductModal = () => {
       })
       dispatch(modalActions.setIsAddProductModalOpen(false))
       return
+    } else {
+      dispatch(modalActions.setIsLoadingModalOpen(false))
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '發生錯誤，請重新操作。',
+        showConfirmButton: false,
+        timer: 2000,
+      })
     }
   }
 
@@ -122,15 +152,19 @@ const AddProductModal = () => {
     <div className={styles.modal}>
       <div
         className={styles.backdrop}
-        onClick={() => dispatch(modalActions.setIsAddProductModalOpen(false))}
+        onClick={() => {
+          dispatch(modalActions.setIsAddProductModalOpen(false))
+          refreshHandler()
+        }}
       ></div>
       <div className={styles.modal__container}>
         <div className={styles.delete__button__container}>
           <DeleteIcon
             className={styles.delete__button}
-            onClick={() =>
+            onClick={() => {
               dispatch(modalActions.setIsAddProductModalOpen(false))
-            }
+              refreshHandler()
+            }}
           />
         </div>
 
