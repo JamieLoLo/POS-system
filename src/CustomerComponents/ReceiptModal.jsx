@@ -1,10 +1,15 @@
 import React from 'react'
 // hook
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+// store
+import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './ReceiptModal.module.scss'
 
 const ReceiptModal = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   // localStorage
   const orderId = localStorage.getItem('order_id')
   const adultCount = localStorage.getItem('adult_count')
@@ -15,6 +20,12 @@ const ReceiptModal = () => {
   const isReceiptModalOpen = useSelector(
     (state) => state.modal.isReceiptModalOpen
   )
+
+  // 關閉明細
+  const closeHandler = () => {
+    dispatch(modalActions.setIsReceiptModalOpen(false))
+    navigate('/customer/main')
+  }
 
   return isReceiptModalOpen ? (
     <div className={styles.modal}>
@@ -46,6 +57,11 @@ const ReceiptModal = () => {
             <div className={styles.detail__title}>金額</div>
             <div className={styles.detail__number}>${totalPrice}</div>
           </div>
+        </div>
+        <div className={styles.button__container}>
+          <button className={styles.close__button} onClick={closeHandler}>
+            關閉明細
+          </button>
         </div>
       </div>
     </div>
