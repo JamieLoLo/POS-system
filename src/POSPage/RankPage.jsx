@@ -1,4 +1,5 @@
 import React from 'react'
+import Swal from 'sweetalert2'
 import moment from 'moment'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -6,6 +7,8 @@ import { useState, useEffect } from 'react'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, RankItem } from '../POSComponents/index'
+// api
+import { getRankApi } from '../api/posApi'
 // calendar package
 import DatePicker from 'react-datepicker'
 // CSS
@@ -35,8 +38,28 @@ const RankPage = () => {
     }
   }, [navigate])
 
-  console.log(0, startDate)
-  console.log(1, endDate)
+  // 搜尋
+  const searchHandler = async () => {
+    const res = await getRankApi(startDate, endDate)
+    if (res.data.length === 0) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '查無此區間資訊',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    } else {
+      setRankData(res.data)
+    }
+  }
+
+  // 排行清單
+  const rankList = rankData.map((data) => (
+    <RankItem data={data} key={data.product_id} />
+  ))
+
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
@@ -61,34 +84,16 @@ const RankPage = () => {
               onChange={(date) => setEndDate(moment(date).format('yyyy-MM-DD'))}
               dateFormat='yyyy/MM/dd'
             />
-            <button className={styles.search}>查詢</button>
+            <button className={styles.search} onClick={searchHandler}>
+              查詢
+            </button>
           </div>
           <div className={styles.list__container}>
             <div className={styles.title__container}>
               <div className={styles.title}>品項</div>
               <div className={styles.title}>數量</div>
-              <div className={styles.title}>小計</div>
             </div>
-            <div className={styles.rank__list}>
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />{' '}
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />{' '}
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />{' '}
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />{' '}
-              <RankItem dish='紅燒牛腩筋飯' counts='10' total='$3200' />
-              <RankItem dish='無錫排骨飯' counts='5' total='$1200' />
-              <RankItem dish='蜜椒小豬球' counts='5' total='$3400' />
-            </div>
+            <div className={styles.rank__list}>{rankList}</div>
           </div>
         </div>
       </PosMainGridSystem>
