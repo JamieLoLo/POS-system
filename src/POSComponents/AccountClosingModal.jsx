@@ -47,6 +47,16 @@ const AccountClosingModal = () => {
 
   // 確認入帳
   const submitHandler = async () => {
+    if (revenueData.length !== 0) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '此日期已入過帳',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    }
     const res = await closeDailyRevenueApi(confirmDate, actualRevenue)
     if (res) {
       console.log(res.data)
