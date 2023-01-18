@@ -1,12 +1,13 @@
 {
   "files": {
-    "main.css": "/POS-system/static/css/main.c6170742.css",
-    "main.js": "/POS-system/static/js/main.6717fd6e.js",
+    "main.css": "/POS-system/static/css/main.e8e21e46.css",
+    "main.js": "/POS-system/static/js/main.6df6fc41.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
     "static/media/logo_circle.png": "/POS-system/static/media/logo_circle.145b04c90b132c1034b2.png",
     "static/media/default_food.jpeg": "/POS-system/static/media/default_food.3d823e813f26143a56d8.jpeg",
     "static/media/food.svg": "/POS-system/static/media/food.cf9189f2209173c061478733d21ff7c8.svg",
+    "static/media/chef.svg": "/POS-system/static/media/chef.9e9bde8a83c58894009beab231afb903.svg",
     "static/media/setting.svg": "/POS-system/static/media/setting.da24f4f34aff59ae079a0f4c63cd94f3.svg",
     "static/media/loading.svg": "/POS-system/static/media/loading.30f22533f74514586cf1c7f585869131.svg",
     "static/media/form.svg": "/POS-system/static/media/form.3301d6abd46e655050fc8a29af46746a.svg",
@@ -20,17 +21,18 @@
     "static/media/delete.svg": "/POS-system/static/media/delete.29cecc7c75dfc639007ef773e300494b.svg",
     "static/media/cart.svg": "/POS-system/static/media/cart.365b0670c3a5a652e735c761d782cdd6.svg",
     "index.html": "/POS-system/index.html",
+    "static/media/person_tall.svg": "/POS-system/static/media/person_tall.720a11c477a4bbb1c516457e0f978092.svg",
     "static/media/person_grey.svg": "/POS-system/static/media/person_grey.b6353ab0b4021d61eb4a2376f5d15c2a.svg",
     "static/media/person.svg": "/POS-system/static/media/person.76f39bcbaef7934f6421fc49b59ca1a3.svg",
     "static/media/minus.svg": "/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
     "static/media/delete_black.svg": "/POS-system/static/media/delete_black.51522a7618bca8e90c2d8ea9c0ba4458.svg",
-    "main.c6170742.css.map": "/POS-system/static/css/main.c6170742.css.map",
-    "main.6717fd6e.js.map": "/POS-system/static/js/main.6717fd6e.js.map",
+    "main.e8e21e46.css.map": "/POS-system/static/css/main.e8e21e46.css.map",
+    "main.6df6fc41.js.map": "/POS-system/static/js/main.6df6fc41.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c6170742.css",
-    "static/js/main.6717fd6e.js"
+    "static/css/main.e8e21e46.css",
+    "static/js/main.6df6fc41.js"
   ]
 }
