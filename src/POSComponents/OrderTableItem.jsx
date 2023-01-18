@@ -98,7 +98,6 @@ const OrderTableItem = ({ data }) => {
             showConfirmButton: false,
             timer: 2000,
           })
-          console.log(res)
         }
       } catch (error) {
         console.error(error)
