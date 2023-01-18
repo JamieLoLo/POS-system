@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -15,8 +16,16 @@ const RankPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
   // useState
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [startDate, setStartDate] = useState(
+    moment(new Date()).format('yyyy-MM-DD')
+  )
+  const [endDate, setEndDate] = useState(
+    moment(new Date()).format('yyyy-MM-DD')
+  )
+  const [rankData, setRankData] = useState([])
+  // 給套件用的資訊
+  const startDateSelected = moment(startDate).toDate()
+  const endDateSelected = moment(endDate).toDate()
 
   // 確認登入狀態
   useEffect(() => {
@@ -25,6 +34,9 @@ const RankPage = () => {
       navigate('/admin/login')
     }
   }, [navigate])
+
+  console.log(0, startDate)
+  console.log(1, endDate)
   return (
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
@@ -35,15 +47,19 @@ const RankPage = () => {
             <DatePicker
               className={styles.inner__container}
               wrapperClassName={styles.datePicker}
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={startDateSelected}
+              onChange={(date) =>
+                setStartDate(moment(date).format('yyyy-MM-DD'))
+              }
+              dateFormat='yyyy/MM/dd'
             />
             至
             <DatePicker
               className={styles.inner__container}
               wrapperClassName={styles.datePicker}
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              selected={endDateSelected}
+              onChange={(date) => setEndDate(moment(date).format('yyyy-MM-DD'))}
+              dateFormat='yyyy/MM/dd'
             />
             <button className={styles.search}>查詢</button>
           </div>

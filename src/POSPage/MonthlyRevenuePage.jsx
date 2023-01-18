@@ -1,4 +1,6 @@
 import React from 'react'
+import moment from 'moment'
+import Swal from 'sweetalert2'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -7,6 +9,8 @@ import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, RevenueItem } from '../POSComponents/index'
 // calendar package
 import DatePicker from 'react-datepicker'
+// api
+import { getRevenuesApi } from '../api/posApi'
 // CSS
 import 'react-datepicker/dist/react-datepicker.css'
 import styles from './MonthlyRevenuePage.module.scss'
@@ -15,8 +19,16 @@ const MonthlyRevenuePage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
   // useState
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [startDate, setStartDate] = useState(
+    moment(new Date()).format('yyyy-MM-DD')
+  )
+  const [endDate, setEndDate] = useState(
+    moment(new Date()).format('yyyy-MM-DD')
+  )
+  const [revenueData, setRevenueData] = useState([])
+  // 給套件用的資訊
+  const startDateSelected = moment(startDate).toDate()
+  const endDateSelected = moment(endDate).toDate()
 
   // 確認登入狀態
   useEffect(() => {
@@ -25,7 +37,27 @@ const MonthlyRevenuePage = () => {
       navigate('/admin/login')
     }
   }, [navigate])
-  console.log(startDate)
+
+  // 查詢
+  const searchHandler = async () => {
+    const res = await getRevenuesApi('2022-01-01', '2024-01-18')
+    console.log(res.data)
+    // if (res.data.length === 0) {
+    //   Swal.fire({
+    //     position: 'center',
+    //     icon: 'error',
+    //     title: '查無此區間資訊',
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   })
+    //   return
+    // } else {
+    //   setRevenueData(res.data)
+    // }
+  }
+  // console.log(revenueData)
+  // console.log(0, startDate)
+  // console.log(1, endDate)
 
   return (
     <div className='main__container'>
@@ -37,17 +69,23 @@ const MonthlyRevenuePage = () => {
             <DatePicker
               className={styles.inner__container}
               wrapperClassName={styles.datePicker}
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={startDateSelected}
+              onChange={(date) =>
+                setStartDate(moment(date).format('yyyy-MM-DD'))
+              }
+              dateFormat='yyyy/MM/dd'
             />
             至
             <DatePicker
               className={styles.inner__container}
               wrapperClassName={styles.datePicker}
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              selected={endDateSelected}
+              onChange={(date) => setEndDate(moment(date).format('yyyy-MM-DD'))}
+              dateFormat='yyyy/MM/dd'
             />
-            <button className={styles.search}>查詢</button>
+            <button className={styles.search} onClick={searchHandler}>
+              查詢
+            </button>
           </div>
           <div className={styles.list__container}>
             <div className={styles.title__container}>
