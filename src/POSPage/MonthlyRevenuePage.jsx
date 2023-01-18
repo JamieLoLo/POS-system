@@ -40,24 +40,24 @@ const MonthlyRevenuePage = () => {
 
   // 查詢
   const searchHandler = async () => {
-    const res = await getRevenuesApi('2022-01-01', '2024-01-18')
-    console.log(res.data)
-    // if (res.data.length === 0) {
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'error',
-    //     title: '查無此區間資訊',
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //   })
-    //   return
-    // } else {
-    //   setRevenueData(res.data)
-    // }
+    const res = await getRevenuesApi(startDate, endDate)
+    if (res.data.length === 0) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '查無此區間資訊',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    } else {
+      setRevenueData(res.data)
+    }
   }
-  // console.log(revenueData)
-  // console.log(0, startDate)
-  // console.log(1, endDate)
+
+  const revenueList = revenueData.map((data) => (
+    <RevenueItem data={data} key={data.postingDate} />
+  ))
 
   return (
     <div className='main__container'>
@@ -94,39 +94,7 @@ const MonthlyRevenuePage = () => {
               <div className={styles.title}>來客數</div>
               <div className={styles.title}>客單價</div>
             </div>
-            <div className={styles.classification__list}>
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem
-                date='12/01'
-                revenue='$12,000'
-                tc='50'
-                aov='$251'
-              />{' '}
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem
-                date='12/01'
-                revenue='$12,000'
-                tc='50'
-                aov='$251'
-              />{' '}
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem
-                date='12/01'
-                revenue='$12,000'
-                tc='50'
-                aov='$251'
-              />{' '}
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-              <RevenueItem date='12/01' revenue='$12,000' tc='50' aov='$251' />
-            </div>
+            <div className={styles.classification__list}>{revenueList}</div>
           </div>
         </div>
       </PosMainGridSystem>
