@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Swal from 'sweetalert2'
 // hook
 import { useState } from 'react'
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 // store
 import { modalActions } from '../store/modal-slice'
 // api
-import { closeDailyRevenueApi } from '../api/posApi'
+import { closeDailyRevenueApi, getRevenuesApi } from '../api/posApi'
 // SCSS
 import styles from './AccountClosingModal.module.scss'
 
@@ -24,6 +24,7 @@ const AccountClosingModal = () => {
   // useState
   const [confirmDate, setConfirmDate] = useState(formatDate(date))
   const [actualRevenue, setActualRevenue] = useState()
+  const [revenueData, setRevenueData] = useState([])
   // useSelector
   const isAccountClosingModalOpen = useSelector(
     (state) => state.modal.isAccountClosingModalOpen
@@ -34,6 +35,15 @@ const AccountClosingModal = () => {
   const accountClosingCalculate = useSelector(
     (state) => state.information.accountClosingCalculate
   )
+
+  //取得營收報表，確認日期是否重複。
+  useEffect(() => {
+    const getRevenue = async () => {
+      const res = await getRevenuesApi(confirmDate, confirmDate)
+      setRevenueData(res.data)
+    }
+    getRevenue()
+  }, [confirmDate])
 
   // 確認入帳
   const submitHandler = async () => {
