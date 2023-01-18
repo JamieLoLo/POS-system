@@ -182,11 +182,22 @@ export const closeDailyRevenueApi = async (postingDate, revenue) => {
 export const getRevenuesApi = async (startDate, endDate) => {
   try {
     const res = await axiosInstance.get(`${posURL}/revenues`, {
-      startDate,
-      endDate,
+      params: { startDate, endDate },
     })
     return res
   } catch (error) {
     console.error('[Get Revenues Failed]: ', error)
+  }
+}
+
+// 取得銷售排行
+export const getRankApi = async (startDate, endDate) => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/sales_ranking`, {
+      params: { startDate, endDate },
+    })
+    return res
+  } catch (error) {
+    console.error('[Get Rank Failed]: ', error)
   }
 }
