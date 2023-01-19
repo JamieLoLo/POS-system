@@ -31,7 +31,7 @@ https://jamielolo.github.io/POS-system/
 
 <div><img src="./src/POSComponents/assets/projectImage/customer_order.png" /></div>
 【顧客-餐點詳細介紹】
-<div><img src="./src/POSComponents/assets/projectImage/Product_detail.png" /></div>
+<div><img src="./src/POSComponents/assets/projectImage/product_detail.png" /></div>
 【顧客-訂單內容】
 <div><img src="./src/POSComponents/assets/projectImage/receipt.png" /></div>
 <br/>
