@@ -47,17 +47,36 @@ const AccountClosingModal = () => {
 
   // 確認入帳
   const submitHandler = async () => {
-    if (revenueData.length !== 0) {
+    // if (revenueData.length !== 0) {
+    //   Swal.fire({
+    //     position: 'center',
+    //     icon: 'error',
+    //     title: '此日期已入過帳',
+    //     showConfirmButton: false,
+    //     timer: 2000,
+    //   })
+    //   return
+    // }
+    if (!actualRevenue) {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: '此日期已入過帳',
+        title: '請輸入入帳金額',
         showConfirmButton: false,
         timer: 2000,
       })
       return
     }
     const res = await closeDailyRevenueApi(confirmDate, actualRevenue)
+    if (!res) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '此日期已有帳目',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+    }
     if (res) {
       console.log(res.data)
       Swal.fire({
@@ -69,16 +88,6 @@ const AccountClosingModal = () => {
       })
       dispatch(modalActions.setIsAccountClosingModalOpen(false))
       navigate('/forms/revenue')
-    } else {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '關帳失敗',
-        text: '請重新操作',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      return
     }
   }
 
