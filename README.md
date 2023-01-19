@@ -28,11 +28,12 @@ https://jamielolo.github.io/POS-system/
 【管理者-設定相關頁面】
 <img src="./src/POSComponents/assets/projectImage/order_table.png" />
 【顧客-點餐畫面】
-<img src="./src/POSComponents/assets/projectImage/customer_order.png" />
+
+<div><img src="./src/POSComponents/assets/projectImage/customer_order.png" /></div>
 【顧客-餐點詳細介紹】
-<img src="./src/POSComponents/assets/projectImage/Product_detail.png" />
+<div><img src="./src/POSComponents/assets/projectImage/Product_detail.png" /></div>
 【顧客-訂單內容】
-<img src="./src/POSComponents/assets/projectImage/receipt.png" />
+<div><img src="./src/POSComponents/assets/projectImage/receipt.png" /></div>
 <br/>
 <br/>
 
