@@ -1,6 +1,7 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 import moment from 'moment'
+import ExcelJs from 'exceljs'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -55,6 +56,58 @@ const RankPage = () => {
     }
   }
 
+  // 給匯出 excel 的檔案格式
+  const excelList = rankData.map((data) => [
+    data.Product.name,
+    Number(data.counts),
+  ])
+
+  // 匯出 excel
+  const excelHandler = async () => {
+    if (rankData.length === 0) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '尚未選取日期',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    }
+    const workbook = new ExcelJs.Workbook()
+    const sheet = workbook.addWorksheet('銷售排行')
+    // 設置欄寬
+    sheet.getColumn(1).width = 45
+    sheet.getColumn(2).width = 20
+    // 列表文字置中
+    sheet.getColumn(1).alignment = {
+      vertical: 'center',
+      horizontal: 'center',
+    }
+    sheet.getColumn(2).alignment = { vertical: 'center', horizontal: 'center' }
+
+    sheet.addTable({
+      // 在工作表裡面指定位置、格式並用columns與rows屬性填寫內容
+      name: '銷售排行', // 表格內看不到的，讓你之後想要針對這個table去做額外設定的時候，可以指定到這個table
+      ref: 'A1', // 從A1開始
+      columns: [{ name: '品項' }, { name: '數量' }],
+      rows: excelList,
+    })
+
+    // 表格裡面的資料都填寫完成之後，訂出下載的callback function
+    // 異步的等待他處理完之後，創建url與連結，觸發下載
+    const res = await workbook.xlsx.writeBuffer()
+    if (res) {
+      const link = document.createElement('a')
+      const blobData = new Blob([res], {
+        type: 'application/vnd.ms-excel;charset=utf-8;',
+      })
+      link.download = '銷售排行.xlsx'
+      link.href = URL.createObjectURL(blobData)
+      link.click()
+    }
+  }
+
   // 排行清單
   const rankList = rankData.map((data) => (
     <RankItem data={data} key={data.product_id} />
@@ -64,7 +117,9 @@ const RankPage = () => {
     <div className='main__container'>
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
-          <button className={styles.export__button}>匯出 Excel</button>
+          <button className={styles.export__button} onClick={excelHandler}>
+            匯出 Excel
+          </button>
           <FormSwitchButton page='rank' />
           <div className={styles.input__container}>
             <DatePicker
