@@ -2,7 +2,7 @@ import React from 'react'
 import Swal from 'sweetalert2'
 // hook
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 // UI
 import {
@@ -17,7 +17,7 @@ import {
 import { modalActions } from '../store/modal-slice'
 // api
 import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
-import { getOrderApi, customerOrderApi } from '../api/orderApi'
+import { customerOrderApi } from '../api/orderApi'
 import { modifyHeadcountApi } from '../api/posApi'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus_white.svg'
@@ -49,14 +49,12 @@ const OrderSystemPage = () => {
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
-  const [orderData, setOrderData] = useState([])
   const [adultCount, setAdultCount] = useState(defaultAdultCount)
   const [childrenCount, setChildrenCount] = useState(defaultChildrenCount)
   const [adultCountForCompare, setAdultCountForCompare] =
     useState(defaultAdultCount)
   const [childrenCountForCompare, setChildrenCountForCompare] =
     useState(defaultChildrenCount)
-  const [soldProducts, setSoldProducts] = useState([])
   const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
   const [total, setTotal] = useState(defaultTotalPrice)
 
@@ -68,29 +66,12 @@ const OrderSystemPage = () => {
     }
   }, [navigate])
 
-  // 取得訂單內容 (餐點、人數)
-  useEffect(() => {
-    const getOrder = async () => {
-      try {
-        const res = await getOrderApi(tableId)
-        await setOrderData(res.data)
-        // await setAdultCount(res.data.adultNum)
-        // await setChildrenCount(res.data.childrenNum)
-        await setSoldProducts(res.data.soldProducts)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getOrder()
-  }, [tableId])
-
   // 取得所有分類
   useEffect(() => {
     const categoryGetAll = async () => {
       try {
         const res = await categoryGetAllApi()
         await setAllCategoryData(res.data)
-        // localStorage.setItem('defaultCategoryId', res.data[0].id)
       } catch (error) {
         console.error(error)
       }

@@ -1,7 +1,5 @@
 import React from 'react'
 import clsx from 'clsx'
-import Swal from 'sweetalert2'
-import { Link } from 'react-router-dom'
 // hook
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -29,9 +27,7 @@ const OrderPage = () => {
   const navigate = useNavigate()
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
-  const tableId = localStorage.getItem('table_id')
   const tableName = localStorage.getItem('table_name')
-  const orderId = Number(localStorage.getItem('order_id'))
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
   const totalCount = localStorage.getItem('total_count')
@@ -106,7 +102,7 @@ const OrderPage = () => {
   useEffect(() => {
     const getOrder = async () => {
       try {
-        const res = await getOrderApi(tableId)
+        const res = await getOrderApi(tableName)
         await dispatch(informationActions.setOrderInfo(res.data))
         localStorage.setItem('adult_count', res.data.adultNum)
       } catch (error) {
@@ -114,7 +110,7 @@ const OrderPage = () => {
       }
     }
     getOrder()
-  }, [dispatch, tableId])
+  }, [dispatch, tableName])
 
   // 分類列表
   const categoryList = allCategoryData.map((data) => (
@@ -238,7 +234,7 @@ const OrderPage = () => {
   // 前往購物車
   const getCartHandler = async () => {
     try {
-      const res = await getOrderApi(tableId)
+      const res = await getOrderApi(tableName)
       localStorage.setItem('adult_count', res.data.adultNum)
       navigate('/customer/cart')
     } catch (error) {

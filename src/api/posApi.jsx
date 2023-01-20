@@ -62,9 +62,12 @@ export const getTablesApi = async () => {
 }
 
 // 修改桌號
-export const modifyTableApi = async (id, name) => {
+export const modifyTableApi = async (id, name, isValid) => {
   try {
-    const res = await axiosInstance.put(`${posURL}/tables/${id}`, { name })
+    const res = await axiosInstance.put(`${posURL}/tables/${id}`, {
+      name,
+      isValid,
+    })
     return res
   } catch (error) {
     console.error('[Modify Table Failed]: ', error)

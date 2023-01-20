@@ -7,16 +7,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   CartItem,
   MinimumModal,
-  ReceiptModal,
   OrderConfirmModal,
 } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 // store
 import { modalActions } from '../store/modal-slice'
-import { updateActions } from '../store/update-slice'
 // api
-import { customerOrderApi, getOrderApi } from '../api/orderApi'
+import { getOrderApi } from '../api/orderApi'
 // SCSS
 import styles from './CartPage.module.scss'
 
@@ -26,11 +24,8 @@ const CartPage = () => {
   // localStorage
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
-  const orderId = Number(localStorage.getItem('order_id'))
+  const tableName = localStorage.getItem('table_name')
   const tableId = localStorage.getItem('table_id')
-  const minCharge = localStorage.getItem('min_charge')
-  const adultNum = localStorage.getItem('adult_count')
-  const totalPrice = localStorage.getItem('total_price')
   // useState
   const [renderList, setRenderList] = useState([])
   // useSelector
@@ -45,7 +40,7 @@ const CartPage = () => {
   useEffect(() => {
     const getOrder = async () => {
       try {
-        const res = await getOrderApi(tableId)
+        const res = await getOrderApi(tableName)
         localStorage.setItem('adult_count', res.data.adultNum)
       } catch (error) {
         console.error(error)
@@ -161,7 +156,7 @@ const CartPage = () => {
   const submitHandler = async () => {
     try {
       // 再次確認後台是否更新人數
-      const res = await getOrderApi(tableId)
+      const res = await getOrderApi(tableName)
       if (res.status === 200) {
         localStorage.setItem('adult_count', res.data.adultNum)
         dispatch(modalActions.setIsOrderConfirmModalOpen(true))

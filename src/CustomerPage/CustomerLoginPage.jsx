@@ -19,7 +19,7 @@ const CustomerLoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // useState
-  const [tableId, setTableID] = useState()
+  const [tableName, setTableName] = useState()
   // 初始化購物車
   let cartList = []
   localStorage.setItem('cart_list', JSON.stringify(cartList))
@@ -33,7 +33,7 @@ const CustomerLoginPage = () => {
   // 取得訂單內容 (餐點、人數)
   const getOrderHandler = async () => {
     try {
-      const res = await getOrderApi(tableId)
+      const res = await getOrderApi(tableName)
       if (!res) {
         Swal.fire({
           position: 'center',
@@ -44,7 +44,7 @@ const CustomerLoginPage = () => {
         })
       }
       localStorage.setItem('order_id', res.data.id)
-      localStorage.setItem('table_id', tableId)
+      localStorage.setItem('table_id', res.data.tableId)
       localStorage.setItem('table_name', res.data.Table.name)
       localStorage.setItem('adult_count', res.data.adultNum)
       localStorage.setItem('children_count', res.data.childrenNum)
@@ -79,7 +79,7 @@ const CustomerLoginPage = () => {
           <input
             type='text'
             id='account'
-            onChange={(e) => setTableID(e.target.value)}
+            onChange={(e) => setTableName(e.target.value)}
             autoComplete='off'
             className={styles.input}
             placeholder='請輸入點餐代號'

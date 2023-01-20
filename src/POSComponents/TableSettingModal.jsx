@@ -25,7 +25,17 @@ const TableSettingModal = () => {
   // 修改桌號
   const modifyTableHandler = async () => {
     try {
-      await modifyTableApi(tableID, tableName)
+      const res = await modifyTableApi(tableID, tableName, 'true')
+      if (!res) {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: '桌號不可重複',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+        return
+      }
       dispatch(updateActions.setIsTableUpdate())
       Swal.fire({
         position: 'center',
@@ -45,7 +55,6 @@ const TableSettingModal = () => {
     try {
       let result = await Swal.fire({
         title: '確定要刪除此桌嗎？',
-        text: '刪除後將無法恢復！',
         icon: 'warning',
         showCancelButton: true,
         cancelButtonText: '取消',
@@ -54,7 +63,7 @@ const TableSettingModal = () => {
         confirmButtonText: '刪除',
       })
       if (result.isConfirmed) {
-        await modifyTableApi(tableID, '0')
+        await modifyTableApi(tableID, tableName, 'false')
         dispatch(updateActions.setIsTableUpdate())
         Swal.fire({
           position: 'center',

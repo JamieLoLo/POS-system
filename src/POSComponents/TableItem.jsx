@@ -20,12 +20,12 @@ const TableItem = ({ data }) => {
   return (
     <div
       className={clsx('', {
-        [styles.table]: data.name === '0',
-        [styles.table__active]: data.name !== '0',
+        [styles.table]: data.isValid === 0,
+        [styles.table__active]: data.isValid !== 0,
       })}
       onClick={modalHandler}
     >
-      {data.name !== '0' && data.name}
+      {data.name}
     </div>
   )
 }

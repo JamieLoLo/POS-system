@@ -17,13 +17,12 @@ export const CustomerReceiptPage = () => {
   const childrenCount = localStorage.getItem('children_count')
   const totalPrice = localStorage.getItem('total_price')
   const tableName = localStorage.getItem('table_name')
-  const tableId = localStorage.getItem('table_id')
 
   // 確認是否已結帳，未結帳可繼續點餐。
   const continueOrderHandler = async () => {
     try {
       // 再次確認後台是否已結帳
-      const res = await getOrderApi(tableId)
+      const res = await getOrderApi(tableName)
       console.log(res)
       if (res) {
         navigate('/customer/main')

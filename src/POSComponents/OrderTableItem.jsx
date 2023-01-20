@@ -43,7 +43,7 @@ const OrderTableItem = ({ data }) => {
       navigate('/order/headcount')
     } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
       try {
-        const res = await getOrderApi(data.id)
+        const res = await getOrderApi(data.name)
         // 這邊取出已點餐點的資訊，取出的部分為更新訂單時需要的資料格式。
         const cartList = res.data.soldProducts.map((product) => ({
           productId: product.productId,
@@ -108,15 +108,15 @@ const OrderTableItem = ({ data }) => {
   return (
     <div
       className={clsx('', {
-        [styles.table]: data.name !== '0' && data.Orders.id === null,
-        [styles.table__d__none]: data.name === '0',
+        [styles.table]: data.isValid !== 0 && data.Orders.id === null,
+        [styles.table__d__none]: data.isValid === 0,
         [styles.table__not__order]:
-          data.name !== '0' &&
+          data.isValid !== 0 &&
           data.Orders.id !== null &&
           data.Orders.isPaid === 0 &&
           data.Orders.totalPrice === 0,
         [styles.table__not__paid]:
-          data.name !== '0' &&
+          data.isValid !== 0 &&
           data.Orders.isPaid === 0 &&
           data.Orders.totalPrice !== 0,
         [styles.table__paid]: data.Orders.isPaid === 1,
