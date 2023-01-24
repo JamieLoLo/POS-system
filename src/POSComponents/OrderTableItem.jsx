@@ -34,7 +34,7 @@ const OrderTableItem = ({ data }) => {
   // 點擊桌子後將桌子資訊存入store，判斷目前狀態，導入對應頁面。
   const orderHandler = async () => {
     // 排除沒有的桌子
-    if (data.name === '0') {
+    if (data.isValid === 0) {
       return
     }
     dispatch(informationActions.setTableInfo(data))
