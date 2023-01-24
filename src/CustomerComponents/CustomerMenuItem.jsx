@@ -7,6 +7,7 @@ import DefaultFoodImg from '../POSComponents/assets/logo/logo.png'
 // icon
 import { ReactComponent as PlusIcon } from '../POSComponents/assets/icon/plus.svg'
 import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.svg'
+import LoadingIcon from '../POSComponents/assets/icon/loading_circle.gif'
 // store
 import { modalActions } from '../store/modal-slice'
 import { informationActions } from '../store/information-slice'
@@ -17,8 +18,8 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
   const dispatch = useDispatch()
   // useState
   let [count, setCount] = useState(0)
+  const [img, setImg] = useState(LoadingIcon)
   // localStorage
-  const orderId = localStorage.getItem('order_id')
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
 
   // 進入頁面時取得數量
@@ -27,7 +28,15 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
     if (filterData.length === 1) {
       setCount(filterData[0].count)
     }
-  }, [])
+  }, [cartList, data.id])
+
+  const imgLoadHandler = () => {
+    if (data.image) {
+      setImg(data.image)
+    } else {
+      setImg(DefaultFoodImg)
+    }
+  }
 
   return (
     <div className={styles.menu__item__container}>
@@ -40,8 +49,9 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
       >
         <img
           className={styles.default__img}
-          src={data.image ? data.image : DefaultFoodImg}
-          alt=''
+          src={img}
+          alt='food_image'
+          onLoad={imgLoadHandler}
         />
       </div>
       <div className={styles.right__side__container}>

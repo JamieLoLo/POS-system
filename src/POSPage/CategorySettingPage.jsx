@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+// icon
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // api
 import { categoryGetAllApi, categoryPostApi } from '../api/categoryApi'
 // store
@@ -116,7 +118,13 @@ const CategorySettingPage = () => {
           </div>
           <div className={styles.list__container}>
             <div className={styles.title}>類別</div>
-            <div className={styles.classification__list}>{allCategoryList}</div>
+            <div className={styles.classification__list}>
+              {allCategoryData.length !== 0 ? (
+                allCategoryList
+              ) : (
+                <LoadingIcon className={styles.loading__icon} />
+              )}
+            </div>
           </div>
         </div>
       </PosMainGridSystem>

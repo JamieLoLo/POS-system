@@ -4,6 +4,8 @@ import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+// icon
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // UI
 import {
   SettingSwitchButton,
@@ -139,7 +141,13 @@ const DishSettingPage = () => {
               <div className={styles.title}>品項</div>
               <div className={styles.title}>類別</div>
             </div>
-            <div className={styles.dish__list}>{productList}</div>
+            <div className={styles.dish__list}>
+              {products.length !== 0 ? (
+                productList
+              ) : (
+                <LoadingIcon className={styles.loading__icon} />
+              )}
+            </div>
           </div>
         </div>
       </PosMainGridSystem>

@@ -1,7 +1,7 @@
 import React from 'react'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 // UI
 import {
@@ -10,9 +10,8 @@ import {
   TableSettingModal,
 } from '../POSComponents/index'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
-// store
-import { modalActions } from '../store/modal-slice'
-import { updateActions } from '../store/update-slice'
+// icon
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // api
 import { getTablesApi } from '../api/posApi'
 // SCSS
@@ -20,7 +19,6 @@ import styles from './TableSettingPage.module.scss'
 
 const TableSettingPage = () => {
   const pathname = useLocation().pathname
-  const dispatch = useDispatch()
   const navigate = useNavigate()
   // useState
   const [allTablesData, setAllTablesData] = useState([])
@@ -72,7 +70,11 @@ const TableSettingPage = () => {
           </button>
           <SettingSwitchButton page='table' />
           <div className={styles.right__bottom__container}>
-            <div className={styles.table__container}>{tableList}</div>
+            {allTablesData.length !== 0 ? (
+              <div className={styles.table__container}>{tableList}</div>
+            ) : (
+              <LoadingIcon />
+            )}
           </div>
         </div>
       </PosMainGridSystem>
