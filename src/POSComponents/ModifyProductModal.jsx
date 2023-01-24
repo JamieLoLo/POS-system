@@ -79,17 +79,28 @@ const ModifyProductModal = () => {
         timer: 2000,
       })
       return
-    } else if (name.length > 20) {
+    } else if (name.length > 25) {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: '品名請輸入20字內',
+        title: '品名請輸入25字以內',
         showConfirmButton: false,
         timer: 2000,
       })
       return
     } else {
       formData.append('name', name)
+    }
+
+    if (nameEn !== null && nameEn.length > 100) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '英文品名請輸入100字以內',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
     }
     if (nameEn === undefined || nameEn === '') {
       formData.append('nameEn', '')
@@ -120,6 +131,16 @@ const ModifyProductModal = () => {
 
     formData.append('image', newImageFile)
 
+    if (description !== null && description.length > 100) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: '描述請輸入100字以內',
+        showConfirmButton: false,
+        timer: 2000,
+      })
+      return
+    }
     if (description === undefined || description === '') {
       formData.append('description', '')
     } else {

@@ -30,7 +30,7 @@ const TableSettingModal = () => {
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: '桌號不可重複',
+          title: '桌號不可重複 不可空白',
           showConfirmButton: false,
           timer: 2000,
         })
