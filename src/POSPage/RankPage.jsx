@@ -144,11 +144,17 @@ const RankPage = () => {
             </button>
           </div>
           <div className={styles.list__container}>
-            <div className={styles.title__container}>
-              <div className={styles.title}>品項</div>
-              <div className={styles.title}>數量</div>
-            </div>
-            <div className={styles.rank__list}>{rankList}</div>
+            {rankData.length !== 0 ? (
+              <>
+                <div className={styles.title__container}>
+                  <div className={styles.title}>品項</div>
+                  <div className={styles.title}>數量</div>
+                </div>
+                <div className={styles.rank__list}>{rankList}</div>
+              </>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </PosMainGridSystem>

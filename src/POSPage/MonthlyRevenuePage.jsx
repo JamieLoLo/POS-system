@@ -154,13 +154,19 @@ const MonthlyRevenuePage = () => {
             </button>
           </div>
           <div className={styles.list__container}>
-            <div className={styles.title__container}>
-              <div className={styles.title}>日期</div>
-              <div className={styles.title}>營業額</div>
-              <div className={styles.title}>來客數</div>
-              <div className={styles.title}>客單價</div>
-            </div>
-            <div className={styles.classification__list}>{revenueList}</div>
+            {revenueData.length !== 0 ? (
+              <>
+                <div className={styles.title__container}>
+                  <div className={styles.title}>日期</div>
+                  <div className={styles.title}>營業額</div>
+                  <div className={styles.title}>來客數</div>
+                  <div className={styles.title}>客單價</div>
+                </div>
+                <div className={styles.classification__list}>{revenueList}</div>
+              </>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </PosMainGridSystem>
