@@ -42,9 +42,6 @@ const OrderPage = () => {
 
   // useSelector
   const orderInfo = useSelector((state) => state.information.orderInfo)
-  const isProductDetailModalOpen = useSelector(
-    (state) => state.modal.isProductDetailModalOpen
-  )
 
   // 取得描述
   useEffect(() => {
@@ -255,7 +252,7 @@ const OrderPage = () => {
 
   return (
     <div className='mobile__main__container'>
-      <ProductDetailModal trigger={isProductDetailModalOpen} />
+      <ProductDetailModal />
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />

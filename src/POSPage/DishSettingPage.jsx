@@ -27,15 +27,6 @@ const DishSettingPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
   // useSelector
-  const isAddProductModalOpen = useSelector(
-    (state) => state.modal.isAddProductModalOpen
-  )
-  const isLoadingModalOpen = useSelector(
-    (state) => state.modal.isLoadingModalOpen
-  )
-  const isModifyProductModalOpen = useSelector(
-    (state) => state.modal.isModifyProductModalOpen
-  )
   const isProductUpdate = useSelector((state) => state.update.isProductUpdate)
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
@@ -111,9 +102,9 @@ const DishSettingPage = () => {
 
   return (
     <div>
-      <AddProductModal trigger={isAddProductModalOpen} />
-      <ModifyProductModal trigger={isModifyProductModalOpen} />
-      <LoadingModal trigger={isLoadingModalOpen} />
+      <AddProductModal />
+      <ModifyProductModal />
+      <LoadingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <button className={styles.logout__button} onClick={logoutHandler}>

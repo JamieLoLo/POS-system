@@ -25,17 +25,10 @@ const CartPage = () => {
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
   const tableName = localStorage.getItem('table_name')
-  const tableId = localStorage.getItem('table_id')
   // useState
   const [renderList, setRenderList] = useState([])
   // useSelector
   const isCartUpdate = useSelector((state) => state.update.isCartUpdate)
-  const isMinimumModalOpen = useSelector(
-    (state) => state.modal.isMinimumModalOpen
-  )
-  const isOrderConfirmModalOpen = useSelector(
-    (state) => state.modal.isOrderConfirmModalOpen
-  )
   // 進入購物車時，再度確定人數是否有更新。
   useEffect(() => {
     const getOrder = async () => {
@@ -47,7 +40,7 @@ const CartPage = () => {
       }
     }
     getOrder()
-  }, [tableId])
+  }, [tableName])
 
   // 因為這一頁沒有打 api 的動作，資料都是從 localStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 localStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
@@ -168,8 +161,8 @@ const CartPage = () => {
 
   return (
     <div className='mobile__main__container'>
-      <MinimumModal trigger={isMinimumModalOpen} />
-      <OrderConfirmModal trigger={isOrderConfirmModalOpen} />
+      <MinimumModal />
+      <OrderConfirmModal />
       <header>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />

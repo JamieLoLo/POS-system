@@ -1,7 +1,7 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 // hook
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 // UI
@@ -42,10 +42,6 @@ const OrderSystemPage = () => {
   const orderId = Number(orderInfo.id)
   const defaultAdultCount = orderInfo.adultNum
   const defaultChildrenCount = orderInfo.childrenNum
-  // useSelector
-  const isLoadingModalOpen = useSelector(
-    (state) => state.modal.isLoadingModalOpen
-  )
   // useState
   const [allCategoryData, setAllCategoryData] = useState([])
   const [products, setProducts] = useState([])
@@ -335,7 +331,7 @@ const OrderSystemPage = () => {
   return (
     <div className='main__container'>
       <CheckoutModal />
-      <LoadingModal trigger={isLoadingModalOpen} />
+      <LoadingModal />
       <div className={styles.left__side__container}>
         <div className={styles.table__name__container}>
           <p className={StyleSheet.table__name}>{tableName}</p>

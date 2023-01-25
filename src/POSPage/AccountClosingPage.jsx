@@ -20,9 +20,6 @@ const AccountClosingPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // useSelector
-  const isAccountClosingModalOpen = useSelector(
-    (state) => state.modal.isAccountClosingModalOpen
-  )
   const unSettledRevenue = useSelector(
     (state) => state.information.unSettledRevenue
   )
@@ -84,7 +81,7 @@ const AccountClosingPage = () => {
 
   return (
     <div className='main__container'>
-      <AccountClosingModal trigger={isAccountClosingModalOpen} />
+      <AccountClosingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <FormSwitchButton page='account' />

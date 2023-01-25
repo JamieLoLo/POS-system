@@ -23,10 +23,6 @@ const TableSettingPage = () => {
   // useState
   const [allTablesData, setAllTablesData] = useState([])
   // useSelector
-  const isTableSettingModalOpen = useSelector(
-    (state) => state.modal.isTableSettingModalOpen
-  )
-
   const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
 
   // 確認登入狀態
@@ -62,7 +58,7 @@ const TableSettingPage = () => {
   ))
   return (
     <div className='main__container'>
-      <TableSettingModal trigger={isTableSettingModalOpen} />
+      <TableSettingModal />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <button className={styles.logout__button} onClick={logoutHandler}>
