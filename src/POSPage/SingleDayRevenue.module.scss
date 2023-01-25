@@ -1,0 +1,10 @@
+@import './MonthlyRevenuePage.module.scss';
+
+.input__container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem;
+  .datePicker {
+    margin-right: 1.25rem;
+  }
+}

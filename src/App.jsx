@@ -13,6 +13,7 @@ import {
   OrderHeadcountPage,
   HomePage,
   AccountClosingPage,
+  SingleDayRevenue,
 } from './POSPage/index'
 import {
   OrderPage,
@@ -37,6 +38,7 @@ function App() {
           <Route path='/setting/minimum' element={<MinimumSettingPage />} />
           <Route path='/admin/login' element={<AdminLoginPage />} />
           <Route path='/forms/revenue' element={<MonthlyRevenuePage />} />
+          <Route path='/forms/details' element={<SingleDayRevenue />} />
           <Route path='/forms/rank' element={<RankPage />} />
           <Route path='/forms/account' element={<AccountClosingPage />} />
           <Route path='/order/table' element={<OrderTablePage />} />

@@ -11,6 +11,7 @@ const initialState = {
   isMinimumModalOpen: false,
   isProductDetailModalOpen: false,
   isOrderConfirmModalOpen: false,
+  isAdminDetailsModalOpen: false,
 }
 
 const modalSlice = createSlice({
@@ -47,6 +48,9 @@ const modalSlice = createSlice({
     },
     setIsOrderConfirmModalOpen(state, action) {
       state.isOrderConfirmModalOpen = action.payload
+    },
+    setIsAdminDetailsModalOpen(state, action) {
+      state.isAdminDetailsModalOpen = action.payload
     },
   },
 })

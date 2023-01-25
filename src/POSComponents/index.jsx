@@ -17,6 +17,9 @@ import LoadingModal from './LoadingModal'
 import ModifyProductModal from './ModifyProductModal'
 import TableItem from './TableItem'
 import OrderTableItem from './OrderTableItem'
+import ReceiptDetailsItem from './ReceiptDetailsItem'
+import AdminDetailsModal from './AdminDetailsModal'
+import AdminDetailsItem from './AdminDetailsItem'
 
 export {
   CategoryItem,
@@ -38,4 +41,7 @@ export {
   ModifyProductModal,
   TableItem,
   OrderTableItem,
+  ReceiptDetailsItem,
+  AdminDetailsModal,
+  AdminDetailsItem,
 }

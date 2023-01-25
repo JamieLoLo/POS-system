@@ -1,0 +1,13 @@
+.item__container {
+  display: flex;
+  justify-content: space-between;
+
+  .name {
+    width: 85%;
+    text-align: left;
+  }
+  .price {
+    width: 15%;
+    text-align: center;
+  }
+}

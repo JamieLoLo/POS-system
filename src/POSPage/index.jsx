@@ -10,6 +10,7 @@ import OrderSystemPage from './OrderSystemPage'
 import OrderHeadcountPage from './OrderHeadcountPage'
 import HomePage from './HomePage'
 import AccountClosingPage from './AccountClosingPage'
+import SingleDayRevenue from './SingleDayRevenue'
 
 export {
   CategorySettingPage,
@@ -24,4 +25,5 @@ export {
   OrderHeadcountPage,
   HomePage,
   AccountClosingPage,
+  SingleDayRevenue,
 }
