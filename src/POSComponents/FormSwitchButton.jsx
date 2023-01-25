@@ -13,7 +13,16 @@ const FormSwitchButton = ({ page }) => {
             [styles.active]: page === 'revenue',
           })}
         >
-          月營收報表
+          營收報表
+        </div>
+      </Link>
+      <Link to='/forms/details'>
+        <div
+          className={clsx(`${styles.switch__button}`, {
+            [styles.active]: page === 'details',
+          })}
+        >
+          訂單明細
         </div>
       </Link>
       <Link to='/forms/rank'>
