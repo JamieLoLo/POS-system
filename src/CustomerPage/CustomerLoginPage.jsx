@@ -11,7 +11,6 @@ import { getOrderApi } from '../api/orderApi'
 import { categoryGetAllApi } from '../api/categoryApi'
 // store
 import { informationActions } from '../store/information-slice'
-import { modalActions } from '../store/modal-slice'
 // SCSS
 import styles from './CustomerLoginPage.module.scss'
 
