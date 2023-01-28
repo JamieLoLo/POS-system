@@ -23,7 +23,7 @@ export const CustomerReceiptPage = () => {
     try {
       // 再次確認後台是否已結帳
       const res = await getOrderApi(tableName)
-      console.log(res)
+
       if (res) {
         navigate('/customer/main')
       } else if (!res) {
