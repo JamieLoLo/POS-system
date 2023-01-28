@@ -50,7 +50,14 @@ const SingleDayRevenue = () => {
               <div className={styles.title}>人數</div>
             </div>
             <div className={styles.classification__list}>
-              <ReceiptDetailsItem />
+              <ReceiptDetailsItem time='11:11' total='800' headcount='3' />
+              <ReceiptDetailsItem time='11:18' total='280' headcount='1' />
+              <ReceiptDetailsItem time='11:34' total='520' headcount='2' />
+              <ReceiptDetailsItem time='12:01' total='760' headcount='3' />
+              <ReceiptDetailsItem time='12:05' total='800' headcount='3' />
+              <ReceiptDetailsItem time='12:30' total='560' headcount='2' />
+              <ReceiptDetailsItem time='12:32' total='320' headcount='1' />
+              <ReceiptDetailsItem time='12:36' total='620' headcount='2' />
             </div>
           </div>
         </div>

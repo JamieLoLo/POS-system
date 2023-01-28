@@ -33,32 +33,21 @@ const AdminDetailsModal = () => {
         </div>
         <div className={styles.title}>交易明細</div>
         <div className={styles.information__container}>
-          <p className={styles.information}>日期：2023/01/23</p>
-          <p className={styles.information}>時間：17:28</p>
-          <p className={styles.information}>人數：3大1小</p>
+          <p className={styles.information}>日期：2023/01/26</p>
+          <p className={styles.information}>時間：11:34</p>
+          <p className={styles.information}>人數：2大0小</p>
         </div>
         <div className={styles.subtitle__container}>
           <p className={styles.name}>品名 (數量)</p>
           <p className={styles.price}>小計</p>
         </div>
         <div className={styles.products__container}>
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
-          <AdminDetailsItem />
+          <AdminDetailsItem name='奶油明太子義大利麵' count='1' price='270' />
+          <AdminDetailsItem name='奶油野菇義大利麵' count='1' price='250' />
         </div>
         <div className={styles.total__container}>
           <div className={styles.total}>
-            合計 <span className={styles.total__number}>$2136</span>
+            合計 <span className={styles.total__number}>$520</span>
           </div>
         </div>
       </div>
