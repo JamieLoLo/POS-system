@@ -20,13 +20,15 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
   let [count, setCount] = useState(0)
   const [img, setImg] = useState(LoadingIcon)
   // localStorage
-  const cartList = JSON.parse(localStorage.getItem('cart_list'))
+  const cartList = JSON.parse(localStorage.getItem('cart_list')) || null
 
   // 進入頁面時取得數量
   useEffect(() => {
-    let filterData = cartList.filter((product) => product.id === data.id)
-    if (filterData.length === 1) {
-      setCount(filterData[0].count)
+    if (cartList !== null) {
+      let filterData = cartList.filter((product) => product.id === data.id)
+      if (filterData.length === 1) {
+        setCount(filterData[0].count)
+      }
     }
   }, [cartList, data.id])
 
@@ -111,13 +113,15 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
                 data.price,
                 data.image
               )
-              let filterData = cartList.filter(
-                (product) => product.id === data.id
-              )
-              if (filterData.length === 1) {
-                setCount(filterData[0].count + 1)
-              } else {
-                setCount((count) => count + 1)
+              if (cartList !== null) {
+                let filterData = cartList.filter(
+                  (product) => product.id === data.id
+                )
+                if (filterData.length === 1) {
+                  setCount(filterData[0].count + 1)
+                } else {
+                  setCount((count) => count + 1)
+                }
               }
             }}
           >

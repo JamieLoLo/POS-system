@@ -28,8 +28,8 @@ const OrderPage = () => {
   // localStorage
   const defaultCategoryId = localStorage.getItem('default_category_id')
   const tableName = localStorage.getItem('table_name')
-  const cartList = JSON.parse(localStorage.getItem('cart_list'))
-  const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
+  const cartList = JSON.parse(localStorage.getItem('cart_list')) || []
+  const checkoutList = JSON.parse(localStorage.getItem('checkout_list')) || []
   const totalCount = localStorage.getItem('total_count')
   const totalPrice = localStorage.getItem('total_price')
 
