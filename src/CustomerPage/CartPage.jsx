@@ -21,10 +21,10 @@ import styles from './CartPage.module.scss'
 const CartPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // localStorage
-  const cartList = JSON.parse(localStorage.getItem('cart_list'))
-  const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
-  const tableName = localStorage.getItem('table_name')
+  // sessionStorage
+  const cartList = JSON.parse(sessionStorage.getItem('cart_list'))
+  const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list'))
+  const tableName = sessionStorage.getItem('table_name')
   // useState
   const [renderList, setRenderList] = useState([])
   // useSelector
@@ -34,7 +34,7 @@ const CartPage = () => {
     const getOrder = async () => {
       try {
         const res = await getOrderApi(tableName)
-        localStorage.setItem('adult_count', res.data.adultNum)
+        sessionStorage.setItem('adult_count', res.data.adultNum)
       } catch (error) {
         console.error(error)
       }
@@ -42,10 +42,10 @@ const CartPage = () => {
     getOrder()
   }, [tableName])
 
-  // 因為這一頁沒有打 api 的動作，資料都是從 localStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 localStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
+  // 因為這一頁沒有打 api 的動作，資料都是從 sessionStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 sessionStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
     const renderList = () => {
-      const cartList = JSON.parse(localStorage.getItem('cart_list'))
+      const cartList = JSON.parse(sessionStorage.getItem('cart_list'))
       const filterList = cartList.filter((product) => product.count !== 0)
       const cartItemList = filterList.map((data) => (
         <CartItem
@@ -72,7 +72,7 @@ const CartPage = () => {
         }
         return product
       })
-      localStorage.setItem('cart_list', JSON.stringify(newList))
+      sessionStorage.setItem('cart_list', JSON.stringify(newList))
     }
 
     // 用來存打點餐api的資訊
@@ -87,7 +87,7 @@ const CartPage = () => {
         }
         return product
       })
-      localStorage.setItem('checkout_list', JSON.stringify(newList))
+      sessionStorage.setItem('checkout_list', JSON.stringify(newList))
     }
 
     let calculateCount = cartList.reduce(
@@ -98,8 +98,8 @@ const CartPage = () => {
       (acc, product) => acc + product.count * product.price,
       0
     )
-    localStorage.setItem('total_count', calculateCount)
-    localStorage.setItem('total_price', calculatePrice)
+    sessionStorage.setItem('total_count', calculateCount)
+    sessionStorage.setItem('total_price', calculatePrice)
   }
 
   // 點選餐點數量減少時
@@ -115,7 +115,7 @@ const CartPage = () => {
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
-      localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+      sessionStorage.setItem('cart_list', JSON.stringify(filterCartList))
     }
 
     // 用來打點餐api的資訊
@@ -131,7 +131,7 @@ const CartPage = () => {
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
-      localStorage.setItem('checkout_list', JSON.stringify(filterCartList))
+      sessionStorage.setItem('checkout_list', JSON.stringify(filterCartList))
     }
     let calculateCount = cartList.reduce(
       (acc, product) => acc + product.count,
@@ -141,8 +141,8 @@ const CartPage = () => {
       (acc, product) => acc + product.count * product.price,
       0
     )
-    localStorage.setItem('total_count', calculateCount)
-    localStorage.setItem('total_price', calculatePrice)
+    sessionStorage.setItem('total_count', calculateCount)
+    sessionStorage.setItem('total_price', calculatePrice)
   }
 
   // 提交訂單
@@ -151,7 +151,7 @@ const CartPage = () => {
       // 再次確認後台是否更新人數
       const res = await getOrderApi(tableName)
       if (res.status === 200) {
-        localStorage.setItem('adult_count', res.data.adultNum)
+        sessionStorage.setItem('adult_count', res.data.adultNum)
         dispatch(modalActions.setIsOrderConfirmModalOpen(true))
       }
     } catch (error) {

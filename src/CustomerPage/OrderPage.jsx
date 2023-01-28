@@ -25,13 +25,13 @@ import styles from './OrderPage.module.scss'
 const OrderPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // localStorage
-  const defaultCategoryId = localStorage.getItem('default_category_id')
-  const tableName = localStorage.getItem('table_name')
-  const cartList = JSON.parse(localStorage.getItem('cart_list')) || []
-  const checkoutList = JSON.parse(localStorage.getItem('checkout_list')) || []
-  const totalCount = localStorage.getItem('total_count')
-  const totalPrice = localStorage.getItem('total_price')
+  // sessionStorage
+  const defaultCategoryId = sessionStorage.getItem('default_category_id')
+  const tableName = sessionStorage.getItem('table_name')
+  const cartList = JSON.parse(sessionStorage.getItem('cart_list')) || []
+  const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list')) || []
+  const totalCount = sessionStorage.getItem('total_count')
+  const totalPrice = sessionStorage.getItem('total_price')
 
   // useState
   const [minimumInfo, setMinimumInfo] = useState({})
@@ -49,7 +49,7 @@ const OrderPage = () => {
       try {
         const res = await getMinimumApi()
         setMinimumInfo(res.data)
-        localStorage.setItem('min_charge', res.data.minCharge)
+        sessionStorage.setItem('min_charge', res.data.minCharge)
       } catch (error) {
         console.error(error)
       }
@@ -63,8 +63,8 @@ const OrderPage = () => {
       try {
         const res = await categoryGetAllApi()
         await setAllCategoryData(res.data)
-        localStorage.setItem('default_category_id', res.data[0].id)
-        localStorage.setItem('default_category_name', res.data[0].name)
+        sessionStorage.setItem('default_category_id', res.data[0].id)
+        sessionStorage.setItem('default_category_name', res.data[0].name)
       } catch (error) {
         console.error(error)
       }
@@ -101,7 +101,7 @@ const OrderPage = () => {
       try {
         const res = await getOrderApi(tableName)
         await dispatch(informationActions.setOrderInfo(res.data))
-        localStorage.setItem('adult_count', res.data.adultNum)
+        sessionStorage.setItem('adult_count', res.data.adultNum)
       } catch (error) {
         console.error(error)
       }
@@ -130,7 +130,7 @@ const OrderPage = () => {
         }
         return product
       })
-      localStorage.setItem('cart_list', JSON.stringify(newList))
+      sessionStorage.setItem('cart_list', JSON.stringify(newList))
     } else {
       // 加入餐點
       cartList.push({
@@ -142,7 +142,7 @@ const OrderPage = () => {
         price: price,
         count: 1,
       })
-      localStorage.setItem('cart_list', JSON.stringify(cartList))
+      sessionStorage.setItem('cart_list', JSON.stringify(cartList))
     }
 
     // 用來存打點餐api的資訊
@@ -157,7 +157,7 @@ const OrderPage = () => {
         }
         return product
       })
-      localStorage.setItem('checkout_list', JSON.stringify(newList))
+      sessionStorage.setItem('checkout_list', JSON.stringify(newList))
     } else {
       // 加入餐點
       checkoutList.push({
@@ -165,7 +165,7 @@ const OrderPage = () => {
         count: 1,
         sellingPrice: price,
       })
-      localStorage.setItem('checkout_list', JSON.stringify(checkoutList))
+      sessionStorage.setItem('checkout_list', JSON.stringify(checkoutList))
     }
 
     let calculateCount = cartList.reduce(
@@ -176,8 +176,8 @@ const OrderPage = () => {
       (acc, product) => acc + product.count * product.price,
       0
     )
-    localStorage.setItem('total_count', calculateCount)
-    localStorage.setItem('total_price', calculatePrice)
+    sessionStorage.setItem('total_count', calculateCount)
+    sessionStorage.setItem('total_price', calculatePrice)
     setTotalCountForRender(calculateCount)
     setTotalPriceForRender(calculatePrice)
   }
@@ -195,7 +195,7 @@ const OrderPage = () => {
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
-      localStorage.setItem('cart_list', JSON.stringify(filterCartList))
+      sessionStorage.setItem('cart_list', JSON.stringify(filterCartList))
     }
 
     // 用來打點餐api的資訊
@@ -211,7 +211,7 @@ const OrderPage = () => {
         return product
       })
       let filterCartList = newList.filter((product) => product.count !== 0)
-      localStorage.setItem('checkout_list', JSON.stringify(filterCartList))
+      sessionStorage.setItem('checkout_list', JSON.stringify(filterCartList))
     }
 
     let calculateCount = cartList.reduce(
@@ -222,8 +222,8 @@ const OrderPage = () => {
       (acc, product) => acc + product.count * product.price,
       0
     )
-    localStorage.setItem('total_count', calculateCount)
-    localStorage.setItem('total_price', calculatePrice)
+    sessionStorage.setItem('total_count', calculateCount)
+    sessionStorage.setItem('total_price', calculatePrice)
     setTotalCountForRender(calculateCount)
     setTotalPriceForRender(calculatePrice)
   }
@@ -232,7 +232,7 @@ const OrderPage = () => {
   const getCartHandler = async () => {
     try {
       const res = await getOrderApi(tableName)
-      localStorage.setItem('adult_count', res.data.adultNum)
+      sessionStorage.setItem('adult_count', res.data.adultNum)
       navigate('/customer/cart')
     } catch (error) {
       console.error(error)

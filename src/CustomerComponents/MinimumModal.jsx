@@ -10,10 +10,10 @@ import styles from './MinimumModal.module.scss'
 const MinimumModal = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // localStorage
-  const minCharge = localStorage.getItem('min_charge')
-  const adultNum = localStorage.getItem('adult_count')
-  const totalPrice = localStorage.getItem('total_price')
+  // sessionStorage
+  const minCharge = sessionStorage.getItem('min_charge')
+  const adultNum = sessionStorage.getItem('adult_count')
+  const totalPrice = sessionStorage.getItem('total_price')
   // useSelector
   const isMinimumModalOpen = useSelector(
     (state) => state.modal.isMinimumModalOpen

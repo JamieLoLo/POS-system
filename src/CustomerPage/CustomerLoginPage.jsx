@@ -32,11 +32,11 @@ const CustomerLoginPage = () => {
           timer: 2000,
         })
       }
-      localStorage.setItem('order_id', res.data.id)
-      localStorage.setItem('table_id', res.data.tableId)
-      localStorage.setItem('table_name', res.data.Table.name)
-      localStorage.setItem('adult_count', res.data.adultNum)
-      localStorage.setItem('children_count', res.data.childrenNum)
+      sessionStorage.setItem('order_id', res.data.id)
+      sessionStorage.setItem('table_id', res.data.tableId)
+      sessionStorage.setItem('table_name', res.data.Table.name)
+      sessionStorage.setItem('adult_count', res.data.adultNum)
+      sessionStorage.setItem('children_count', res.data.childrenNum)
       await dispatch(informationActions.setOrderInfo(res.data))
       navigate('/customer/main')
     } catch (error) {
@@ -49,8 +49,8 @@ const CustomerLoginPage = () => {
     const categoryGetAll = async () => {
       try {
         const res = await categoryGetAllApi()
-        localStorage.setItem('default_category_id', res.data[0].id)
-        localStorage.setItem('default_category_name', res.data[0].name)
+        sessionStorage.setItem('default_category_id', res.data[0].id)
+        sessionStorage.setItem('default_category_name', res.data[0].name)
       } catch (error) {
         console.error(error)
       }

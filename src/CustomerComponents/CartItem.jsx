@@ -14,8 +14,8 @@ import styles from './CartItem.module.scss'
 
 const CartItem = ({ data, addProductHandler, minusProductHandler }) => {
   const dispatch = useDispatch()
-  // localStorage
-  const cartList = JSON.parse(localStorage.getItem('cart_list'))
+  // sessionStorage
+  const cartList = JSON.parse(sessionStorage.getItem('cart_list'))
   //  useState
   let [count, setCount] = useState(0)
 

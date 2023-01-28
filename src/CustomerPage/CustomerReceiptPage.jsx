@@ -11,12 +11,12 @@ import styles from './CustomerReceiptPage.module.scss'
 
 export const CustomerReceiptPage = () => {
   const navigate = useNavigate()
-  // localStorage
-  const orderId = localStorage.getItem('order_id')
-  const adultCount = localStorage.getItem('adult_count')
-  const childrenCount = localStorage.getItem('children_count')
-  const totalPrice = localStorage.getItem('total_price')
-  const tableName = localStorage.getItem('table_name')
+  // sessionStorage
+  const orderId = sessionStorage.getItem('order_id')
+  const adultCount = sessionStorage.getItem('adult_count')
+  const childrenCount = sessionStorage.getItem('children_count')
+  const totalPrice = sessionStorage.getItem('total_price')
+  const tableName = sessionStorage.getItem('table_name')
 
   // 確認是否已結帳，未結帳可繼續點餐。
   const continueOrderHandler = async () => {

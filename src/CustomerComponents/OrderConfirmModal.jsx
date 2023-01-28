@@ -13,12 +13,12 @@ import styles from './OrderConfirmModal.module.scss'
 const OrderConfirmModal = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // localStorage
-  const checkoutList = JSON.parse(localStorage.getItem('checkout_list'))
-  const orderId = Number(localStorage.getItem('order_id'))
-  const minCharge = localStorage.getItem('min_charge')
-  const adultNum = localStorage.getItem('adult_count')
-  const totalPrice = localStorage.getItem('total_price')
+  // sessionStorage
+  const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list'))
+  const orderId = Number(sessionStorage.getItem('order_id'))
+  const minCharge = sessionStorage.getItem('min_charge')
+  const adultNum = sessionStorage.getItem('adult_count')
+  const totalPrice = sessionStorage.getItem('total_price')
   // useSelector
   const isOrderConfirmModalOpen = useSelector(
     (state) => state.modal.isOrderConfirmModalOpen

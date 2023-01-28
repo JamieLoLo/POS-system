@@ -19,8 +19,8 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
   // useState
   let [count, setCount] = useState(0)
   const [img, setImg] = useState(LoadingIcon)
-  // localStorage
-  const cartList = JSON.parse(localStorage.getItem('cart_list')) || null
+  // sessionStorage
+  const cartList = JSON.parse(sessionStorage.getItem('cart_list')) || null
 
   // 進入頁面時取得數量
   useEffect(() => {
