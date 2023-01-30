@@ -331,7 +331,7 @@ const OrderSystemPage = () => {
   return (
     <div className='main__container'>
       <CheckoutModal />
-      <LoadingModal />
+      <LoadingModal title='資料上傳中...' />
       <div className={styles.left__side__container}>
         <div className={styles.table__name__container}>
           <p className={StyleSheet.table__name}>{tableName}</p>

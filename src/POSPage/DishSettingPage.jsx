@@ -104,7 +104,7 @@ const DishSettingPage = () => {
     <div>
       <AddProductModal />
       <ModifyProductModal />
-      <LoadingModal />
+      <LoadingModal title='資料上傳中...' />
       <PosMainGridSystem pathname={pathname}>
         <div className={styles.container__height}>
           <button className={styles.logout__button} onClick={logoutHandler}>
