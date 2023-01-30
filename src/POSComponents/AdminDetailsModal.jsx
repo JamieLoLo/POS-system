@@ -16,6 +16,15 @@ const AdminDetailsModal = () => {
   const isAdminDetailsModalOpen = useSelector(
     (state) => state.modal.isAdminDetailsModalOpen
   )
+  const singleOrderData =
+    useSelector((state) => state.information.singleOrderData) || []
+  const productData =
+    useSelector((state) => state.information.singleOrderData).soldProducts || []
+  // 訂單內容
+  const orderList = productData.map((data) => (
+    <AdminDetailsItem data={data} key={data.productId} />
+  ))
+
   return isAdminDetailsModalOpen ? (
     <div className={styles.modal}>
       <div
@@ -33,21 +42,27 @@ const AdminDetailsModal = () => {
         </div>
         <div className={styles.title}>交易明細</div>
         <div className={styles.information__container}>
-          <p className={styles.information}>日期：2023/01/26</p>
-          <p className={styles.information}>時間：11:34</p>
-          <p className={styles.information}>人數：2大0小</p>
+          <p className={styles.information}>
+            日期：{singleOrderData.createdAt.slice(0, 10)}
+          </p>
+          <p className={styles.information}>
+            時間：{singleOrderData.createdAt.slice(11)}
+          </p>
+          <p className={styles.information}>
+            人數：{singleOrderData.adultNum}大{singleOrderData.childrenNum}小
+          </p>
         </div>
         <div className={styles.subtitle__container}>
           <p className={styles.name}>品名 (數量)</p>
           <p className={styles.price}>小計</p>
         </div>
-        <div className={styles.products__container}>
-          <AdminDetailsItem name='奶油明太子義大利麵' count='1' price='270' />
-          <AdminDetailsItem name='奶油野菇義大利麵' count='1' price='250' />
-        </div>
+        <div className={styles.products__container}>{orderList}</div>
         <div className={styles.total__container}>
           <div className={styles.total}>
-            合計 <span className={styles.total__number}>$520</span>
+            合計
+            <span className={styles.total__number}>
+              ${singleOrderData.totalPrice}
+            </span>
           </div>
         </div>
       </div>
