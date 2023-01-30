@@ -204,3 +204,27 @@ export const getRankApi = async (startDate, endDate) => {
     console.error('[Get Rank Failed]: ', error)
   }
 }
+
+// 查看所有訂單
+export const getAllOrdersApi = async (date, page) => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/orders/${date}`, {
+      params: { page },
+    })
+    return res
+  } catch (error) {
+    console.error('[Get All Orders Failed]: ', error)
+  }
+}
+
+// 商家取得一張訂單
+export const getSingleOrderApi = async (id) => {
+  try {
+    const res = await axiosInstance.get(`${posURL}/order/${id}`, {
+      params: { id },
+    })
+    return res
+  } catch (error) {
+    console.error('[Get Single Order Failed]: ', error)
+  }
+}
