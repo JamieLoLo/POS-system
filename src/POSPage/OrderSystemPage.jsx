@@ -196,7 +196,6 @@ const OrderSystemPage = () => {
     )
 
     localStorage.setItem('total_price', calculatePrice)
-    console.log(calculatePrice)
     setTotalPriceForRender(calculatePrice)
   }
 
