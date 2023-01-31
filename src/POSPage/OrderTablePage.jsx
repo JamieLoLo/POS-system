@@ -1,4 +1,5 @@
 import React from 'react'
+import webSocket from 'socket.io-client'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
@@ -20,8 +21,30 @@ const OrderTablePage = () => {
   const navigate = useNavigate()
   // useState
   const [allTablesData, setAllTablesData] = useState([])
+  const [ws, setWs] = useState(null)
+  const [message, setMessage] = useState('')
   // useSelector
   const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
+
+  const connectWebSocket = () => {
+    setWs(webSocket('https://pacific-woodland-57366.herokuapp.com/'))
+  }
+
+  useEffect(() => {
+    connectWebSocket()
+  }, [])
+
+  useEffect(() => {
+    if (ws) {
+      initWebSocket()
+    }
+  }, [ws])
+
+  const initWebSocket = () => {
+    ws.on('ordered', (message) => {
+      setMessage(message)
+    })
+  }
 
   // 確認登入狀態
   useEffect(() => {
@@ -42,7 +65,7 @@ const OrderTablePage = () => {
       }
     }
     getTables()
-  }, [isTableUpdate])
+  }, [isTableUpdate, message.orderId, message.tableId])
 
   // 取得所有分類
   useEffect(() => {
