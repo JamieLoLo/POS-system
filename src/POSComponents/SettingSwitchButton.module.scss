@@ -21,3 +21,12 @@
     border: 1px solid var(--dark-90);
   }
 }
+
+// 修正小台平板的匯出excel鍵會爆版的問題
+@media screen and (max-width: 1179px) {
+  .switch__button__container {
+    .switch__button {
+      width: 145px;
+    }
+  }
+}
