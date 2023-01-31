@@ -26,6 +26,7 @@ const OrderTablePage = () => {
   // useSelector
   const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
 
+  // socket.io 的部分，用來即時轉換桌子顏色（當顧客送出訂單時）。
   const connectWebSocket = () => {
     setWs(webSocket('https://pacific-woodland-57366.herokuapp.com/'))
   }
