@@ -94,11 +94,16 @@ const SingleDayRevenue = () => {
             </button>
           </div>
           <div className={styles.list__container}>
-            <div className={styles.title__container}>
-              <div className={styles.title}>時間</div>
-              <div className={styles.title}>金額</div>
-              <div className={styles.title}>人數</div>
-            </div>
+            {ordersData.length !== 0 ? (
+              <div className={styles.title__container}>
+                <div className={styles.title}>時間</div>
+                <div className={styles.title}>金額</div>
+                <div className={styles.title}>人數</div>
+              </div>
+            ) : (
+              ''
+            )}
+
             <div className={styles.classification__list} id='order__list'>
               {ordersData.length !== 0 && (
                 <InfiniteScroll
