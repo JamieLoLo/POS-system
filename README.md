@@ -14,25 +14,44 @@
 https://jamielolo.github.io/POS-system/
 <br/>
 <br/>
+【 管理者 】
+<br/>
+帳號：admin
+<br/>
+密碼：12345678
+
+【 顧客 】
+<br/>
+桌號：A1 ~ A7、B1 ~ B8
+<br/>
+**若出現未開桌訊息，請換桌號，或是至管理系統開桌。**
+<br/>
+<br/>
+
+## Demo Video
+
+https://youtu.be/xm0SaJXoS9U
+<br/>
+<br/>
 
 ## 專案部分畫面
 
-【管理者-點餐入口】
+【 管理者 - 點餐入口 】
 <img src="./src/POSComponents/assets/projectImage/table.png" />
-【管理者-點餐頁面】
+【 管理者 - 點餐頁面 】
 <img src="./src/POSComponents/assets/projectImage/admin_order.png" />
-【管理者-帳務相關頁面】
+【 管理者 - 帳務相關頁面 】
 <img src="./src/POSComponents/assets/projectImage/revenue.png" />
-【管理者-設定相關頁面】
+【 管理者 - 設定相關頁面 】
 <img src="./src/POSComponents/assets/projectImage/product_setting.png" />
-【管理者-設定相關頁面】
+【 管理者 - 設定相關頁面 】
 <img src="./src/POSComponents/assets/projectImage/order_table.png" />
-【顧客-點餐畫面】
+【 顧客 - 點餐畫面 】
 
 <div><img src="./src/POSComponents/assets/projectImage/customer_order.png" /></div>
-【顧客-餐點詳細介紹】
+【 顧客 - 餐點詳細介紹 】
 <div><img src="./src/POSComponents/assets/projectImage/product_detail.png" /></div>
-【顧客-訂單內容】
+【 顧客 - 訂單內容 】
 <div><img src="./src/POSComponents/assets/projectImage/receipt.png" /></div>
 <br/>
 <br/>
