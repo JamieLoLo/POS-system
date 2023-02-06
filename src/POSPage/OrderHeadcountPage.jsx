@@ -2,7 +2,7 @@ import React from 'react'
 // hook
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus.svg'
