@@ -424,7 +424,9 @@ const posSlice = createSlice({
           showConfirmButton: false,
           timer: 2000,
         })
-        window.location.assign('http://localhost:3000/POS-system#/order/table')
+        window.location.assign(
+          'https://jamielolo.github.io/POS-system/#/order/table'
+        )
       }
     })
     // 店家修改人數
@@ -451,7 +453,9 @@ const posSlice = createSlice({
           showConfirmButton: false,
           timer: 2000,
         })
-        window.location.assign('http://localhost:3000/POS-system#/order/table')
+        window.location.assign(
+          'https://jamielolo.github.io/POS-system/#/order/table'
+        )
       } else {
         Swal.fire({
           position: 'center',
@@ -511,7 +515,7 @@ const posSlice = createSlice({
         })
         state.isAccountClosingModalOpen = false
         window.location.assign(
-          'http://localhost:3000/POS-system#/forms/revenue'
+          'https://jamielolo.github.io/POS-system/#/forms/revenue'
         )
       }
     })
