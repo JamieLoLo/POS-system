@@ -5,13 +5,14 @@ import ExcelJs from 'exceljs'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, RevenueItem } from '../POSComponents/index'
 // calendar package
 import DatePicker from 'react-datepicker'
-// api
-import { getRevenuesApi } from '../api/posApi'
+// slice
+import { getRevenuesApi } from '../store/pos-slice'
 // CSS
 import 'react-datepicker/dist/react-datepicker.css'
 import styles from './MonthlyRevenuePage.module.scss'
@@ -19,6 +20,7 @@ import styles from './MonthlyRevenuePage.module.scss'
 const MonthlyRevenuePage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   // useState
   const [startDate, setStartDate] = useState(
     moment(new Date()).format('yyyy-MM-DD')
@@ -26,7 +28,8 @@ const MonthlyRevenuePage = () => {
   const [endDate, setEndDate] = useState(
     moment(new Date()).format('yyyy-MM-DD')
   )
-  const [revenueData, setRevenueData] = useState([])
+  // useSelector
+  const revenueData = useSelector((state) => state.pos.revenueData)
   // 給套件用的資訊
   const startDateSelected = moment(startDate).toDate()
   const endDateSelected = moment(endDate).toDate()
@@ -40,20 +43,8 @@ const MonthlyRevenuePage = () => {
   }, [navigate])
 
   // 查詢
-  const searchHandler = async () => {
-    const res = await getRevenuesApi(startDate, endDate)
-    if (res.data.length === 0) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '查無此區間資訊',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      return
-    } else {
-      setRevenueData(res.data)
-    }
+  const searchHandler = () => {
+    dispatch(getRevenuesApi({ startDate, endDate }))
   }
 
   // 給匯出 excel 的檔案格式

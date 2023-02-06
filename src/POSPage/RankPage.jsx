@@ -5,11 +5,12 @@ import ExcelJs from 'exceljs'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, RankItem } from '../POSComponents/index'
-// api
-import { getRankApi } from '../api/posApi'
+// slice
+import { getRankApi } from '../store/pos-slice'
 // calendar package
 import DatePicker from 'react-datepicker'
 // CSS
@@ -19,6 +20,7 @@ import styles from './RankPage.module.scss'
 const RankPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   // useState
   const [startDate, setStartDate] = useState(
     moment(new Date()).format('yyyy-MM-DD')
@@ -26,7 +28,8 @@ const RankPage = () => {
   const [endDate, setEndDate] = useState(
     moment(new Date()).format('yyyy-MM-DD')
   )
-  const [rankData, setRankData] = useState([])
+  // useSelector
+  const rankData = useSelector((state) => state.pos.rankData)
   // 給套件用的資訊
   const startDateSelected = moment(startDate).toDate()
   const endDateSelected = moment(endDate).toDate()
@@ -39,21 +42,9 @@ const RankPage = () => {
     }
   }, [navigate])
 
-  // 搜尋
-  const searchHandler = async () => {
-    const res = await getRankApi(startDate, endDate)
-    if (res.data.length === 0) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '查無此區間資訊',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      return
-    } else {
-      setRankData(res.data)
-    }
+  // 搜尋銷售排行
+  const searchHandler = () => {
+    dispatch(getRankApi({ startDate, endDate }))
   }
 
   // 給匯出 excel 的檔案格式

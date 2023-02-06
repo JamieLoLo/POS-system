@@ -6,17 +6,13 @@ import { ReactComponent as CalculatorDeleteIcon } from './assets/icon/calculator
 // hook
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { checkoutApi } from '../api/posApi'
+// slice
+import { checkoutApi, posActions } from '../store/pos-slice'
 // SCSS
 import styles from './CheckoutModal.module.scss'
 
 const CheckoutModal = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   // localStorage
   const orderId = JSON.parse(localStorage.getItem('order_info')).id
   const total = Number(
@@ -25,7 +21,7 @@ const CheckoutModal = () => {
 
   // useSelector
   const isCheckoutModalOpen = useSelector(
-    (state) => state.modal.isCheckoutModalOpen
+    (state) => state.pos.isCheckoutModalOpen
   )
   // useState
   const [receive, setReceive] = useState('')
@@ -57,26 +53,10 @@ const CheckoutModal = () => {
         confirmButtonText: '確定',
       })
       if (result.isConfirmed) {
-        await checkoutApi(orderId)
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '結帳成功',
-          showConfirmButton: false,
-          timer: 2000,
-        })
-        dispatch(modalActions.setIsCheckoutModalOpen(false))
-        navigate('/order/table')
+        await dispatch(checkoutApi(orderId))
       }
     } catch (error) {
       console.error(error)
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '結帳失敗，請重新操作。',
-        showConfirmButton: false,
-        timer: 2000,
-      })
     }
   }
 
@@ -85,7 +65,7 @@ const CheckoutModal = () => {
       <div
         className={styles.backdrop}
         onClick={() => {
-          dispatch(modalActions.setIsCheckoutModalOpen(false))
+          dispatch(posActions.setIsCheckoutModalOpen(false))
           setReceive('')
           setChange('')
         }}
@@ -95,7 +75,7 @@ const CheckoutModal = () => {
           <DeleteIcon
             className={styles.delete__button}
             onClick={() => {
-              dispatch(modalActions.setIsCheckoutModalOpen(false))
+              dispatch(posActions.setIsCheckoutModalOpen(false))
               setReceive('')
               setChange('')
             }}

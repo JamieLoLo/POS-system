@@ -1,5 +1,4 @@
 import React from 'react'
-import Swal from 'sweetalert2'
 // hook
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
@@ -7,10 +6,8 @@ import { useSelector, useDispatch } from 'react-redux'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus.svg'
-// api
-import { addHeadcountApi } from '../api/posApi'
-// store
-import { informationActions } from '../store/information-slice'
+// slice
+import { addHeadcountApi, getTablesApi } from '../store/pos-slice'
 // SCSS
 import styles from './OrderHeadcountPage.module.scss'
 
@@ -18,10 +15,10 @@ const OrderCustomerPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   // useState
-  const [adultCount, setAdultCount] = useState(0)
-  const [childrenCount, setChildrenCount] = useState(0)
-  // useSelector
-  const tableId = useSelector((state) => state.information.tableInfo.id)
+  const [adultNum, setAdultNum] = useState(0)
+  const [childrenNum, setChildrenNum] = useState(0)
+  // localStorage
+  const table_id = localStorage.getItem('table_id')
 
   // 確認登入狀態
   useEffect(() => {
@@ -33,20 +30,8 @@ const OrderCustomerPage = () => {
 
   // 開桌
   const submitHandler = async () => {
-    try {
-      const res = await addHeadcountApi(tableId, adultCount, childrenCount)
-      await dispatch(informationActions.setHeadcountInfo(res.data))
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '成功開桌',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      navigate('/order/table')
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(addHeadcountApi({ table_id, adultNum, childrenNum }))
+    dispatch(getTablesApi())
   }
 
   return (
@@ -61,18 +46,18 @@ const OrderCustomerPage = () => {
                 <CustomerMinusIcon
                   className={styles.icon}
                   onClick={() => {
-                    if (adultCount !== 0) {
-                      setAdultCount((adultCount) => adultCount - 1)
+                    if (adultNum !== 0) {
+                      setAdultNum((adultNum) => adultNum - 1)
                     }
                   }}
                 />
               </div>
-              <p className={styles.count}>{adultCount}</p>
+              <p className={styles.count}>{adultNum}</p>
               <div className={styles.icon__container}>
                 <CustomerPlusIcon
                   className={styles.icon}
                   onClick={() => {
-                    setAdultCount((adultCount) => adultCount + 1)
+                    setAdultNum((adultNum) => adultNum + 1)
                   }}
                 />
               </div>
@@ -85,18 +70,18 @@ const OrderCustomerPage = () => {
                 <CustomerMinusIcon
                   className={styles.icon}
                   onClick={() => {
-                    if (childrenCount !== 0) {
-                      setChildrenCount((childrenCount) => childrenCount - 1)
+                    if (childrenNum !== 0) {
+                      setChildrenNum((childrenNum) => childrenNum - 1)
                     }
                   }}
                 />
               </div>
-              <p className={styles.count}>{childrenCount}</p>
+              <p className={styles.count}>{childrenNum}</p>
               <div className={styles.icon__container}>
                 <CustomerPlusIcon
                   className={styles.icon}
                   onClick={() => {
-                    setChildrenCount((childrenCount) => childrenCount + 1)
+                    setChildrenNum((childrenNum) => childrenNum + 1)
                   }}
                 />
               </div>

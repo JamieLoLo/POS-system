@@ -2,7 +2,7 @@ import React from 'react'
 // hook
 import { useDispatch, useSelector } from 'react-redux'
 // store
-import { modalActions } from '../store/modal-slice'
+import { categoryActions } from '../store/category-slice'
 // icon
 import { ReactComponent as DeleteIcon } from '../POSComponents/assets/icon/delete_black.svg'
 // default img
@@ -14,17 +14,15 @@ const ProductDetailModal = () => {
   const dispatch = useDispatch()
   // useSelector
   const isProductDetailModalOpen = useSelector(
-    (state) => state.modal.isProductDetailModalOpen
+    (state) => state.category.isProductDetailModalOpen
   )
-  const customerMenuInfo = useSelector(
-    (state) => state.information.customerMenuInfo
-  )
+  const customerMenuInfo = useSelector((state) => state.order.customerMenuInfo)
   return isProductDetailModalOpen ? (
     <div className={styles.modal}>
       <div
         className={styles.backdrop}
         onClick={() =>
-          dispatch(modalActions.setIsProductDetailModalOpen(false))
+          dispatch(categoryActions.setIsProductDetailModalOpen(false))
         }
       ></div>
       <div className={styles.modal__container}>
@@ -32,7 +30,7 @@ const ProductDetailModal = () => {
           <DeleteIcon
             className={styles.delete__button}
             onClick={() =>
-              dispatch(modalActions.setIsProductDetailModalOpen(false))
+              dispatch(categoryActions.setIsProductDetailModalOpen(false))
             }
           />
           <div className={styles.image__container}>

@@ -3,7 +3,6 @@ import clsx from 'clsx'
 // hook
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 // UI
 import {
   CustomerOrderCategory,
@@ -13,101 +12,53 @@ import {
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as CartIcon } from '../CustomerComponents/assets/icon/cart.svg'
-// api
-import { getMinimumApi } from '../api/posApi'
-import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
-import { getOrderApi } from '../api/orderApi'
-// store
-import { informationActions } from '../store/information-slice'
+// slice
+import { getMinimumApi } from '../store/pos-slice'
+import { getOrderApi } from '../store/order-slice'
+import { categoryGetAllApi, getProductsApi } from '../store/category-slice'
 // SCSS
 import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   // sessionStorage
-  const defaultCategoryId = sessionStorage.getItem('default_category_id')
-  const tableName = sessionStorage.getItem('table_name')
+  const adultNum = sessionStorage.getItem('adult_count')
+  const childrenNum = sessionStorage.getItem('children_count')
+  const id = sessionStorage.getItem('default_category_id')
+  const table_id = sessionStorage.getItem('table_name')
   const cartList = JSON.parse(sessionStorage.getItem('cart_list')) || []
   const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list')) || []
   const totalCount = sessionStorage.getItem('total_count')
   const totalPrice = sessionStorage.getItem('total_price')
-
   // useState
-  const [minimumInfo, setMinimumInfo] = useState({})
-  const [allCategoryData, setAllCategoryData] = useState([])
-  const [products, setProducts] = useState([])
   const [totalCountForRender, setTotalCountForRender] = useState(totalCount)
   const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
-
   // useSelector
-  const orderInfo = useSelector((state) => state.information.orderInfo)
+  const minCharge = useSelector((state) => state.pos.minimum).minCharge
+  const description = useSelector((state) => state.pos.minimum).description
+  const allCategoryData = useSelector((state) => state.category.allCategoryData)
+  const products = useSelector((state) => state.category.products)
 
   // 取得描述
   useEffect(() => {
-    const getDescription = async () => {
-      try {
-        const res = await getMinimumApi()
-        setMinimumInfo(res.data)
-        sessionStorage.setItem('min_charge', res.data.minCharge)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getDescription()
-  }, [])
+    dispatch(getMinimumApi())
+    sessionStorage.setItem('min_charge', minCharge)
+  }, [dispatch, minCharge])
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        await setAllCategoryData(res.data)
-        sessionStorage.setItem('default_category_id', res.data[0].id)
-        sessionStorage.setItem('default_category_name', res.data[0].name)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'customer_order_page' }))
+  }, [dispatch])
 
   // 取得單一分類裡的所有餐點 (首次進入本頁時)
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await getProductsApi(defaultCategoryId)
-        await setProducts(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getProducts()
-  }, [defaultCategoryId])
+    dispatch(getProductsApi({ id, page: 'customer_order_first' }))
+  }, [dispatch, id])
 
   // 取得單一分類裡的所有餐點
   const productsHandler = async (id) => {
-    try {
-      const res = await getProductsApi(id)
-      setProducts(res.data)
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(getProductsApi({ id, page: 'customer_order_select' }))
   }
-
-  // 取得訂單內容 (餐點、人數)
-  useEffect(() => {
-    const getOrder = async () => {
-      try {
-        const res = await getOrderApi(tableName)
-        await dispatch(informationActions.setOrderInfo(res.data))
-        sessionStorage.setItem('adult_count', res.data.adultNum)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getOrder()
-  }, [dispatch, tableName])
 
   // 分類列表
   const categoryList = allCategoryData.map((data) => (
@@ -229,14 +180,8 @@ const OrderPage = () => {
   }
 
   // 前往購物車
-  const getCartHandler = async () => {
-    try {
-      const res = await getOrderApi(tableName)
-      sessionStorage.setItem('adult_count', res.data.adultNum)
-      navigate('/customer/cart')
-    } catch (error) {
-      console.error(error)
-    }
+  const getCartHandler = () => {
+    dispatch(getOrderApi({ table_id, page: 'customer_go_cart' }))
   }
 
   // 餐點清單
@@ -261,14 +206,12 @@ const OrderPage = () => {
       </header>
       <div className={styles.information__container}>
         <div className={styles.description}>
-          <pre className={styles.description__text}>
-            {minimumInfo.description}
-          </pre>
+          <pre className={styles.description__text}>{description}</pre>
         </div>
         <div className={styles.table__information}>
-          <div className={styles.table__number}>桌號：{tableName}</div>
+          <div className={styles.table__number}>桌號：{table_id}</div>
           <div className={styles.headcount}>
-            人數：{orderInfo.adultNum}大 {orderInfo.childrenNum}小
+            人數：{adultNum}大 {childrenNum}小
           </div>
         </div>
       </div>
@@ -279,10 +222,8 @@ const OrderPage = () => {
 
       <footer
         className={clsx('', {
-          [styles.footer__success]:
-            totalPrice >= orderInfo.adultNum * minimumInfo.minCharge,
-          [styles.footer__error]:
-            totalPrice < orderInfo.adultNum * minimumInfo.minCharge,
+          [styles.footer__success]: totalPrice >= adultNum * minCharge,
+          [styles.footer__error]: totalPrice < adultNum * minCharge,
         })}
         onClick={getCartHandler}
       >
@@ -293,7 +234,9 @@ const OrderPage = () => {
           <div className={styles.cart__count}>{totalCountForRender}</div>
         </div>
         <div className={styles.cart__text}>購物車</div>
-        <div className={styles.sum}>${totalPriceForRender}</div>
+        <div className={styles.sum}>
+          {totalPriceForRender ? '$' : ''} {totalPriceForRender}
+        </div>
       </footer>
     </div>
   )

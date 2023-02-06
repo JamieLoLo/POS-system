@@ -1,10 +1,10 @@
 import React from 'react'
 import moment from 'moment'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Swal from 'sweetalert2'
 // hook
 import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import {
@@ -13,8 +13,8 @@ import {
   AdminDetailsModal,
   LoadingModal,
 } from '../POSComponents'
-// api
-import { getAllOrdersApi } from '../api/posApi'
+// slice
+import { getAllOrdersApi } from '../store/pos-slice'
 // calendar package
 import DatePicker from 'react-datepicker'
 // CSS
@@ -23,54 +23,35 @@ import styles from './SingleDayRevenue.module.scss'
 
 const SingleDayRevenue = () => {
   const pathname = useLocation().pathname
+  const dispatch = useDispatch()
   // useState
   const [date, setDate] = useState(moment(new Date()).format('yyyy-MM-DD'))
-  const [ordersData, setOrdersData] = useState([])
   const [page, setPage] = useState(1) // lazy loading 相關
   const [hasMore, setHasMore] = useState(true) // lazy loading 相關
-
+  // useSelector
+  const allOrdersData = useSelector((state) => state.pos.allOrdersData)
+  const singlePageOrdersData = useSelector(
+    (state) => state.pos.singlePageOrdersData
+  )
   // 給套件用的資訊
   const startDateSelected = moment(date).toDate()
 
   // 依照日期查詢
   const searchHandler = async () => {
     setHasMore(true)
-    try {
-      const res = await getAllOrdersApi(date, 1)
-      if (res.data.length === 0) {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '查無此日期的訂單',
-          showConfirmButton: false,
-          timer: 2000,
-        })
-      }
-      if (res) {
-        setOrdersData(res.data)
-        setPage(2)
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(getAllOrdersApi({ date, page: 1, for: 'search' }))
+    setPage(2)
   }
 
   // lazy loading 換頁
   const changePage = async () => {
-    try {
-      const res = await getAllOrdersApi(date, page)
-      if (res) {
-        setHasMore(res.data.length)
-        setPage((page) => page + 1)
-        setOrdersData(ordersData.concat(res.data))
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(getAllOrdersApi({ date, page, for: 'lazy_loading' }))
+    setHasMore(singlePageOrdersData.length)
+    setPage((page) => page + 1)
   }
 
   // 訂單列表
-  const orderList = ordersData.map((data) => (
+  const orderList = allOrdersData.map((data) => (
     <ReceiptDetailsItem data={data} key={data.id} />
   ))
 
@@ -94,7 +75,7 @@ const SingleDayRevenue = () => {
             </button>
           </div>
           <div className={styles.list__container}>
-            {ordersData.length !== 0 ? (
+            {allOrdersData.length !== 0 ? (
               <div className={styles.title__container}>
                 <div className={styles.title}>時間</div>
                 <div className={styles.title}>金額</div>
@@ -105,9 +86,9 @@ const SingleDayRevenue = () => {
             )}
 
             <div className={styles.classification__list} id='order__list'>
-              {ordersData.length !== 0 && (
+              {allOrdersData.length !== 0 && (
                 <InfiniteScroll
-                  dataLength={ordersData.length}
+                  dataLength={allOrdersData.length}
                   next={changePage}
                   hasMore={hasMore !== 0}
                   endMessage={null}

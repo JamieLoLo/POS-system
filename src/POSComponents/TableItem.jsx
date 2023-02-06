@@ -2,9 +2,8 @@ import React from 'react'
 import clsx from 'clsx'
 // hook
 import { useDispatch } from 'react-redux'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+// slice
+import { posActions } from '../store/pos-slice'
 // SCSS
 import styles from './TableItem.module.scss'
 
@@ -12,9 +11,9 @@ const TableItem = ({ data }) => {
   const dispatch = useDispatch()
 
   const modalHandler = () => {
-    dispatch(modalActions.setIsTableSettingModalOpen(true))
-    dispatch(informationActions.setTableID(data.id))
-    dispatch(informationActions.setTableName(data.name))
+    dispatch(posActions.setIsTableSettingModalOpen(true))
+    dispatch(posActions.setTableID(data.id))
+    dispatch(posActions.setTableName(data.name))
   }
 
   return (

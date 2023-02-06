@@ -1,45 +1,25 @@
 import React from 'react'
-import Swal from 'sweetalert2'
 // hook
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
-// api
-import { getOrderApi } from '../api/orderApi'
+// slice
+import { getOrderApi } from '../store/order-slice'
 // SCSS
 import styles from './CustomerReceiptPage.module.scss'
 
 export const CustomerReceiptPage = () => {
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
   // sessionStorage
   const orderId = sessionStorage.getItem('order_id')
   const adultCount = sessionStorage.getItem('adult_count')
   const childrenCount = sessionStorage.getItem('children_count')
   const totalPrice = sessionStorage.getItem('total_price')
-  const tableName = sessionStorage.getItem('table_name')
+  const table_id = sessionStorage.getItem('table_name')
 
   // 確認是否已結帳，未結帳可繼續點餐。
   const continueOrderHandler = async () => {
-    try {
-      // 再次確認後台是否已結帳
-      const res = await getOrderApi(tableName)
-
-      if (res) {
-        navigate('/customer/main')
-      } else if (!res) {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '您已結帳',
-          text: '加點請洽櫃檯',
-          showConfirmButton: false,
-          timer: 2000,
-        })
-        return
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(getOrderApi({ table_id, page: 'customer_receipt_page' }))
   }
 
   return (
@@ -63,7 +43,7 @@ export const CustomerReceiptPage = () => {
         </div>
         <div className={styles.item__container}>
           <div className={styles.detail__title}>桌號：</div>
-          <div className={styles.detail__number}>{tableName}</div>
+          <div className={styles.detail__number}>{table_id}</div>
         </div>
         <div className={styles.item__container}>
           <div className={styles.detail__title}>人數：</div>

@@ -1,19 +1,18 @@
 import React from 'react'
 // hook
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 // store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+import { posActions } from '../store/pos-slice'
 // SCSS
 import styles from './DishItem.module.scss'
 
 const DishItem = ({ data }) => {
   const dispatch = useDispatch()
 
-  // useSelector
+  // 點擊修改按鈕
   const modifyHandler = () => {
-    dispatch(informationActions.setProductInfo(data))
-    dispatch(modalActions.setIsModifyProductModalOpen(true))
+    dispatch(posActions.setProductInfo(data))
+    dispatch(posActions.setIsModifyProductModalOpen(true))
   }
 
   return (

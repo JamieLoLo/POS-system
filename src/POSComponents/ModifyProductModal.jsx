@@ -6,13 +6,9 @@ import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
-import { updateActions } from '../store/update-slice'
-// api
-import { modifyProductApi } from '../api/posApi'
-import { categoryGetAllApi } from '../api/categoryApi'
+// slice
+import { modifyProductApi, posActions } from '../store/pos-slice'
+import { categoryGetAllApi } from '../store/category-slice'
 // SCSS
 import styles from './ModifyProductModal.module.scss'
 
@@ -22,25 +18,20 @@ const ModifyProductModal = () => {
 
   // useSelector
   const isModifyProductModalOpen = useSelector(
-    (state) => state.modal.isModifyProductModalOpen
+    (state) => state.pos.isModifyProductModalOpen
   )
-  const productData = useSelector((state) => state.information.product)
-  const productId = useSelector((state) => state.information.product.id)
-  const categoryId = useSelector(
-    (state) => state.information.product.categoryId
-  )
-  const name = useSelector((state) => state.information.product.name)
-  const nameEn = useSelector((state) => state.information.product.nameEn)
-  const imageFile = useSelector((state) => state.information.product.image)
-  const cost = useSelector((state) => state.information.product.cost)
-  const price = useSelector((state) => state.information.product.price)
-  const description = useSelector(
-    (state) => state.information.product.description
-  )
+  const productData = useSelector((state) => state.pos.product)
+  const id = useSelector((state) => state.pos.product.id)
+  const categoryId = useSelector((state) => state.pos.product.categoryId)
+  const name = useSelector((state) => state.pos.product.name)
+  const nameEn = useSelector((state) => state.pos.product.nameEn)
+  const cost = useSelector((state) => state.pos.product.cost)
+  const price = useSelector((state) => state.pos.product.price)
+  const description = useSelector((state) => state.pos.product.description)
+  const allCategoryData = useSelector((state) => state.category.allCategoryData)
 
   // useState
   const [newImageFile, setNewImageFile] = useState()
-  const [allCategoryData, setAllCategoryData] = useState([])
 
   // 取得上傳照片位置
   const newImageHandler = async (event) => {
@@ -49,16 +40,8 @@ const ModifyProductModal = () => {
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        await setAllCategoryData(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'modify_product' }))
+  }, [dispatch])
 
   // 餐點分類選單
   const selectList = allCategoryData.map((data) => ({
@@ -146,38 +129,23 @@ const ModifyProductModal = () => {
     } else {
       formData.append('description', description)
     }
-    dispatch(modalActions.setIsLoadingModalOpen(true))
-    const res = await modifyProductApi(formData, productId)
-    if (res.status === 200) {
-      dispatch(modalActions.setIsLoadingModalOpen(false))
-      dispatch(updateActions.setIsProductUpdate())
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '修改成功',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      dispatch(modalActions.setIsModifyProductModalOpen(false))
-      setNewImageFile(undefined)
-      return
-    }
+    dispatch(posActions.setIsLoadingModalOpen(true))
+    dispatch(modifyProductApi({ formData, id }))
+    setNewImageFile(undefined)
   }
 
   return isModifyProductModalOpen ? (
     <div className={styles.modal}>
       <div
         className={styles.backdrop}
-        onClick={() =>
-          dispatch(modalActions.setIsModifyProductModalOpen(false))
-        }
+        onClick={() => dispatch(posActions.setIsModifyProductModalOpen(false))}
       ></div>
       <div className={styles.modal__container}>
         <div className={styles.delete__button__container}>
           <DeleteIcon
             className={styles.delete__button}
             onClick={() =>
-              dispatch(modalActions.setIsModifyProductModalOpen(false))
+              dispatch(posActions.setIsModifyProductModalOpen(false))
             }
           />
         </div>
@@ -192,7 +160,7 @@ const ModifyProductModal = () => {
               autoComplete='off'
               onChange={(e) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     name: e.target.value,
                   })
@@ -208,7 +176,7 @@ const ModifyProductModal = () => {
               autoComplete='off'
               onChange={(e) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     nameEn: e.target.value,
                   })
@@ -224,7 +192,7 @@ const ModifyProductModal = () => {
               options={options}
               onChange={(item) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     categoryId: item.value,
                   })
@@ -242,7 +210,7 @@ const ModifyProductModal = () => {
               autoComplete='off'
               onChange={(e) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     cost: e.target.value,
                   })
@@ -259,7 +227,7 @@ const ModifyProductModal = () => {
               value={productData.price}
               onChange={(e) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     price: e.target.value,
                   })
@@ -287,7 +255,7 @@ const ModifyProductModal = () => {
               autoComplete='off'
               onChange={(e) =>
                 dispatch(
-                  informationActions.setProductInfo({
+                  posActions.setProductInfo({
                     ...productData,
                     description: e.target.value,
                   })

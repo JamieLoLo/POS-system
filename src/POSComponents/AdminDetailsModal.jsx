@@ -6,7 +6,7 @@ import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
 // UI
 import { AdminDetailsItem } from './index'
 // store
-import { modalActions } from '../store/modal-slice'
+import { posActions } from '../store/pos-slice'
 // SCSS
 import styles from './AdminDetailsModal.module.scss'
 
@@ -14,12 +14,12 @@ const AdminDetailsModal = () => {
   const dispatch = useDispatch()
   // useSelector
   const isAdminDetailsModalOpen = useSelector(
-    (state) => state.modal.isAdminDetailsModalOpen
+    (state) => state.pos.isAdminDetailsModalOpen
   )
   const singleOrderData =
-    useSelector((state) => state.information.singleOrderData) || []
+    useSelector((state) => state.pos.singleOrderData) || []
   const productData =
-    useSelector((state) => state.information.singleOrderData).soldProducts || []
+    useSelector((state) => state.pos.singleOrderData).soldProducts || []
   // 訂單內容
   const orderList = productData.map((data) => (
     <AdminDetailsItem data={data} key={data.productId} />
@@ -29,14 +29,14 @@ const AdminDetailsModal = () => {
     <div className={styles.modal}>
       <div
         className={styles.backdrop}
-        onClick={() => dispatch(modalActions.setIsAdminDetailsModalOpen(false))}
+        onClick={() => dispatch(posActions.setIsAdminDetailsModalOpen(false))}
       ></div>
       <div className={styles.modal__container}>
         <div className={styles.delete__button__container}>
           <DeleteIcon
             className={styles.delete__button}
             onClick={() =>
-              dispatch(modalActions.setIsAdminDetailsModalOpen(false))
+              dispatch(posActions.setIsAdminDetailsModalOpen(false))
             }
           />
         </div>

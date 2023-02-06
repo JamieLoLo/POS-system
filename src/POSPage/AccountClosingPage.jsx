@@ -7,11 +7,9 @@ import { useEffect, useState } from 'react'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { FormSwitchButton, AccountClosingModal } from '../POSComponents/index'
-// api
-import { getUnsettledRevenueApi } from '../api/posApi'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+// slice
+import { getUnsettledRevenueApi } from '../store/pos-slice'
+import { posActions } from '../store/pos-slice'
 // SCSS
 import styles from './AccountClosingPage.module.scss'
 
@@ -20,9 +18,7 @@ const AccountClosingPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // useSelector
-  const unSettledRevenue = useSelector(
-    (state) => state.information.unSettledRevenue
-  )
+  const unSettledRevenue = useSelector((state) => state.pos.unSettledRevenue)
   // useState
   const [twoThousand, setTwoThousand] = useState(0)
   const [oneThousand, setOneThousand] = useState(0)
@@ -44,11 +40,7 @@ const AccountClosingPage = () => {
 
   // 取得未結帳營收
   useEffect(() => {
-    const getUnsettledRevenue = async () => {
-      const res = await getUnsettledRevenueApi()
-      dispatch(informationActions.setUnSettledRevenue(res.data))
-    }
-    getUnsettledRevenue()
+    dispatch(getUnsettledRevenueApi())
   }, [dispatch])
 
   // 計算金額加總
@@ -64,7 +56,7 @@ const AccountClosingPage = () => {
       return
     }
     dispatch(
-      informationActions.setAccountClosingCalculate(
+      posActions.setAccountClosingCalculate(
         2000 * twoThousand +
           1000 * oneThousand +
           500 * fiveHundred +
@@ -76,7 +68,7 @@ const AccountClosingPage = () => {
           1 * one
       )
     )
-    dispatch(modalActions.setIsAccountClosingModalOpen(true))
+    dispatch(posActions.setIsAccountClosingModalOpen(true))
   }
 
   return (

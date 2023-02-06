@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 // store
-import { modalActions } from '../store/modal-slice'
+import { orderActions } from '../store/order-slice'
 // SCSS
 import styles from './MinimumModal.module.scss'
 
@@ -16,12 +16,12 @@ const MinimumModal = () => {
   const totalPrice = sessionStorage.getItem('total_price')
   // useSelector
   const isMinimumModalOpen = useSelector(
-    (state) => state.modal.isMinimumModalOpen
+    (state) => state.order.isMinimumModalOpen
   )
 
   // 未達低消，繼續點餐。
   const orderHandler = () => {
-    dispatch(modalActions.setIsMinimumModalOpen(false))
+    dispatch(orderActions.setIsMinimumModalOpen(false))
     navigate('/customer/main')
   }
 

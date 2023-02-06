@@ -2,12 +2,8 @@ import React from 'react'
 import Swal from 'sweetalert2'
 // hook
 import { useDispatch } from 'react-redux'
-// api
-import { deleteCategoryApi } from '../api/categoryApi'
-// store
-import { updateActions } from '../store/update-slice'
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+// slice
+import { deleteCategoryApi, categoryActions } from '../store/category-slice'
 // SCSS
 import styles from './CategoryItem.module.scss'
 
@@ -28,15 +24,7 @@ const CategoryItem = ({ data }) => {
         confirmButtonText: '刪除',
       })
       if (result.isConfirmed) {
-        await deleteCategoryApi(data.id)
-        await dispatch(updateActions.setIsAllCategoryUpdate())
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '刪除成功',
-          showConfirmButton: false,
-          timer: 2000,
-        })
+        dispatch(deleteCategoryApi(data.id))
       }
     } catch (error) {
       console.error(error)
@@ -50,9 +38,9 @@ const CategoryItem = ({ data }) => {
         <button
           className={styles.modify__button}
           onClick={() => {
-            dispatch(informationActions.setCategoryName(data.name))
-            dispatch(informationActions.setCategoryId(data.id))
-            dispatch(modalActions.setIsCategoryModifyModalOpen(true))
+            dispatch(categoryActions.setCategoryName(data.name))
+            dispatch(categoryActions.setCategoryId(data.id))
+            dispatch(categoryActions.setIsCategoryModifyModalOpen(true))
           }}
         >
           修改

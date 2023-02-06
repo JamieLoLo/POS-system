@@ -7,8 +7,8 @@ import DefaultFoodImg from './assets/img/default_food.jpeg'
 // icon
 import { ReactComponent as PlusIcon } from '../POSComponents/assets/icon/plus.svg'
 import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.svg'
-// store
-import { updateActions } from '../store/update-slice'
+// slice
+import { orderActions } from '../store/order-slice'
 // SCSS
 import styles from './CartItem.module.scss'
 
@@ -52,7 +52,7 @@ const CartItem = ({ data, addProductHandler, minusProductHandler }) => {
                   (product) => product.id === data.id
                 )
                 setCount(filterData[0].count - 1)
-                dispatch(updateActions.setIsCartUpdate())
+                dispatch(orderActions.setIsCartUpdate())
               } else if (count > 0 && count !== 1) {
                 let filterData = cartList.filter(
                   (product) => product.id === data.id

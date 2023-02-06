@@ -8,7 +8,7 @@ import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person_grey.svg'
 import { ReactComponent as PasswordIcon } from '../POSComponents/assets/icon/password.svg'
 // api
-import { posLoginApi } from '../api/posApi'
+import { posLoginApi } from '../api/loginApi'
 // SCSS
 import styles from './AdminLoginPage.module.scss'
 

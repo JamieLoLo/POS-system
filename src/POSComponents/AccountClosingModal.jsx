@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Swal from 'sweetalert2'
 // hook
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { closeDailyRevenueApi, getRevenuesApi } from '../api/posApi'
+
+// slice
+
+import { posActions } from '../store/pos-slice'
+import { closeDailyRevenueApi } from '../store/pos-slice'
+
 // SCSS
 import styles from './AccountClosingModal.module.scss'
 
 const AccountClosingModal = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   // for default input
   let date = new Date()
   const formatDate = (date) => {
@@ -22,42 +22,21 @@ const AccountClosingModal = () => {
     return formatted_date
   }
   // useState
-  const [confirmDate, setConfirmDate] = useState(formatDate(date))
-  const [actualRevenue, setActualRevenue] = useState()
-  const [revenueData, setRevenueData] = useState([])
+  const [postingDate, setPostingDate] = useState(formatDate(date))
+  const [revenue, setRevenue] = useState()
+
   // useSelector
   const isAccountClosingModalOpen = useSelector(
-    (state) => state.modal.isAccountClosingModalOpen
+    (state) => state.pos.isAccountClosingModalOpen
   )
-  const unSettledRevenue = useSelector(
-    (state) => state.information.unSettledRevenue
-  )
+  const unSettledRevenue = useSelector((state) => state.pos.unSettledRevenue)
   const accountClosingCalculate = useSelector(
-    (state) => state.information.accountClosingCalculate
+    (state) => state.pos.accountClosingCalculate
   )
-
-  //取得營收報表，確認日期是否重複。
-  useEffect(() => {
-    const getRevenue = async () => {
-      const res = await getRevenuesApi(confirmDate, confirmDate)
-      setRevenueData(res.data)
-    }
-    getRevenue()
-  }, [confirmDate])
 
   // 確認入帳
   const submitHandler = async () => {
-    // if (revenueData.length !== 0) {
-    //   Swal.fire({
-    //     position: 'center',
-    //     icon: 'error',
-    //     title: '此日期已入過帳',
-    //     showConfirmButton: false,
-    //     timer: 2000,
-    //   })
-    //   return
-    // }
-    if (!actualRevenue) {
+    if (!revenue) {
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -67,28 +46,7 @@ const AccountClosingModal = () => {
       })
       return
     }
-    const res = await closeDailyRevenueApi(confirmDate, actualRevenue)
-    if (!res) {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '此日期已有帳目',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-    }
-    if (res) {
-      console.log(res.data)
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '已成功關帳',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      dispatch(modalActions.setIsAccountClosingModalOpen(false))
-      navigate('/forms/revenue')
-    }
+    dispatch(closeDailyRevenueApi({ postingDate, revenue }))
   }
 
   return isAccountClosingModalOpen ? (
@@ -114,8 +72,8 @@ const AccountClosingModal = () => {
               className={styles.input}
               type='text'
               placeholder='請輸入日期'
-              defaultValue={confirmDate}
-              onChange={(e) => setConfirmDate(e.target.value)}
+              defaultValue={postingDate}
+              onChange={(e) => setPostingDate(e.target.value)}
             />
           </div>
           <div className={styles.input__container}>
@@ -124,7 +82,7 @@ const AccountClosingModal = () => {
               className={styles.input}
               type='text'
               placeholder='請輸入金額'
-              onChange={(e) => setActualRevenue(e.target.value)}
+              onChange={(e) => setRevenue(e.target.value)}
             />
           </div>
         </div>
@@ -132,7 +90,7 @@ const AccountClosingModal = () => {
           <button
             className={styles.return__button}
             onClick={() => {
-              dispatch(modalActions.setIsAccountClosingModalOpen(false))
+              dispatch(posActions.setIsAccountClosingModalOpen(false))
             }}
           >
             返回重算

@@ -4,12 +4,10 @@ import Swal from 'sweetalert2'
 import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
-import { updateActions } from '../store/update-slice'
-// api
-import { modifyTableApi } from '../api/posApi'
+// slice
+import { posActions } from '../store/pos-slice'
+// slice
+import { modifyTableApi } from '../store/pos-slice'
 // SCSS
 import styles from './TableSettingModal.module.scss'
 
@@ -17,37 +15,14 @@ const TableSettingModal = () => {
   const dispatch = useDispatch()
   // useSelector
   const isTableSettingModalOpen = useSelector(
-    (state) => state.modal.isTableSettingModalOpen
+    (state) => state.pos.isTableSettingModalOpen
   )
-  const tableName = useSelector((state) => state.information.tableName)
-  const tableID = useSelector((state) => state.information.tableID)
+  const name = useSelector((state) => state.pos.tableName)
+  const id = useSelector((state) => state.pos.tableID)
 
   // 修改桌號
-  const modifyTableHandler = async () => {
-    try {
-      const res = await modifyTableApi(tableID, tableName, 'true')
-      if (!res) {
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: '桌號不可重複 不可空白',
-          showConfirmButton: false,
-          timer: 2000,
-        })
-        return
-      }
-      dispatch(updateActions.setIsTableUpdate())
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '桌號修改成功',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      dispatch(modalActions.setIsTableSettingModalOpen(false))
-    } catch (error) {
-      console.error(error)
-    }
+  const modifyTableHandler = () => {
+    dispatch(modifyTableApi({ id, name, isValid: 'true' }))
   }
 
   // 刪除桌子
@@ -63,16 +38,7 @@ const TableSettingModal = () => {
         confirmButtonText: '刪除',
       })
       if (result.isConfirmed) {
-        await modifyTableApi(tableID, tableName, 'false')
-        dispatch(updateActions.setIsTableUpdate())
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: '刪除成功',
-          showConfirmButton: false,
-          timer: 2000,
-        })
-        dispatch(modalActions.setIsTableSettingModalOpen(false))
+        dispatch(modifyTableApi({ id, name, isValid: 'false' }))
       }
     } catch (error) {
       console.error(error)
@@ -84,7 +50,7 @@ const TableSettingModal = () => {
       <div
         className={styles.backdrop}
         onClick={() => {
-          dispatch(modalActions.setIsTableSettingModalOpen(false))
+          dispatch(posActions.setIsTableSettingModalOpen(false))
         }}
       ></div>
       <div className={styles.modal__container}>
@@ -92,7 +58,7 @@ const TableSettingModal = () => {
           <DeleteIcon
             className={styles.delete__button}
             onClick={() => {
-              dispatch(modalActions.setIsTableSettingModalOpen(false))
+              dispatch(posActions.setIsTableSettingModalOpen(false))
             }}
           />
         </div>
@@ -103,9 +69,9 @@ const TableSettingModal = () => {
               type='text'
               id='chinese__name'
               autoComplete='off'
-              defaultValue={tableName}
+              defaultValue={name}
               onChange={(e) =>
-                dispatch(informationActions.setTableName(e.target.value))
+                dispatch(posActions.setTableName(e.target.value))
               }
             />
           </div>

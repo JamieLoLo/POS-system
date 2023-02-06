@@ -3,15 +3,12 @@ import Swal from 'sweetalert2'
 import Select from 'react-select'
 // icon
 import { ReactComponent as DeleteIcon } from './assets/icon/delete.svg'
-import { ReactComponent as LoadingIcon } from './assets/icon/loading.svg'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { AddProductApi } from '../api/posApi'
-import { categoryGetAllApi } from '../api/categoryApi'
+// slice
+import { addProductApi, posActions } from '../store/pos-slice'
+import { categoryGetAllApi } from '../store/category-slice'
 // SCSS
 import styles from './AddProductModal.module.scss'
 
@@ -21,8 +18,9 @@ const AddProductModal = () => {
 
   // useSelector
   const isAddProductModalOpen = useSelector(
-    (state) => state.modal.isAddProductModalOpen
+    (state) => state.pos.isAddProductModalOpen
   )
+  const allCategoryData = useSelector((state) => state.category.allCategoryData)
   // useState
   const [categoryId, setCategoryId] = useState()
   const [name, setName] = useState()
@@ -31,7 +29,6 @@ const AddProductModal = () => {
   const [imageFile, setImageFile] = useState()
   const [cost, setCost] = useState()
   const [price, setPrice] = useState()
-  const [allCategoryData, setAllCategoryData] = useState([])
 
   // 取得上傳照片位置
   const AddImageHandler = async (event) => {
@@ -40,16 +37,8 @@ const AddProductModal = () => {
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        await setAllCategoryData(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'add_product' }))
+  }, [dispatch])
 
   // 關閉 modal 時，清空原有資料。
   const refreshHandler = () => {
@@ -140,29 +129,8 @@ const AddProductModal = () => {
     } else {
       formData.append('description', description)
     }
-    dispatch(modalActions.setIsLoadingModalOpen(true))
-    const res = await AddProductApi(formData)
-    if (res.status === 200) {
-      dispatch(modalActions.setIsLoadingModalOpen(false))
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '新增成功',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-      dispatch(modalActions.setIsAddProductModalOpen(false))
-      return
-    } else {
-      dispatch(modalActions.setIsLoadingModalOpen(false))
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '發生錯誤，請重新操作。',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-    }
+    dispatch(posActions.setIsLoadingModalOpen(true))
+    dispatch(addProductApi(formData))
   }
 
   return isAddProductModalOpen ? (
@@ -170,7 +138,7 @@ const AddProductModal = () => {
       <div
         className={styles.backdrop}
         onClick={() => {
-          dispatch(modalActions.setIsAddProductModalOpen(false))
+          dispatch(posActions.setIsAddProductModalOpen(false))
           refreshHandler()
         }}
       ></div>
@@ -179,7 +147,7 @@ const AddProductModal = () => {
           <DeleteIcon
             className={styles.delete__button}
             onClick={() => {
-              dispatch(modalActions.setIsAddProductModalOpen(false))
+              dispatch(posActions.setIsAddProductModalOpen(false))
               refreshHandler()
             }}
           />

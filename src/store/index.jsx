@@ -1,15 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import modalSlice from './modal-slice'
-import updateSlice from './update-slice'
-import informationSlice from './information-slice'
+import posSlice from './pos-slice'
+import categorySlice from './category-slice'
+import orderSlice from './order-slice'
 
 const store = configureStore({
   reducer: {
-    modal: modalSlice,
-    update: updateSlice,
-    information: informationSlice,
+    pos: posSlice,
+    category: categorySlice,
+    order: orderSlice,
   },
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({ serializableCheck: false }),
+  ],
 })
 
 export default store

@@ -4,66 +4,28 @@ import Swal from 'sweetalert2'
 // hook
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-// store
-import { informationActions } from '../store/information-slice'
-import { updateActions } from '../store/update-slice'
-// api
-import { getOrderApi } from '../api/orderApi'
-import { getMinimumApi, finishOrderApi } from '../api/posApi'
+// slice
+import { finishOrderApi, posActions } from '../store/pos-slice'
+import { getOrderApi } from '../store/order-slice'
 // SCSS
 import styles from './OrderTableItem.module.scss'
 
 const OrderTableItem = ({ data }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  // 取得低消金額
-  useEffect(() => {
-    const getDescription = async () => {
-      try {
-        const res = await getMinimumApi()
-        localStorage.setItem('min_charge', res.data.minCharge)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getDescription()
-  }, [])
-
+  const table_id = data.name
   // 點擊桌子後將桌子資訊存入store，判斷目前狀態，導入對應頁面。
   const orderHandler = async () => {
     // 排除沒有的桌子
     if (data.isValid === 0) {
       return
     }
-    dispatch(informationActions.setTableInfo(data))
+    dispatch(posActions.setTableInfo(data))
     localStorage.setItem('table_id', data.id)
     if (data.Orders.id === null && data.Orders.isPaid === null) {
       navigate('/order/headcount')
     } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
-      try {
-        const res = await getOrderApi(data.name)
-        // 這邊取出已點餐點的資訊，取出的部分為更新訂單時需要的資料格式。
-        const cartList = res.data.soldProducts.map((product) => ({
-          productId: product.productId,
-          count: product.count,
-          sellingPrice: product.Product.price,
-        }))
-        // 這個是用來即時渲染購物車清單用的，因為需要產品名稱，與上面api格式不符，額外多存一個。
-        const renderCartList = res.data.soldProducts.map((product) => ({
-          productId: product.productId,
-          name: product.Product.name,
-          count: product.count,
-          sellingPrice: product.Product.price,
-        }))
-        localStorage.setItem('order_info', JSON.stringify(res.data))
-        localStorage.setItem('cart_list', JSON.stringify(cartList))
-        localStorage.setItem('render_cart_list', JSON.stringify(renderCartList))
-        navigate('/order/system')
-      } catch (error) {
-        console.error(error)
-      }
+      dispatch(getOrderApi({ table_id, page: 'pos_go_order' }))
     }
     // 客人離場
     if (data.Orders.isPaid === 1) {
@@ -79,25 +41,7 @@ const OrderTableItem = ({ data }) => {
           confirmButtonText: '確定',
         })
         if (result.isConfirmed) {
-          const res = await finishOrderApi(data.Orders.id)
-          if (res.status !== 200) {
-            Swal.fire({
-              position: 'center',
-              icon: 'error',
-              title: '發生錯誤，請重新操作。',
-              showConfirmButton: false,
-              timer: 2000,
-            })
-            return
-          }
-          dispatch(updateActions.setIsTableUpdate())
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: '設定成功',
-            showConfirmButton: false,
-            timer: 2000,
-          })
+          dispatch(finishOrderApi(data.Orders.id))
         }
       } catch (error) {
         console.error(error)

@@ -1,8 +1,8 @@
 import React from 'react'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 // UI
 import {
   SettingSwitchButton,
@@ -12,18 +12,18 @@ import {
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // icon
 import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
-// api
-import { getTablesApi } from '../api/posApi'
+// slice
+import { getTablesApi } from '../store/pos-slice'
 // SCSS
 import styles from './TableSettingPage.module.scss'
 
 const TableSettingPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
-  // useState
-  const [allTablesData, setAllTablesData] = useState([])
+  const dispatch = useDispatch()
   // useSelector
-  const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
+  const isTableUpdate = useSelector((state) => state.pos.isTableUpdate)
+  const allTablesData = useSelector((state) => state.pos.allTablesData)
 
   // 確認登入狀態
   useEffect(() => {
@@ -41,16 +41,8 @@ const TableSettingPage = () => {
 
   // 取得所有桌子
   useEffect(() => {
-    const getTables = async () => {
-      try {
-        const res = await getTablesApi()
-        setAllTablesData(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getTables()
-  }, [isTableUpdate])
+    dispatch(getTablesApi())
+  }, [isTableUpdate, dispatch])
 
   // 所有桌子
   const tableList = allTablesData.map((data) => (

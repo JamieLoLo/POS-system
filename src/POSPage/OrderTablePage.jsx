@@ -3,13 +3,13 @@ import webSocket from 'socket.io-client'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // UI
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 import { OrderTableItem } from '../POSComponents'
-// api
-import { getTablesApi } from '../api/posApi'
-import { categoryGetAllApi } from '../api/categoryApi'
+// slice
+import { getTablesApi, getMinimumApi } from '../store/pos-slice'
+import { categoryGetAllApi } from '../store/category-slice'
 // icon
 import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // SCSS
@@ -19,20 +19,21 @@ import styles from './OrderTablePage.module.scss'
 const OrderTablePage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   // useState
-  const [allTablesData, setAllTablesData] = useState([])
   const [ws, setWs] = useState(null)
   const [message, setMessage] = useState('')
   // useSelector
-  const isTableUpdate = useSelector((state) => state.update.isTableUpdate)
+  const isTableUpdate = useSelector((state) => state.pos.isTableUpdate)
+  const allTablesData = useSelector((state) => state.pos.allTablesData)
+  const minCharge = useSelector((state) => state.pos.minimum).minCharge
 
+  // 進入頁面後，連接 socket.io，並且取得低消金額。
   // socket.io 的部分，用來即時轉換桌子顏色（當顧客送出訂單時）。
-  const connectWebSocket = () => {
-    setWs(webSocket('https://pacific-woodland-57366.herokuapp.com/'))
-  }
-
   useEffect(() => {
-    connectWebSocket()
+    setWs(webSocket('https://pacific-woodland-57366.herokuapp.com/'))
+    dispatch(getMinimumApi())
+    localStorage.setItem('min_charge', minCharge)
   }, [])
 
   useEffect(() => {
@@ -57,30 +58,13 @@ const OrderTablePage = () => {
 
   // 取得所有桌子
   useEffect(() => {
-    const getTables = async () => {
-      try {
-        const res = await getTablesApi()
-        setAllTablesData(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getTables()
-  }, [isTableUpdate, message.orderId, message.tableId])
+    dispatch(getTablesApi())
+  }, [dispatch, isTableUpdate, message.orderId, message.tableId])
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        localStorage.setItem('default_category_id', res.data[0].id)
-        localStorage.setItem('default_category_name', res.data[0].name)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'admin_table_page' }))
+  }, [dispatch])
 
   // 所有桌子
   const tableList = allTablesData.map((data) => (

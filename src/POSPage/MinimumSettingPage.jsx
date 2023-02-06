@@ -1,24 +1,26 @@
 import React from 'react'
-import Swal from 'sweetalert2'
 // hook
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 // UI
 import { SettingSwitchButton } from '../POSComponents'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
 // icon
 import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person.svg'
-// api
-import { getMinimumApi, minimumModifyApi } from '../api/posApi'
+// slice
+import { minimumModifyApi, getMinimumApi, posActions } from '../store/pos-slice'
 // SCSS
 import styles from './MinimumSettingPage.module.scss'
 
 const MinimumSettingPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
-  // useState
-  const [minimum, setMinimum] = useState('')
-  const [description, setDescription] = useState('')
+  const dispatch = useDispatch()
+
+  // useSelector
+  const minCharge = useSelector((state) => state.pos.minimum).minCharge
+  const description = useSelector((state) => state.pos.minimum).description
 
   // 確認登入狀態
   useEffect(() => {
@@ -30,32 +32,12 @@ const MinimumSettingPage = () => {
 
   // 取得低消金額與描述
   useEffect(() => {
-    const getMinimumInformation = async () => {
-      try {
-        const res = await getMinimumApi()
-        setMinimum(res.data.minCharge)
-        setDescription(res.data.description)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getMinimumInformation()
-  }, [])
+    dispatch(getMinimumApi())
+  }, [dispatch])
 
   // 編輯低消與描述
-  const modifyHandler = async () => {
-    try {
-      await minimumModifyApi(minimum, description)
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: '資訊更新成功',
-        showConfirmButton: false,
-        timer: 2000,
-      })
-    } catch (error) {
-      console.error(error)
-    }
+  const modifyHandler = () => {
+    dispatch(minimumModifyApi({ minCharge, description }))
   }
 
   // 登出
@@ -79,8 +61,10 @@ const MinimumSettingPage = () => {
                   className={styles.input}
                   type='text'
                   placeholder='請輸入金額'
-                  defaultValue={minimum}
-                  onChange={(e) => setMinimum(e.target.value)}
+                  defaultValue={minCharge}
+                  onChange={(e) =>
+                    dispatch(posActions.setMinCharge(e.target.value))
+                  }
                 />
                 <div className={styles.text}>$ / per adult</div>
               </div>
@@ -93,7 +77,9 @@ const MinimumSettingPage = () => {
                 rows='9'
                 wrap='Physical'
                 defaultValue={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) =>
+                  dispatch(posActions.setDescription(e.target.value))
+                }
               ></textarea>
             </div>
           </div>

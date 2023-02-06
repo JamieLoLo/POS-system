@@ -8,9 +8,9 @@ import DefaultFoodImg from '../POSComponents/assets/logo/logo.png'
 import { ReactComponent as PlusIcon } from '../POSComponents/assets/icon/plus.svg'
 import { ReactComponent as MinusIcon } from '../POSComponents/assets/icon/minus.svg'
 import LoadingIcon from '../POSComponents/assets/icon/loading_circle.gif'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+// slice
+import { categoryActions } from '../store/category-slice'
+import { orderActions } from '../store/order-slice'
 // SCSS
 import styles from './CustomerMenuItem.module.scss'
 
@@ -45,8 +45,8 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
       <div
         className={styles.image__container}
         onClick={() => {
-          dispatch(informationActions.setCustomerMenuInfo(data))
-          dispatch(modalActions.setIsProductDetailModalOpen(true))
+          dispatch(orderActions.setCustomerMenuInfo(data))
+          dispatch(categoryActions.setIsProductDetailModalOpen(true))
         }}
       >
         <img
@@ -61,8 +61,8 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
           <div
             className={styles.title}
             onClick={() => {
-              dispatch(informationActions.setCustomerMenuInfo(data))
-              dispatch(modalActions.setIsProductDetailModalOpen(true))
+              dispatch(orderActions.setCustomerMenuInfo(data))
+              dispatch(categoryActions.setIsProductDetailModalOpen(true))
             }}
           >
             {data.name}
@@ -70,8 +70,8 @@ const CustomerMenuItem = ({ data, addProductHandler, minusProductHandler }) => {
           <div
             className={styles.name__en}
             onClick={() => {
-              dispatch(informationActions.setCustomerMenuInfo(data))
-              dispatch(modalActions.setIsProductDetailModalOpen(true))
+              dispatch(orderActions.setCustomerMenuInfo(data))
+              dispatch(categoryActions.setIsProductDetailModalOpen(true))
             }}
           >
             {data.nameEn}

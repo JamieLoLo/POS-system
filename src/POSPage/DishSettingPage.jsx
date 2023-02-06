@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 // hook
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 // icon
 import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
@@ -15,10 +15,9 @@ import {
   ModifyProductModal,
 } from '../POSComponents/index'
 import { PosMainGridSystem } from '../POSLayout/GridSystem'
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
+// slice
+import { posActions } from '../store/pos-slice'
+import { categoryGetAllApi, getProductsApi } from '../store/category-slice'
 // SCSS
 import styles from './DishSettingPage.module.scss'
 
@@ -27,12 +26,12 @@ const DishSettingPage = () => {
   const pathname = useLocation().pathname
   const navigate = useNavigate()
   // useSelector
-  const isProductUpdate = useSelector((state) => state.update.isProductUpdate)
-  // useState
-  const [allCategoryData, setAllCategoryData] = useState([])
-  const [products, setProducts] = useState([])
+  const isProductUpdate = useSelector((state) => state.pos.isProductUpdate)
+  const allCategoryData = useSelector((state) => state.category.allCategoryData)
+  const loadingStatus = useSelector((state) => state.category.loadingStatus)
+  const products = useSelector((state) => state.category.products)
   // localStorage
-  const defaultCategoryId = localStorage.getItem('default_category_id')
+  let id = localStorage.getItem('default_category_id')
   const defaultCategoryName = localStorage.getItem('default_category_name')
 
   // 確認登入狀態
@@ -45,17 +44,8 @@ const DishSettingPage = () => {
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        await setAllCategoryData(res.data)
-        localStorage.setItem('default_category_id', res.data[0].id)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'product_setting' }))
+  }, [dispatch])
 
   // 餐點分類選單
   const selectList = allCategoryData.map((data) => ({
@@ -67,26 +57,13 @@ const DishSettingPage = () => {
 
   // 取得單一分類裡的所有餐點 (首次進入本頁時)
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await getProductsApi(defaultCategoryId)
-        await setProducts(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getProducts()
-  }, [defaultCategoryId, isProductUpdate])
+    dispatch(getProductsApi({ id, page: 'setting_first' }))
+  }, [dispatch, id, isProductUpdate])
 
   // 取得單一分類裡的所有餐點 (變化選單時)
-  const productsHandler = async (item) => {
-    try {
-      const res = await getProductsApi(item.value)
-      localStorage.setItem('default_category_id', item.value)
-      setProducts(res.data)
-    } catch (error) {
-      console.error(error)
-    }
+  const productsHandler = (item) => {
+    let id = item.value
+    dispatch(getProductsApi({ id, page: 'setting_select' }))
   }
 
   // 登出
@@ -115,7 +92,7 @@ const DishSettingPage = () => {
             <button
               className={styles.button}
               onClick={() => {
-                dispatch(modalActions.setIsAddProductModalOpen(true))
+                dispatch(posActions.setIsAddProductModalOpen(true))
               }}
             >
               新增品項
@@ -133,7 +110,7 @@ const DishSettingPage = () => {
               <div className={styles.title}>類別</div>
             </div>
             <div className={styles.dish__list}>
-              {products.length !== 0 ? (
+              {loadingStatus === false ? (
                 productList
               ) : (
                 <LoadingIcon className={styles.loading__icon} />

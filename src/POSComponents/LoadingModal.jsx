@@ -9,7 +9,7 @@ import styles from './LoadingModal.module.scss'
 const LoadingModal = ({ title }) => {
   // useSelector
   const isLoadingModalOpen = useSelector(
-    (state) => state.modal.isLoadingModalOpen
+    (state) => state.pos.isLoadingModalOpen
   )
   return isLoadingModalOpen ? (
     <div className={styles.modal}>

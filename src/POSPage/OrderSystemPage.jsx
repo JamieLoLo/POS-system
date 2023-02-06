@@ -1,7 +1,7 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 // hook
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 // UI
@@ -13,12 +13,14 @@ import {
   LoadingModal,
 } from '../POSComponents'
 
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { categoryGetAllApi, getProductsApi } from '../api/categoryApi'
-import { customerOrderApi } from '../api/orderApi'
-import { modifyHeadcountApi } from '../api/posApi'
+// slice
+import { customerOrderApi } from '../store/order-slice'
+import { categoryGetAllApi, getProductsApi } from '../store/category-slice'
+import {
+  modifyHeadcountApi,
+  posActions,
+  getTablesApi,
+} from '../store/pos-slice'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus_white.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus_white.svg'
@@ -30,8 +32,8 @@ const OrderSystemPage = () => {
   const navigate = useNavigate()
   // localStorage
   const orderInfo = JSON.parse(localStorage.getItem('order_info'))
-  const defaultCategoryId = localStorage.getItem('default_category_id')
-  const tableId = orderInfo.tableId
+  const id = localStorage.getItem('default_category_id')
+  const table_id = orderInfo.tableId
   const cartList = JSON.parse(localStorage.getItem('cart_list'))
   const renderCartList = JSON.parse(localStorage.getItem('render_cart_list'))
   const minCharge = Number(localStorage.getItem('min_charge'))
@@ -39,18 +41,20 @@ const OrderSystemPage = () => {
   const defaultTotalPrice = orderInfo.totalPrice
   const realTotalPrice = Number(orderInfo.totalPrice)
   const tableName = orderInfo.Table.name
-  const orderId = Number(orderInfo.id)
-  const defaultAdultCount = orderInfo.adultNum
-  const defaultChildrenCount = orderInfo.childrenNum
+  const order_id = Number(orderInfo.id)
+  const defaultAdultNum = orderInfo.adultNum
+  const defaultChildrenNum = orderInfo.childrenNum
+  // useSelector
+  const allCategoryData = useSelector((state) => state.category.allCategoryData)
+  const products = useSelector((state) => state.category.products)
+
   // useState
-  const [allCategoryData, setAllCategoryData] = useState([])
-  const [products, setProducts] = useState([])
-  const [adultCount, setAdultCount] = useState(defaultAdultCount)
-  const [childrenCount, setChildrenCount] = useState(defaultChildrenCount)
+  const [adultNum, setAdultNum] = useState(defaultAdultNum)
+  const [childrenNum, setChildrenNum] = useState(defaultChildrenNum)
   const [adultCountForCompare, setAdultCountForCompare] =
-    useState(defaultAdultCount)
+    useState(defaultAdultNum)
   const [childrenCountForCompare, setChildrenCountForCompare] =
-    useState(defaultChildrenCount)
+    useState(defaultChildrenNum)
   const [totalPriceForRender, setTotalPriceForRender] = useState(totalPrice)
   const [total, setTotal] = useState(defaultTotalPrice)
 
@@ -64,38 +68,23 @@ const OrderSystemPage = () => {
 
   // 取得所有分類
   useEffect(() => {
-    const categoryGetAll = async () => {
-      try {
-        const res = await categoryGetAllApi()
-        await setAllCategoryData(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    categoryGetAll()
-  }, [])
+    dispatch(categoryGetAllApi({ page: 'admin_order_page' }))
+  }, [dispatch])
 
   // 取得單一分類裡的所有餐點 (首次進入本頁時)
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await getProductsApi(defaultCategoryId)
-        await setProducts(res.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getProducts()
-  }, [defaultCategoryId])
+    dispatch(getProductsApi({ id, page: 'admin_order_first' }))
+  }, [dispatch, id])
+
+  // 刷新時更新 orderInfo
+  // useEffect(() => {
+  //   let table_id = tableName
+  //   dispatch(getOrderApi({ table_id, page: 'pos_order_page' }))
+  // }, [dispatch, table_id, tableName])
 
   // 取得單一分類裡的所有餐點 (點選分類結果)
   const productsHandler = async (id) => {
-    try {
-      const res = await getProductsApi(id)
-      setProducts(res.data)
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(getProductsApi({ id, page: 'admin_order_select' }))
   }
 
   // 點擊增加購物車內產品數量時
@@ -117,7 +106,7 @@ const OrderSystemPage = () => {
     } else {
       // 加入餐點
       cartList.push({
-        orderId: orderId,
+        orderId: order_id,
         productId: productId,
         count: 1,
         sellingPrice: price,
@@ -210,7 +199,7 @@ const OrderSystemPage = () => {
     } else {
       // 加入餐點
       cartList.push({
-        orderId: orderId,
+        orderId: order_id,
         productId: productId,
         count: 1,
         sellingPrice: price,
@@ -245,10 +234,11 @@ const OrderSystemPage = () => {
 
   // 修改訂單人數或內容
   const modifyHandler = async () => {
+    dispatch(posActions.setIsLoadingModalOpen(true))
     try {
       if (total !== totalPriceForRender) {
-        dispatch(modalActions.setIsLoadingModalOpen(true))
-        await customerOrderApi(orderId, cartList)
+        let data = cartList
+        dispatch(customerOrderApi({ order_id, data, page: 'admin_order' }))
         setTotal(totalPriceForRender)
         let newOrderInfoPrice = {
           ...orderInfo,
@@ -257,14 +247,20 @@ const OrderSystemPage = () => {
         localStorage.setItem('order_info', JSON.stringify(newOrderInfoPrice))
       }
       if (
-        adultCountForCompare !== adultCount ||
-        childrenCountForCompare !== childrenCount
+        adultCountForCompare !== adultNum ||
+        childrenCountForCompare !== childrenNum
       ) {
-        await modifyHeadcountApi(tableId, adultCount, childrenCount)
-        setAdultCountForCompare(adultCount)
-        setChildrenCountForCompare(childrenCount)
+        dispatch(modifyHeadcountApi({ table_id, adultNum, childrenNum }))
+        let newHeadcount = {
+          ...orderInfo,
+          adultNum: adultNum,
+          childrenNum: childrenNum,
+        }
+        localStorage.setItem('order_info', JSON.stringify(newHeadcount))
+        setAdultCountForCompare(adultNum)
+        setChildrenCountForCompare(childrenNum)
       }
-      dispatch(modalActions.setIsLoadingModalOpen(false))
+      dispatch(posActions.setIsLoadingModalOpen(false))
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -279,7 +275,7 @@ const OrderSystemPage = () => {
 
   // 結帳按鈕
   const checkoutHandler = () => {
-    if (realTotalPrice < minCharge * adultCount) {
+    if (realTotalPrice < minCharge * adultNum) {
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -289,7 +285,8 @@ const OrderSystemPage = () => {
       })
       return
     } else {
-      dispatch(modalActions.setIsCheckoutModalOpen(true))
+      dispatch(posActions.setIsCheckoutModalOpen(true))
+      dispatch(getTablesApi())
     }
   }
 
@@ -344,18 +341,18 @@ const OrderSystemPage = () => {
                 <CustomerMinusIcon
                   className={styles.icon}
                   onClick={() => {
-                    if (adultCount > 0) {
-                      setAdultCount((adultCount) => adultCount - 1)
+                    if (adultNum > 0) {
+                      setAdultNum((adultNum) => adultNum - 1)
                     }
                   }}
                 />
               </div>
-              <p className={styles.count}>{adultCount}</p>
+              <p className={styles.count}>{adultNum}</p>
               <div className={styles.icon__container}>
                 <CustomerPlusIcon
                   className={styles.icon}
                   onClick={() => {
-                    setAdultCount((adultCount) => adultCount + 1)
+                    setAdultNum((adultNum) => adultNum + 1)
                   }}
                 />
               </div>
@@ -368,18 +365,18 @@ const OrderSystemPage = () => {
                 <CustomerMinusIcon
                   className={styles.icon}
                   onClick={() => {
-                    if (childrenCount > 0) {
-                      setChildrenCount((childrenCount) => childrenCount - 1)
+                    if (childrenNum > 0) {
+                      setChildrenNum((childrenNum) => childrenNum - 1)
                     }
                   }}
                 />
               </div>
-              <p className={styles.count}>{childrenCount}</p>
+              <p className={styles.count}>{childrenNum}</p>
               <div className={styles.icon__container}>
                 <CustomerPlusIcon
                   className={styles.icon}
                   onClick={() => {
-                    setChildrenCount((childrenCount) => childrenCount + 1)
+                    setChildrenNum((childrenNum) => childrenNum + 1)
                   }}
                 />
               </div>
@@ -395,21 +392,21 @@ const OrderSystemPage = () => {
             返回
           </button>
           {total === totalPriceForRender &&
-            adultCountForCompare === adultCount &&
-            childrenCountForCompare === childrenCount &&
-            totalPrice < minCharge * adultCount && (
+            adultCountForCompare === adultNum &&
+            childrenCountForCompare === childrenNum &&
+            totalPrice < minCharge * adultNum && (
               <button className={styles.unreached__button}>
                 未達低消
                 <br />
                 <p className={styles.price}>
-                  差額：${minCharge * adultCount - totalPrice}
+                  差額：${minCharge * adultNum - totalPrice}
                 </p>
               </button>
             )}
           {total === totalPriceForRender &&
-            adultCountForCompare === adultCount &&
-            childrenCountForCompare === childrenCount &&
-            totalPrice >= minCharge * adultCount && (
+            adultCountForCompare === adultNum &&
+            childrenCountForCompare === childrenNum &&
+            totalPrice >= minCharge * adultNum && (
               <button
                 className={styles.checkout__button}
                 onClick={checkoutHandler}
@@ -420,8 +417,8 @@ const OrderSystemPage = () => {
               </button>
             )}
           {(total !== totalPriceForRender ||
-            adultCountForCompare !== adultCount ||
-            childrenCountForCompare !== childrenCount) && (
+            adultCountForCompare !== adultNum ||
+            childrenCountForCompare !== childrenNum) && (
             <button className={styles.modify__button} onClick={modifyHandler}>
               修改訂單
             </button>

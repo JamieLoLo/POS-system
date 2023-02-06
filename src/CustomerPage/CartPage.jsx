@@ -11,10 +11,8 @@ import {
 } from '../CustomerComponents'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
-// store
-import { modalActions } from '../store/modal-slice'
-// api
-import { getOrderApi } from '../api/orderApi'
+// slice
+import { getOrderApi } from '../store/order-slice'
 // SCSS
 import styles from './CartPage.module.scss'
 
@@ -24,28 +22,16 @@ const CartPage = () => {
   // sessionStorage
   const cartList = JSON.parse(sessionStorage.getItem('cart_list'))
   const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list'))
-  const tableName = sessionStorage.getItem('table_name')
+  const table_id = sessionStorage.getItem('table_name')
   // useState
   const [renderList, setRenderList] = useState([])
   // useSelector
-  const isCartUpdate = useSelector((state) => state.update.isCartUpdate)
-  // 進入購物車時，再度確定人數是否有更新。
-  useEffect(() => {
-    const getOrder = async () => {
-      try {
-        const res = await getOrderApi(tableName)
-        sessionStorage.setItem('adult_count', res.data.adultNum)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getOrder()
-  }, [tableName])
+  const isCartUpdate = useSelector((state) => state.order.isCartUpdate)
 
   // 因為這一頁沒有打 api 的動作，資料都是從 sessionStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 sessionStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
     const renderList = () => {
-      const cartList = JSON.parse(sessionStorage.getItem('cart_list'))
+      const cartList = JSON.parse(sessionStorage.getItem('cart_list')) || []
       const filterList = cartList.filter((product) => product.count !== 0)
       const cartItemList = filterList.map((data) => (
         <CartItem
@@ -146,17 +132,9 @@ const CartPage = () => {
   }
 
   // 提交訂單
-  const submitHandler = async () => {
-    try {
-      // 再次確認後台是否更新人數
-      const res = await getOrderApi(tableName)
-      if (res.status === 200) {
-        sessionStorage.setItem('adult_count', res.data.adultNum)
-        dispatch(modalActions.setIsOrderConfirmModalOpen(true))
-      }
-    } catch (error) {
-      console.error(error)
-    }
+  const submitHandler = () => {
+    // 再次確認後台是否更新人數
+    dispatch(getOrderApi({ table_id, page: 'customer_submit' }))
   }
 
   return (

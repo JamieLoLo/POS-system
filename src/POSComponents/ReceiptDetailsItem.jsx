@@ -1,11 +1,8 @@
 import React from 'react'
 // hook
 import { useDispatch } from 'react-redux'
-// api
-import { getSingleOrderApi } from '../api/posApi'
-// store
-import { modalActions } from '../store/modal-slice'
-import { informationActions } from '../store/information-slice'
+// slice
+import { getSingleOrderApi, posActions } from '../store/pos-slice'
 // SCSS
 import styles from './ReceiptDetailsItem.module.scss'
 
@@ -14,17 +11,8 @@ const ReceiptDetailsItem = ({ data }) => {
 
   // 取得單筆訂單資訊
   const getSingleOrderHandler = async () => {
-    try {
-      dispatch(modalActions.setIsLoadingModalOpen(true))
-      const res = await getSingleOrderApi(data.id)
-      if (res) {
-        dispatch(informationActions.setSingleOrderData(res.data))
-        dispatch(modalActions.setIsLoadingModalOpen(false))
-        dispatch(modalActions.setIsAdminDetailsModalOpen(true))
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(posActions.setIsLoadingModalOpen(true))
+    dispatch(getSingleOrderApi(data.id))
   }
   return (
     <div className={styles.list__container}>
