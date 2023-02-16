@@ -28,7 +28,7 @@ const CartPage = () => {
   // useSelector
   const isCartUpdate = useSelector((state) => state.order.isCartUpdate)
 
-  // 因為這一頁沒有打 api 的動作，資料都是從 sessionStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 sessionStorage 裡的清單，在 CartItem 裡的減號 icon 設定判斷式，當數量歸零時觸發 isCartUpdate。
+  // 因為這一頁沒有打 api 的動作，資料都是從 sessionStorage 取得，當餐點數量為 0 的時候，沒有事件可以觸發重新渲染，讓它從畫面上消失，因此使用 useEffect 來打印 sessionStorage 裡的清單，在 CartItem 裡的減號 icon 設判斷式，當數量歸零時觸發 isCartUpdate。
   useEffect(() => {
     const renderList = () => {
       const cartList = JSON.parse(sessionStorage.getItem('cart_list')) || []
