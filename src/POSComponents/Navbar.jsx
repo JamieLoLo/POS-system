@@ -2,16 +2,20 @@ import React from 'react'
 import clsx from 'clsx'
 // hook
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 // icon
 import LogoIcon from './assets/logo/logo.png'
 import { ReactComponent as SettingIcon } from './assets/icon/setting.svg'
 import { ReactComponent as FormIcon } from './assets/icon/form.svg'
 import { ReactComponent as FoodIcon } from './assets/icon/food.svg'
+// slice
+import { posActions } from '../store/pos-slice'
 // SCSS
 import styles from './Navbar.module.scss'
 
 const Navbar = ({ pathname }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <nav>
       <div className={styles.logo__container}>
@@ -25,6 +29,9 @@ const Navbar = ({ pathname }) => {
           })}
           onClick={() => {
             navigate('/order/table')
+            dispatch(posActions.setRevenueData([]))
+            dispatch(posActions.setAllOrdersData([]))
+            dispatch(posActions.setRankData([]))
           }}
         >
           <FoodIcon className={styles.icon} />
@@ -49,6 +56,9 @@ const Navbar = ({ pathname }) => {
           })}
           onClick={() => {
             navigate('/setting/category')
+            dispatch(posActions.setRevenueData([]))
+            dispatch(posActions.setAllOrdersData([]))
+            dispatch(posActions.setRankData([]))
           }}
         >
           <SettingIcon className={styles.icon} />
