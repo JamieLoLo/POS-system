@@ -424,9 +424,6 @@ const posSlice = createSlice({
           showConfirmButton: false,
           timer: 2000,
         })
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/order/table'
-        )
       }
     })
     // 店家修改人數
@@ -453,9 +450,6 @@ const posSlice = createSlice({
           showConfirmButton: false,
           timer: 2000,
         })
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/order/table'
-        )
       } else {
         Swal.fire({
           position: 'center',
@@ -514,9 +508,6 @@ const posSlice = createSlice({
           timer: 2000,
         })
         state.isAccountClosingModalOpen = false
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/forms/revenue'
-        )
       }
     })
     // 取得營收報表
@@ -599,6 +590,15 @@ const posSlice = createSlice({
     },
     setAccountClosingCalculate(state, action) {
       state.accountClosingCalculate = action.payload
+    },
+    setRevenueData(state, action) {
+      state.revenueData = action.payload
+    },
+    setAllOrdersData(state, action) {
+      state.allOrdersData = action.payload
+    },
+    setRankData(state, action) {
+      state.rankData = action.payload
     },
     // modal
     setIsTableSettingModalOpen(state, action) {

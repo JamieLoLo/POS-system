@@ -76,9 +76,6 @@ const orderSlice = createSlice({
         localStorage.setItem('order_info', JSON.stringify(action.payload.data))
         localStorage.setItem('cart_list', JSON.stringify(cartList))
         localStorage.setItem('render_cart_list', JSON.stringify(renderCartList))
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/order/system'
-        )
       }
       // 顧客登入頁面
       if (action.meta.arg.page === 'customer_login_page') {
@@ -103,9 +100,6 @@ const orderSlice = createSlice({
           'children_count',
           action.payload.data.childrenNum
         )
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/customer/main'
-        )
       }
       // 顧客進入購物車前再度確認人數，避免臨時 pos 方更動人數的情況發生錯誤。
       if (action.meta.arg.page === 'customer_go_cart') {
@@ -117,9 +111,6 @@ const orderSlice = createSlice({
         sessionStorage.setItem(
           'children_count',
           action.payload.data.childrenNum
-        )
-        window.location.assign(
-          'https://jamielolo.github.io/POS-system/#/customer/cart'
         )
       }
       // 顧客提交訂單時，再度確認人數。
@@ -147,10 +138,6 @@ const orderSlice = createSlice({
             timer: 2000,
           })
           return
-        } else {
-          window.location.assign(
-            'https://jamielolo.github.io/POS-system/#/customer/main'
-          )
         }
       }
     })
@@ -167,10 +154,6 @@ const orderSlice = createSlice({
             timer: 2000,
           })
           return
-        } else {
-          window.location.assign(
-            'https://jamielolo.github.io/POS-system/#/customer/receipt'
-          )
         }
       }
       // POS 點餐

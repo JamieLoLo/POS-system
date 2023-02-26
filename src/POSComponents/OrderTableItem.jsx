@@ -25,7 +25,12 @@ const OrderTableItem = ({ data }) => {
     if (data.Orders.id === null && data.Orders.isPaid === null) {
       navigate('/order/headcount')
     } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
-      dispatch(getOrderApi({ table_id, page: 'pos_go_order' }))
+      try {
+        await dispatch(getOrderApi({ table_id, page: 'pos_go_order' }))
+        navigate('/order/system')
+      } catch (error) {
+        console.error(error)
+      }
     }
     // 客人離場
     if (data.Orders.isPaid === 1) {

@@ -30,8 +30,13 @@ const OrderCustomerPage = () => {
 
   // 開桌
   const submitHandler = async () => {
-    dispatch(addHeadcountApi({ table_id, adultNum, childrenNum }))
-    dispatch(getTablesApi())
+    try {
+      await dispatch(addHeadcountApi({ table_id, adultNum, childrenNum }))
+      await dispatch(getTablesApi())
+      navigate('/order/table')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (

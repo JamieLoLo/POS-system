@@ -1,6 +1,7 @@
 import React from 'react'
 // hook
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 // slice
 import { orderActions, customerOrderApi } from '../store/order-slice'
 // SCSS
@@ -8,6 +9,7 @@ import styles from './OrderConfirmModal.module.scss'
 
 const OrderConfirmModal = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // sessionStorage
   const checkoutList = JSON.parse(sessionStorage.getItem('checkout_list'))
   const order_id = Number(sessionStorage.getItem('order_id'))
@@ -27,6 +29,7 @@ const OrderConfirmModal = () => {
   // 送出訂單
   const confirmHandler = async () => {
     let data = checkoutList
+
     dispatch(orderActions.setIsOrderConfirmModalOpen(false))
 
     // 未達低消 return
@@ -35,7 +38,16 @@ const OrderConfirmModal = () => {
       return
     }
     // 達到低消，送出訂單。
-    dispatch(customerOrderApi({ order_id, data, page: 'customer_order' }))
+    try {
+      let res = await dispatch(
+        customerOrderApi({ order_id, data, page: 'customer_order' })
+      )
+      if (res.payload !== undefined) {
+        navigate('/customer/receipt')
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return isOrderConfirmModalOpen ? (

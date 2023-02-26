@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'
 // hook
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 // slice
 
@@ -14,6 +15,7 @@ import styles from './AccountClosingModal.module.scss'
 
 const AccountClosingModal = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // for default input
   let date = new Date()
   const formatDate = (date) => {
@@ -46,7 +48,12 @@ const AccountClosingModal = () => {
       })
       return
     }
-    dispatch(closeDailyRevenueApi({ postingDate, revenue }))
+    try {
+      await dispatch(closeDailyRevenueApi({ postingDate, revenue }))
+      navigate('/forms/revenue')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return isAccountClosingModalOpen ? (

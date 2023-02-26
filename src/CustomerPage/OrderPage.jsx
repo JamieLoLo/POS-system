@@ -3,6 +3,7 @@ import clsx from 'clsx'
 // hook
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 // UI
 import {
   CustomerOrderCategory,
@@ -21,6 +22,7 @@ import styles from './OrderPage.module.scss'
 
 const OrderPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // sessionStorage
   const adultNum = sessionStorage.getItem('adult_count')
   const childrenNum = sessionStorage.getItem('children_count')
@@ -180,8 +182,13 @@ const OrderPage = () => {
   }
 
   // 前往購物車
-  const getCartHandler = () => {
-    dispatch(getOrderApi({ table_id, page: 'customer_go_cart' }))
+  const getCartHandler = async () => {
+    try {
+      await dispatch(getOrderApi({ table_id, page: 'customer_go_cart' }))
+      navigate('/customer/cart')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // 餐點清單

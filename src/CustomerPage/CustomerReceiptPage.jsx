@@ -1,6 +1,7 @@
 import React from 'react'
 // hook
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
 // slice
@@ -10,6 +11,7 @@ import styles from './CustomerReceiptPage.module.scss'
 
 export const CustomerReceiptPage = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // sessionStorage
   const orderId = sessionStorage.getItem('order_id')
   const adultCount = sessionStorage.getItem('adult_count')
@@ -19,7 +21,16 @@ export const CustomerReceiptPage = () => {
 
   // 確認是否已結帳，未結帳可繼續點餐。
   const continueOrderHandler = async () => {
-    dispatch(getOrderApi({ table_id, page: 'customer_receipt_page' }))
+    try {
+      let res = await dispatch(
+        getOrderApi({ table_id, page: 'customer_receipt_page' })
+      )
+      if (res.payload !== undefined) {
+        navigate('/customer/main')
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
