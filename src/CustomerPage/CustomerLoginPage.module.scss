@@ -1,5 +1,6 @@
 .page__container {
-  background-image: linear-gradient(to left, #2a2627, #373334, #2a2627);
+  background-image: url(../POSComponents/assets/background_image/login_background.jpg);
+  background-size: cover;
   height: 100vh;
   max-height: -webkit-fill-available;
   width: 100vw;
@@ -7,6 +8,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .login__container {
+    background-color: rgba(89, 89, 89, 0.9);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+  }
   .logo__container {
     width: 150px;
     height: 150px;
@@ -20,7 +29,7 @@
     width: 60vw;
 
     .input__container {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0rem;
       display: flex;
 
       .input {
@@ -30,9 +39,26 @@
         border-radius: 50px;
         border: var(--white);
         text-align: center;
+        background-color: rgb(79, 78, 78);
+        color: var(--white);
         &:focus {
           outline: none;
         }
+      }
+      ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: var(--white);
+        opacity: 1; /* Firefox */
+      }
+
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: var(--white);
+      }
+
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: var(--white);
       }
     }
     .login__button {
@@ -41,8 +67,7 @@
       width: 100%;
       padding: 0.5rem;
       line-height: 20px;
-
-      border-radius: 5px;
+      border-radius: 50px;
       border: none;
       background-color: var(--navbar-active);
       color: var(--white);

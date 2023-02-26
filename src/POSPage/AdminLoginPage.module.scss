@@ -1,5 +1,7 @@
 .page__container {
-  background-image: linear-gradient(to left, #2a2627, #373334, #2a2627);
+  // background-image: linear-gradient(to left, #2a2627, #373334, #2a2627);
+  background-image: url(../POSComponents/assets/background_image/login_background.jpg);
+  background-size: cover;
   height: 100vh;
   max-height: -webkit-fill-available;
   width: 100vw;
@@ -7,6 +9,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  .login__container {
+    background-color: rgba(89, 89, 89, 0.9);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+  }
   .logo__container {
     width: 200px;
     height: 200px;
@@ -24,23 +34,25 @@
       display: flex;
 
       .icon__container {
-        background-color: var(--dark-20);
+        background-color: rgb(79, 78, 78);
         display: flex;
         width: 5vw;
         align-items: center;
         justify-content: center;
-        border-radius: 10px 0px 0px 10px;
+        border-radius: 50px 0px 0px 50px;
         .icon {
-          width: 85%;
-          height: 85%;
-          padding: 0 0.5rem;
+          width: 65%;
+          height: 65%;
+          padding: 0.25rem;
         }
       }
-      input {
+      .input {
         font-size: 24px;
         width: 100%;
+        color: var(--white);
         padding: 0.5rem 1rem;
-        border-radius: 0px 10px 10px 0px;
+        border-radius: 0px 50px 50px 0px;
+        background-color: rgb(79, 78, 78);
         border: var(--white);
         &:focus {
           outline: none;
@@ -52,7 +64,7 @@
       margin-top: 2rem;
       width: 100%;
       padding: 0.4rem;
-      border-radius: 10px;
+      border-radius: 50px;
       border: none;
       background-color: var(--navbar-active);
       color: var(--white);
