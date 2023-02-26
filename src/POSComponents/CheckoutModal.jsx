@@ -6,6 +6,7 @@ import { ReactComponent as CalculatorDeleteIcon } from './assets/icon/calculator
 // hook
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 // slice
 import { checkoutApi, posActions } from '../store/pos-slice'
 // SCSS
@@ -13,6 +14,7 @@ import styles from './CheckoutModal.module.scss'
 
 const CheckoutModal = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // localStorage
   const orderId = JSON.parse(localStorage.getItem('order_info')).id
   const total = Number(
@@ -54,6 +56,7 @@ const CheckoutModal = () => {
       })
       if (result.isConfirmed) {
         await dispatch(checkoutApi(orderId))
+        navigate('/order/table')
       }
     } catch (error) {
       console.error(error)
