@@ -1,12 +1,14 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 // hook
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle_dark.png'
 import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person_grey.svg'
 import { ReactComponent as PasswordIcon } from '../POSComponents/assets/icon/password.svg'
+import backgroundImage from '../POSComponents/assets/background_image/login_background.jpg'
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // api
 import { posLoginApi } from '../api/loginApi'
 // SCSS
@@ -14,8 +16,16 @@ import styles from './AdminLoginPage.module.scss'
 
 const AdminLoginPage = () => {
   const navigate = useNavigate()
+  // useState
   const [account, setAccount] = useState(null)
   const [password, setPassword] = useState(null)
+  const [loadStatus, setLoadStatus] = useState(false)
+  // 用來確認背景圖片是否載入完成
+  useEffect(() => {
+    const img = new Image()
+    img.src = backgroundImage
+    img.onload = () => setLoadStatus(true)
+  }, [])
   const accountHandler = (e) => {
     setAccount(e.target.value)
   }
@@ -65,8 +75,14 @@ const AdminLoginPage = () => {
     }
   }
 
-  return (
-    <div className={styles.page__container}>
+  return loadStatus === true ? (
+    <div
+      className={styles.page__container}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+      }}
+    >
       <div className={styles.login__container}>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
@@ -101,6 +117,10 @@ const AdminLoginPage = () => {
           </button>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className={styles.loading__icon__container}>
+      <LoadingIcon className={styles.loading__icon} />
     </div>
   )
 }
