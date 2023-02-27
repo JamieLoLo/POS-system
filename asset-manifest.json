@@ -1,11 +1,12 @@
 {
   "files": {
-    "main.css": "/POS-system/static/css/main.0a6a3e55.css",
-    "main.js": "/POS-system/static/js/main.299b45aa.js",
+    "main.css": "/POS-system/static/css/main.ee28af81.css",
+    "main.js": "/POS-system/static/js/main.ea0ff40d.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
+    "static/media/login_background_image.jpg": "/POS-system/static/media/login_background_image.b3e5d04516b1a5f6580d.jpg",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
     "static/media/logo_circle.png": "/POS-system/static/media/logo_circle.145b04c90b132c1034b2.png",
-    "static/media/login_background.jpg": "/POS-system/static/media/login_background.d8cd0c78a89a361c3668.jpg",
+    "static/media/logo_circle_dark.png": "/POS-system/static/media/logo_circle_dark.4fded28f06d93340db28.png",
     "static/media/loading_circle.gif": "/POS-system/static/media/loading_circle.9ea85af3e86dec222775.gif",
     "static/media/default_food.jpeg": "/POS-system/static/media/default_food.3d823e813f26143a56d8.jpeg",
     "static/media/food.svg": "/POS-system/static/media/food.cf9189f2209173c061478733d21ff7c8.svg",
@@ -13,10 +14,11 @@
     "static/media/setting.svg": "/POS-system/static/media/setting.da24f4f34aff59ae079a0f4c63cd94f3.svg",
     "static/media/loading.svg": "/POS-system/static/media/loading.30f22533f74514586cf1c7f585869131.svg",
     "static/media/form.svg": "/POS-system/static/media/form.3301d6abd46e655050fc8a29af46746a.svg",
-    "static/media/password.svg": "/POS-system/static/media/password.cd894fb91591523824e5444b9f8b716b.svg",
+    "static/media/password.svg": "/POS-system/static/media/password.22ddd5f33455f731fb23903d38cd7ee6.svg",
     "static/media/loading_ball.svg": "/POS-system/static/media/loading_ball.4e5359abaa8a8d3884988bf91e33bec1.svg",
     "static/media/customer_plus.svg": "/POS-system/static/media/customer_plus.234b497a2dde3d8401ccf56b579ca6c5.svg",
     "static/media/customer_plus_white.svg": "/POS-system/static/media/customer_plus_white.83894e371b9fb0fa9a8ce6baa450a0f7.svg",
+    "static/media/edit.svg": "/POS-system/static/media/edit.dadc300194475e48e17418a0f8f16737.svg",
     "static/media/calculator_delete.svg": "/POS-system/static/media/calculator_delete.131264267fc079245856c2348d510b09.svg",
     "static/media/customer_minus.svg": "/POS-system/static/media/customer_minus.939aad4f9d7c67f454ea5d05ab566e9c.svg",
     "static/media/customer_minus_white.svg": "/POS-system/static/media/customer_minus_white.702101baade48f36bbfda0cab6ff201a.svg",
@@ -24,17 +26,18 @@
     "static/media/cart.svg": "/POS-system/static/media/cart.365b0670c3a5a652e735c761d782cdd6.svg",
     "index.html": "/POS-system/index.html",
     "static/media/person_tall.svg": "/POS-system/static/media/person_tall.720a11c477a4bbb1c516457e0f978092.svg",
+    "static/media/person_grey.svg": "/POS-system/static/media/person_grey.4bf604512f3242b84e687995b4859b57.svg",
     "static/media/person.svg": "/POS-system/static/media/person.76f39bcbaef7934f6421fc49b59ca1a3.svg",
-    "static/media/person_white.svg": "/POS-system/static/media/person_white.76f39bcbaef7934f6421fc49b59ca1a3.svg",
     "static/media/minus.svg": "/POS-system/static/media/minus.5d1c8e634476a7c77e7d4225eda5aacc.svg",
     "static/media/plus.svg": "/POS-system/static/media/plus.11a0880f45bca649f6a489e06fc8f907.svg",
+    "static/media/trash_can.svg": "/POS-system/static/media/trash_can.e057f2604bb40917d5ffddc91425eb0f.svg",
     "static/media/delete_black.svg": "/POS-system/static/media/delete_black.51522a7618bca8e90c2d8ea9c0ba4458.svg",
-    "main.0a6a3e55.css.map": "/POS-system/static/css/main.0a6a3e55.css.map",
-    "main.299b45aa.js.map": "/POS-system/static/js/main.299b45aa.js.map",
+    "main.ee28af81.css.map": "/POS-system/static/css/main.ee28af81.css.map",
+    "main.ea0ff40d.js.map": "/POS-system/static/js/main.ea0ff40d.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a6a3e55.css",
-    "static/js/main.299b45aa.js"
+    "static/css/main.ee28af81.css",
+    "static/js/main.ea0ff40d.js"
   ]
 }
