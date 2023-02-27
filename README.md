@@ -28,12 +28,6 @@ https://jamielolo.github.io/POS-system/
 <br/>
 <br/>
 
-## Demo Video
-
-https://youtu.be/xm0SaJXoS9U
-<br/>
-<br/>
-
 ## 專案部分畫面
 
 【 管理者 - 登入頁面 】
