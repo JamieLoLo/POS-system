@@ -209,7 +209,7 @@ const OrderPage = () => {
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
         </div>
-        <div className={styles.restaurant__name}>咕咕義小餐館</div>
+        <div className={styles.restaurant__name}>Good Good Eat</div>
       </header>
       <div className={styles.information__container}>
         <div className={styles.description}>
