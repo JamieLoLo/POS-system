@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 // icon
 import LogoIcon from '../POSComponents/assets/logo/logo_circle_dark.png'
+import backgroundImage from '../POSComponents/assets/background_image/login_background.jpg'
+import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
 // slice
 import { getOrderApi } from '../store/order-slice'
 import { categoryGetAllApi } from '../store/category-slice'
@@ -14,8 +16,16 @@ import styles from './CustomerLoginPage.module.scss'
 const CustomerLoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   // useState
   const [table_id, setTableId] = useState()
+  const [loadStatus, setLoadStatus] = useState(false)
+
+  useEffect(() => {
+    const img = new Image()
+    img.src = backgroundImage
+    img.onload = () => setLoadStatus(true)
+  }, [])
 
   // 取得訂單內容 (餐點、人數)
   const getOrderHandler = async () => {
@@ -32,8 +42,11 @@ const CustomerLoginPage = () => {
     dispatch(categoryGetAllApi({ page: 'customer_login_page' }))
   }, [dispatch])
 
-  return (
-    <div className={styles.page__container}>
+  return loadStatus === true ? (
+    <div
+      className={styles.page__container}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className={styles.login__container}>
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
@@ -55,6 +68,10 @@ const CustomerLoginPage = () => {
           </button>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className={styles.loading__icon__container}>
+      <LoadingIcon className={styles.loading__icon} />
     </div>
   )
 }

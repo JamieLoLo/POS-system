@@ -1,5 +1,4 @@
 .page__container {
-  background-image: url(../POSComponents/assets/background_image/login_background.jpg);
   background-size: cover;
   height: 100vh;
   max-height: -webkit-fill-available;
@@ -57,5 +56,17 @@
       color: var(--white);
       cursor: pointer;
     }
+  }
+}
+.loading__icon__container {
+  height: 100vh;
+  max-height: -webkit-fill-available;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .loading__icon {
+    width: 80px;
+    height: 80px;
   }
 }
