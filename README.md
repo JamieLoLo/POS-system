@@ -36,6 +36,8 @@ https://youtu.be/xm0SaJXoS9U
 
 ## 專案部分畫面
 
+【 管理者 - 登入頁面 】
+<img src="./src/POSComponents/assets/projectImage/admin_login.png" />
 【 管理者 - 點餐入口 】
 <img src="./src/POSComponents/assets/projectImage/table.png" />
 【 管理者 - 點餐頁面 】
