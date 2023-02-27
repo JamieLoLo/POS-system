@@ -31,12 +31,14 @@
       display: flex;
 
       .icon__container {
-        background-color: var(--white);
+        background-color: #4f4e4e;
         display: flex;
         width: 5vw;
         align-items: center;
         justify-content: center;
         border-radius: 50px 0px 0px 50px;
+        border-right: 2px solid #4f4e4e;
+
         .icon {
           width: 65%;
           height: 65%;
@@ -48,8 +50,9 @@
         width: 100%;
         padding: 0.5rem 1rem;
         border-radius: 0px 50px 50px 0px;
-        background-color: var(--white);
-        border: var(--white);
+        background-color: #4f4e4e;
+        border: #4f4e4e;
+        color: var(--white);
         &:focus {
           outline: none;
         }

@@ -35,12 +35,28 @@
         width: 100%;
         padding: 0.5rem 1rem;
         border-radius: 50px;
-        border: var(--white);
+        border: #4f4e4e;
         text-align: center;
-        background-color: var(--white);
+        background-color: #4f4e4e;
+        color: var(--white);
         &:focus {
           outline: none;
         }
+      }
+      ::placeholder {
+        /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: var(--white);
+        opacity: 1; /* Firefox */
+      }
+
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: var(--white);
+      }
+
+      ::-ms-input-placeholder {
+        /* Microsoft Edge */
+        color: var(--white);
       }
     }
     .login__button {
