@@ -145,9 +145,15 @@ const CartPage = () => {
         <div className={styles.logo__container}>
           <img className={styles.logo} src={LogoIcon} alt='' />
         </div>
-        <div className={styles.restaurant__name}>咕咕義小餐館</div>
+        <div className={styles.restaurant__name}>Good Good Eat</div>
       </header>
-      <main className={styles.main}>{renderList}</main>
+      <main className={styles.main}>
+        {!cartList || cartList.length === 0 ? (
+          <div className={styles.message}>您尚未選取餐點</div>
+        ) : (
+          renderList
+        )}
+      </main>
       <footer className={styles.button__container}>
         <button
           className={styles.return__button}
