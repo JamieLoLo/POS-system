@@ -1,6 +1,5 @@
 .page__container {
-  // background-image: linear-gradient(to left, #2a2627, #373334, #2a2627);
-  background-image: url(../POSComponents/assets/background_image/login_background.jpg);
+  background-image: url(../POSComponents/assets/background_image/login_background_image.jpg);
   background-size: cover;
   height: 100vh;
   max-height: -webkit-fill-available;
@@ -10,7 +9,7 @@
   align-items: center;
   justify-content: center;
   .login__container {
-    background-color: rgba(89, 89, 89, 0.9);
+    background-color: rgba(250, 250, 250, 0.6);
     padding: 3rem;
     display: flex;
     flex-direction: column;
@@ -34,7 +33,7 @@
       display: flex;
 
       .icon__container {
-        background-color: rgb(79, 78, 78);
+        background-color: var(--white);
         display: flex;
         width: 5vw;
         align-items: center;
@@ -49,10 +48,9 @@
       .input {
         font-size: 24px;
         width: 100%;
-        color: var(--white);
         padding: 0.5rem 1rem;
         border-radius: 0px 50px 50px 0px;
-        background-color: rgb(79, 78, 78);
+        background-color: var(--white);
         border: var(--white);
         &:focus {
           outline: none;

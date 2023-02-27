@@ -20,9 +20,19 @@
     cursor: pointer;
   }
   .modify__button {
-    color: var(--primary-color);
+    height: 37px;
+    aspect-ratio: 1/1;
+    .icon {
+      height: 100%;
+      width: 100%;
+    }
   }
   .delete__button {
-    color: var(--error-color);
+    height: 35px;
+    aspect-ratio: 1/1;
+    .icon {
+      height: 100%;
+      width: 100%;
+    }
   }
 }

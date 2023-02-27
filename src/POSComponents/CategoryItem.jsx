@@ -2,6 +2,9 @@ import React from 'react'
 import Swal from 'sweetalert2'
 // hook
 import { useDispatch } from 'react-redux'
+// icon
+import { ReactComponent as EditIcon } from '../POSComponents/assets/icon/edit.svg'
+import { ReactComponent as TrashCanIcon } from '../POSComponents/assets/icon/trash_can.svg'
 // slice
 import { deleteCategoryApi, categoryActions } from '../store/category-slice'
 // SCSS
@@ -43,10 +46,10 @@ const CategoryItem = ({ data }) => {
             dispatch(categoryActions.setIsCategoryModifyModalOpen(true))
           }}
         >
-          修改
+          <EditIcon className={styles.icon} />
         </button>
         <button className={styles.delete__button} onClick={deleteHandler}>
-          刪除
+          <TrashCanIcon className={styles.icon} />
         </button>
       </div>
     </div>

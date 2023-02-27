@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 // icon
-import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
+import LogoIcon from '../POSComponents/assets/logo/logo_circle_dark.png'
 // slice
 import { getOrderApi } from '../store/order-slice'
 import { categoryGetAllApi } from '../store/category-slice'

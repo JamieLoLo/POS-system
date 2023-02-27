@@ -1,6 +1,8 @@
 import React from 'react'
 // hook
 import { useDispatch } from 'react-redux'
+// icon
+import { ReactComponent as EditIcon } from '../POSComponents/assets/icon/edit.svg'
 // store
 import { posActions } from '../store/pos-slice'
 // SCSS
@@ -21,7 +23,7 @@ const DishItem = ({ data }) => {
       <div className={styles.list__item}>{data.Category.name}</div>
       <div className={styles.button__container}>
         <button className={styles.modify__button} onClick={modifyHandler}>
-          修改
+          <EditIcon className={styles.icon} />
         </button>
       </div>
     </div>

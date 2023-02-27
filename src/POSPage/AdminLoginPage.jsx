@@ -4,8 +4,8 @@ import Swal from 'sweetalert2'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // icon
-import LogoIcon from '../POSComponents/assets/logo/logo_circle.png'
-import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person_white.svg'
+import LogoIcon from '../POSComponents/assets/logo/logo_circle_dark.png'
+import { ReactComponent as PersonIcon } from '../POSComponents/assets/icon/person_grey.svg'
 import { ReactComponent as PasswordIcon } from '../POSComponents/assets/icon/password.svg'
 // api
 import { posLoginApi } from '../api/loginApi'
