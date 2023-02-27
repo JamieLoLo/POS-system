@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-// icon
+// icon & image
 import LogoIcon from '../POSComponents/assets/logo/logo_circle_dark.png'
 import backgroundImage from '../POSComponents/assets/background_image/login_background.jpg'
 import { ReactComponent as LoadingIcon } from '../POSComponents/assets/icon/loading_ball.svg'
@@ -21,6 +21,7 @@ const CustomerLoginPage = () => {
   const [table_id, setTableId] = useState()
   const [loadStatus, setLoadStatus] = useState(false)
 
+  // 用來確認背景圖片是否載入完成
   useEffect(() => {
     const img = new Image()
     img.src = backgroundImage
@@ -45,7 +46,10 @@ const CustomerLoginPage = () => {
   return loadStatus === true ? (
     <div
       className={styles.page__container}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+      }}
     >
       <div className={styles.login__container}>
         <div className={styles.logo__container}>
