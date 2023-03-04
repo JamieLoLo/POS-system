@@ -23,6 +23,7 @@ const OrderTableItem = ({ data }) => {
     dispatch(posActions.setTableInfo(data))
     localStorage.setItem('table_id', data.id)
     if (data.Orders.id === null && data.Orders.isPaid === null) {
+      await dispatch(posActions.setIsHeadcountDisabled(false))
       navigate('/order/headcount')
     } else if (data.Orders.id !== null && data.Orders.isPaid === 0) {
       try {

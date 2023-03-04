@@ -30,6 +30,7 @@ const initialState = {
   tableID: '',
   tableInfo: [],
   accountClosingCalculate: 0,
+  isHeadcountDisabled: false,
   // modal control
   isTableSettingModalOpen: false,
   isAddProductModalOpen: false,
@@ -621,6 +622,9 @@ const posSlice = createSlice({
     },
     setIsAdminDetailsModalOpen(state, action) {
       state.isAdminDetailsModalOpen = action.payload
+    },
+    setIsHeadcountDisabled(state, action) {
+      state.isHeadcountDisabled = action.payload
     },
   },
 })

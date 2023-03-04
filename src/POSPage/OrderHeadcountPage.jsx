@@ -2,12 +2,12 @@ import React from 'react'
 // hook
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 // icon
 import { ReactComponent as CustomerPlusIcon } from '../POSComponents/assets/icon/customer_plus.svg'
 import { ReactComponent as CustomerMinusIcon } from '../POSComponents/assets/icon/customer_minus.svg'
 // slice
-import { addHeadcountApi, getTablesApi } from '../store/pos-slice'
+import { addHeadcountApi, getTablesApi, posActions } from '../store/pos-slice'
 // SCSS
 import styles from './OrderHeadcountPage.module.scss'
 
@@ -17,6 +17,10 @@ const OrderCustomerPage = () => {
   // useState
   const [adultNum, setAdultNum] = useState(0)
   const [childrenNum, setChildrenNum] = useState(0)
+  // useSelector
+  const isHeadcountDisabled = useSelector(
+    (state) => state.pos.isHeadcountDisabled
+  )
   // localStorage
   const table_id = localStorage.getItem('table_id')
 
@@ -31,14 +35,18 @@ const OrderCustomerPage = () => {
   // 開桌
   const submitHandler = async () => {
     try {
-      await dispatch(addHeadcountApi({ table_id, adultNum, childrenNum }))
-      await dispatch(getTablesApi())
-      navigate('/order/table')
+      await dispatch(posActions.setIsHeadcountDisabled(true))
+      const res = await dispatch(
+        addHeadcountApi({ table_id, adultNum, childrenNum })
+      )
+      if (res.payload !== undefined) {
+        await dispatch(getTablesApi())
+        navigate('/order/table')
+      }
     } catch (error) {
       console.error(error)
     }
   }
-
   return (
     <div className={styles.page__container}>
       <div className={styles.content__container}>
@@ -94,7 +102,11 @@ const OrderCustomerPage = () => {
           </div>
         </div>
         <div className={styles.button__container}>
-          <button className={styles.open__button} onClick={submitHandler}>
+          <button
+            className={styles.open__button}
+            onClick={submitHandler}
+            disabled={isHeadcountDisabled}
+          >
             開桌
           </button>
           <Link to='/order/table'>
