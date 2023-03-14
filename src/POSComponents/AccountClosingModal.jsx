@@ -49,8 +49,10 @@ const AccountClosingModal = () => {
       return
     }
     try {
-      await dispatch(closeDailyRevenueApi({ postingDate, revenue }))
-      navigate('/forms/revenue')
+      const res = await dispatch(closeDailyRevenueApi({ postingDate, revenue }))
+      if (res.payload !== undefined) {
+        navigate('/forms/revenue')
+      }
     } catch (error) {
       console.error(error)
     }
