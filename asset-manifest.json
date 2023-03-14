@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/POS-system/static/css/main.a2a72c9c.css",
-    "main.js": "/POS-system/static/js/main.ef0e02a9.js",
+    "main.js": "/POS-system/static/js/main.5050b20e.js",
     "static/js/787.aab8bd84.chunk.js": "/POS-system/static/js/787.aab8bd84.chunk.js",
     "static/media/login_background.jpg": "/POS-system/static/media/login_background.cf969bb7dcf89d50c4f2.jpg",
     "static/media/logo.png": "/POS-system/static/media/logo.89ac3a07e9a04985294b.png",
@@ -33,11 +33,11 @@
     "static/media/trash_can.svg": "/POS-system/static/media/trash_can.e057f2604bb40917d5ffddc91425eb0f.svg",
     "static/media/delete_black.svg": "/POS-system/static/media/delete_black.51522a7618bca8e90c2d8ea9c0ba4458.svg",
     "main.a2a72c9c.css.map": "/POS-system/static/css/main.a2a72c9c.css.map",
-    "main.ef0e02a9.js.map": "/POS-system/static/js/main.ef0e02a9.js.map",
+    "main.5050b20e.js.map": "/POS-system/static/js/main.5050b20e.js.map",
     "787.aab8bd84.chunk.js.map": "/POS-system/static/js/787.aab8bd84.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a2a72c9c.css",
-    "static/js/main.ef0e02a9.js"
+    "static/js/main.5050b20e.js"
   ]
 }
